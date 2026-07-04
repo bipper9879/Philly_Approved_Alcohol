@@ -439,8 +439,12 @@
                           "location":  "N 15th St \u0026 Race St",
                           "folderName":  "N 15th St \u0026 Race St",
                           "folderUrl":  "index_files/N%2015th%20St%20%26%20Race%20St/",
-                          "coverImageName":  "IMG_20260516_065341_DRO.jpg",
+                          "coverImageName":  "cover.jpg",
                           "images":  [
+                                         {
+                                             "name":  "cover.jpg",
+                                             "url":  "index_files/N%2015th%20St%20%26%20Race%20St/cover.jpg"
+                                         },
                                          {
                                              "name":  "IMG_20260516_065341_DRO.jpg",
                                              "url":  "index_files/N%2015th%20St%20%26%20Race%20St/IMG_20260516_065341_DRO.jpg"
