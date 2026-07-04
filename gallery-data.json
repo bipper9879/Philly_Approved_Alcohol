@@ -3,93 +3,364 @@
     "issueUrlBase":  "https://github.com/bipper9879/Philly_Approved_Alcohol/issues/new",
     "locations":  [
                       {
-                          "location":  "10th St \u0026 Appletree St",
-                          "folderName":  "10th St \u0026 Appletree St",
-                          "folderUrl":  "index_files/10th%20St%20%26%20Appletree%20St/",
+                          "location":  "10th \u0026 Filbert",
+                          "folderName":  "10th \u0026 Filbert",
+                          "folderUrl":  "index_files/10th%20%26%20Filbert/",
                           "coverImageName":  null,
                           "images":  [
 
+                                     ]
+                      },
+                      {
+                          "location":  "10th St \u0026 Appletree St",
+                          "folderName":  "10th St \u0026 Appletree St",
+                          "folderUrl":  "index_files/10th%20St%20%26%20Appletree%20St/",
+                          "coverImageName":  "IMG_20260516_084214_DRO.jpg",
+                          "images":  [
+                                         {
+                                             "name":  "IMG_20260516_084214_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Appletree%20St/IMG_20260516_084214_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_084224_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Appletree%20St/IMG_20260516_084224_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_081053_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Appletree%20St/IMG_20260522_081053_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_081055_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Appletree%20St/IMG_20260522_081055_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_081107_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Appletree%20St/IMG_20260522_081107_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_081115_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Appletree%20St/IMG_20260522_081115_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_081122_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Appletree%20St/IMG_20260522_081122_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_075725_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Appletree%20St/IMG_20260525_075725_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_075729_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Appletree%20St/IMG_20260525_075729_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_075736_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Appletree%20St/IMG_20260525_075736_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_075750_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Appletree%20St/IMG_20260525_075750_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "10th St \u0026 Spring Garden",
                           "folderName":  "10th St \u0026 Spring Garden",
                           "folderUrl":  "index_files/10th%20St%20%26%20Spring%20Garden/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_080234_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_080234_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Spring%20Garden/IMG_20260516_080234_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_080238_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Spring%20Garden/IMG_20260516_080238_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_080243_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Spring%20Garden/IMG_20260516_080243_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_074240_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Spring%20Garden/IMG_20260522_074240_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_074247_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Spring%20Garden/IMG_20260522_074247_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_074158_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Spring%20Garden/IMG_20260525_074158_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_074202_DRO.jpg",
+                                             "url":  "index_files/10th%20St%20%26%20Spring%20Garden/IMG_20260525_074202_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "12th \u0026 Market",
                           "folderName":  "12th \u0026 Market",
                           "folderUrl":  "index_files/12th%20%26%20Market/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_091013_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_091013_DRO.jpg",
+                                             "url":  "index_files/12th%20%26%20Market/IMG_20260516_091013_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_091020_DRO.jpg",
+                                             "url":  "index_files/12th%20%26%20Market/IMG_20260516_091020_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_091035_DRO.jpg",
+                                             "url":  "index_files/12th%20%26%20Market/IMG_20260516_091035_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_091039_DRO.jpg",
+                                             "url":  "index_files/12th%20%26%20Market/IMG_20260516_091039_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "12th St \u0026 Ridge St",
                           "folderName":  "12th St \u0026 Ridge St",
                           "folderUrl":  "index_files/12th%20St%20%26%20Ridge%20St/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_073215_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_073215_DRO.jpg",
+                                             "url":  "index_files/12th%20St%20%26%20Ridge%20St/IMG_20260516_073215_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_073217_DRO.jpg",
+                                             "url":  "index_files/12th%20St%20%26%20Ridge%20St/IMG_20260516_073217_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_073227_DRO.jpg",
+                                             "url":  "index_files/12th%20St%20%26%20Ridge%20St/IMG_20260516_073227_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_073247_DRO.jpg",
+                                             "url":  "index_files/12th%20St%20%26%20Ridge%20St/IMG_20260516_073247_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_071206_DRO.jpg",
+                                             "url":  "index_files/12th%20St%20%26%20Ridge%20St/IMG_20260522_071206_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_071231_DRO.jpg",
+                                             "url":  "index_files/12th%20St%20%26%20Ridge%20St/IMG_20260522_071231_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_071240_DRO.jpg",
+                                             "url":  "index_files/12th%20St%20%26%20Ridge%20St/IMG_20260522_071240_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "13th and Walnut",
                           "folderName":  "13th and Walnut",
                           "folderUrl":  "index_files/13th%20and%20Walnut/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_085214_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_085214_DRO.jpg",
+                                             "url":  "index_files/13th%20and%20Walnut/IMG_20260516_085214_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_085221_DRO.jpg",
+                                             "url":  "index_files/13th%20and%20Walnut/IMG_20260516_085221_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_085048_DRO.jpg",
+                                             "url":  "index_files/13th%20and%20Walnut/IMG_20260522_085048_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_085054_DRO.jpg",
+                                             "url":  "index_files/13th%20and%20Walnut/IMG_20260522_085054_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_080317_DRO.jpg",
+                                             "url":  "index_files/13th%20and%20Walnut/IMG_20260525_080317_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_080326_DRO.jpg",
+                                             "url":  "index_files/13th%20and%20Walnut/IMG_20260525_080326_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "24 and Washington",
                           "folderName":  "24 and Washington",
                           "folderUrl":  "index_files/24%20and%20Washington/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_103016_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_103016_DRO.jpg",
+                                             "url":  "index_files/24%20and%20Washington/IMG_20260516_103016_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_100533_DRO.jpg",
+                                             "url":  "index_files/24%20and%20Washington/IMG_20260522_100533_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_100538_DRO.jpg",
+                                             "url":  "index_files/24%20and%20Washington/IMG_20260522_100538_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "504 N 10th St \u0026 Buttonwood St",
                           "folderName":  "504 N 10th St \u0026 Buttonwood St",
                           "folderUrl":  "index_files/504%20N%2010th%20St%20%26%20Buttonwood%20St/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260511_200709_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260511_200709_DRO.jpg",
+                                             "url":  "index_files/504%20N%2010th%20St%20%26%20Buttonwood%20St/IMG_20260511_200709_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260511_200709_DRO_copy.jpg",
+                                             "url":  "index_files/504%20N%2010th%20St%20%26%20Buttonwood%20St/IMG_20260511_200709_DRO_copy.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260511_200709_DRO_copy_copy.jpg",
+                                             "url":  "index_files/504%20N%2010th%20St%20%26%20Buttonwood%20St/IMG_20260511_200709_DRO_copy_copy.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260511_200712_DRO.jpg",
+                                             "url":  "index_files/504%20N%2010th%20St%20%26%20Buttonwood%20St/IMG_20260511_200712_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260511_200712_DRO_copy.jpg",
+                                             "url":  "index_files/504%20N%2010th%20St%20%26%20Buttonwood%20St/IMG_20260511_200712_DRO_copy.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260511_200712_DRO_copy_copy.jpg",
+                                             "url":  "index_files/504%20N%2010th%20St%20%26%20Buttonwood%20St/IMG_20260511_200712_DRO_copy_copy.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_080508_DRO.jpg",
+                                             "url":  "index_files/504%20N%2010th%20St%20%26%20Buttonwood%20St/IMG_20260516_080508_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_080513_DRO.jpg",
+                                             "url":  "index_files/504%20N%2010th%20St%20%26%20Buttonwood%20St/IMG_20260516_080513_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_075048_DRO.jpg",
+                                             "url":  "index_files/504%20N%2010th%20St%20%26%20Buttonwood%20St/IMG_20260522_075048_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_074245_DRO.jpg",
+                                             "url":  "index_files/504%20N%2010th%20St%20%26%20Buttonwood%20St/IMG_20260525_074245_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_074248_DRO.jpg",
+                                             "url":  "index_files/504%20N%2010th%20St%20%26%20Buttonwood%20St/IMG_20260525_074248_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "8th and Market",
                           "folderName":  "8th and Market",
                           "folderUrl":  "index_files/8th%20and%20Market/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_092348_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_092348_DRO.jpg",
+                                             "url":  "index_files/8th%20and%20Market/IMG_20260516_092348_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_092353_DRO.jpg",
+                                             "url":  "index_files/8th%20and%20Market/IMG_20260516_092353_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_092400_DRO.jpg",
+                                             "url":  "index_files/8th%20and%20Market/IMG_20260516_092400_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_083048_DRO.jpg",
+                                             "url":  "index_files/8th%20and%20Market/IMG_20260522_083048_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_083055_DRO.jpg",
+                                             "url":  "index_files/8th%20and%20Market/IMG_20260522_083055_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_083104_DRO.jpg",
+                                             "url":  "index_files/8th%20and%20Market/IMG_20260522_083104_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_081434_DRO.jpg",
+                                             "url":  "index_files/8th%20and%20Market/IMG_20260525_081434_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_081439_DRO.jpg",
+                                             "url":  "index_files/8th%20and%20Market/IMG_20260525_081439_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_081448_DRO.jpg",
+                                             "url":  "index_files/8th%20and%20Market/IMG_20260525_081448_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_081452_DRO.jpg",
+                                             "url":  "index_files/8th%20and%20Market/IMG_20260525_081452_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "Broad St bt Girard Av \u0026 Poplar (Left Side)",
                           "folderName":  "Broad St bt Girard Av \u0026 Poplar (Left Side)",
                           "folderUrl":  "index_files/Broad%20St%20bt%20Girard%20Av%20%26%20Poplar%20(Left%20Side)/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_070857_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_070857_DRO.jpg",
+                                             "url":  "index_files/Broad%20St%20bt%20Girard%20Av%20%26%20Poplar%20(Left%20Side)/IMG_20260516_070857_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_070902_DRO.jpg",
+                                             "url":  "index_files/Broad%20St%20bt%20Girard%20Av%20%26%20Poplar%20(Left%20Side)/IMG_20260516_070902_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_063733_DRO.jpg",
+                                             "url":  "index_files/Broad%20St%20bt%20Girard%20Av%20%26%20Poplar%20(Left%20Side)/IMG_20260522_063733_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_063738_DRO.jpg",
+                                             "url":  "index_files/Broad%20St%20bt%20Girard%20Av%20%26%20Poplar%20(Left%20Side)/IMG_20260522_063738_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "Broad St btw Poplar and Gerard (Right Side)",
                           "folderName":  "Broad St btw Poplar and Gerard (Right Side)",
                           "folderUrl":  "index_files/Broad%20St%20btw%20Poplar%20and%20Gerard%20(Right%20Side)/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_071126_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_071126_DRO.jpg",
+                                             "url":  "index_files/Broad%20St%20btw%20Poplar%20and%20Gerard%20(Right%20Side)/IMG_20260516_071126_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_071135_DRO.jpg",
+                                             "url":  "index_files/Broad%20St%20btw%20Poplar%20and%20Gerard%20(Right%20Side)/IMG_20260516_071135_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_071139_DRO.jpg",
+                                             "url":  "index_files/Broad%20St%20btw%20Poplar%20and%20Gerard%20(Right%20Side)/IMG_20260516_071139_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_064052_DRO.jpg",
+                                             "url":  "index_files/Broad%20St%20btw%20Poplar%20and%20Gerard%20(Right%20Side)/IMG_20260522_064052_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_064055_DRO.jpg",
+                                             "url":  "index_files/Broad%20St%20btw%20Poplar%20and%20Gerard%20(Right%20Side)/IMG_20260522_064055_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
@@ -98,7 +369,10 @@
                           "folderUrl":  "index_files/Clay%20St%20%26%20Ridge%20Ave/",
                           "coverImageName":  null,
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260522_065342_DRO.jpg",
+                                             "url":  "index_files/Clay%20St%20%26%20Ridge%20Ave/IMG_20260522_065342_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
@@ -107,43 +381,154 @@
                           "folderUrl":  "index_files/Market%20%26%2012th/",
                           "coverImageName":  null,
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_083209_DRO.jpg",
+                                             "url":  "index_files/Market%20%26%2012th/IMG_20260516_083209_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "N 11th st \u0026 Nectarine st",
                           "folderName":  "N 11th st \u0026 Nectarine st",
                           "folderUrl":  "index_files/N%2011th%20st%20%26%20Nectarine%20st/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_081219_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_081219_DRO.jpg",
+                                             "url":  "index_files/N%2011th%20st%20%26%20Nectarine%20st/IMG_20260516_081219_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_081225_DRO.jpg",
+                                             "url":  "index_files/N%2011th%20st%20%26%20Nectarine%20st/IMG_20260516_081225_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_081237_DRO.jpg",
+                                             "url":  "index_files/N%2011th%20st%20%26%20Nectarine%20st/IMG_20260516_081237_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_081242_DRO.jpg",
+                                             "url":  "index_files/N%2011th%20st%20%26%20Nectarine%20st/IMG_20260516_081242_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_075304_DRO.jpg",
+                                             "url":  "index_files/N%2011th%20st%20%26%20Nectarine%20st/IMG_20260522_075304_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_080205_DRO.jpg",
+                                             "url":  "index_files/N%2011th%20st%20%26%20Nectarine%20st/IMG_20260522_080205_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_080216_DRO.jpg",
+                                             "url":  "index_files/N%2011th%20st%20%26%20Nectarine%20st/IMG_20260522_080216_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_075007_DRO.jpg",
+                                             "url":  "index_files/N%2011th%20st%20%26%20Nectarine%20st/IMG_20260525_075007_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_075020_DRO.jpg",
+                                             "url":  "index_files/N%2011th%20st%20%26%20Nectarine%20st/IMG_20260525_075020_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_075022_DRO.jpg",
+                                             "url":  "index_files/N%2011th%20st%20%26%20Nectarine%20st/IMG_20260525_075022_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "N 15th St \u0026 Race St",
                           "folderName":  "N 15th St \u0026 Race St",
                           "folderUrl":  "index_files/N%2015th%20St%20%26%20Race%20St/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_065341_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_065341_DRO.jpg",
+                                             "url":  "index_files/N%2015th%20St%20%26%20Race%20St/IMG_20260516_065341_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_065351_DRO.jpg",
+                                             "url":  "index_files/N%2015th%20St%20%26%20Race%20St/IMG_20260516_065351_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_065357_DRO.jpg",
+                                             "url":  "index_files/N%2015th%20St%20%26%20Race%20St/IMG_20260516_065357_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_065404_DRO.jpg",
+                                             "url":  "index_files/N%2015th%20St%20%26%20Race%20St/IMG_20260516_065404_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_061158_DRO.jpg",
+                                             "url":  "index_files/N%2015th%20St%20%26%20Race%20St/IMG_20260522_061158_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_061203_DRO.jpg",
+                                             "url":  "index_files/N%2015th%20St%20%26%20Race%20St/IMG_20260522_061203_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_062542_DRO.jpg",
+                                             "url":  "index_files/N%2015th%20St%20%26%20Race%20St/IMG_20260525_062542_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_062547_DRO.jpg",
+                                             "url":  "index_files/N%2015th%20St%20%26%20Race%20St/IMG_20260525_062547_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "Needs_Manual_Sorting",
                           "folderName":  "Needs_Manual_Sorting",
                           "folderUrl":  "index_files/Needs_Manual_Sorting/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260522_092130_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260522_092130_DRO.jpg",
+                                             "url":  "index_files/Needs_Manual_Sorting/IMG_20260522_092130_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_092133_DRO.jpg",
+                                             "url":  "index_files/Needs_Manual_Sorting/IMG_20260522_092133_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_080856_DRO.jpg",
+                                             "url":  "index_files/Needs_Manual_Sorting/IMG_20260525_080856_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_080909_DRO.jpg",
+                                             "url":  "index_files/Needs_Manual_Sorting/IMG_20260525_080909_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_083234_DRO.jpg",
+                                             "url":  "index_files/Needs_Manual_Sorting/IMG_20260525_083234_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_083237_DRO.jpg",
+                                             "url":  "index_files/Needs_Manual_Sorting/IMG_20260525_083237_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "Ridge and Clay",
                           "folderName":  "Ridge and Clay",
                           "folderUrl":  "index_files/Ridge%20and%20Clay/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_072627_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_072627_DRO.jpg",
+                                             "url":  "index_files/Ridge%20and%20Clay/IMG_20260516_072627_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_065408_DRO.jpg",
+                                             "url":  "index_files/Ridge%20and%20Clay/IMG_20260522_065408_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_065412_DRO.jpg",
+                                             "url":  "index_files/Ridge%20and%20Clay/IMG_20260522_065412_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_065422_DRO.jpg",
+                                             "url":  "index_files/Ridge%20and%20Clay/IMG_20260522_065422_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
@@ -152,16 +537,30 @@
                           "folderUrl":  "index_files/Ridge%20Ave%20%26%20N%2012th%20St/",
                           "coverImageName":  null,
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260522_071159_DRO.jpg",
+                                             "url":  "index_files/Ridge%20Ave%20%26%20N%2012th%20St/IMG_20260522_071159_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "Ridge St \u0026 btw 12th St Green St",
                           "folderName":  "Ridge St \u0026 btw 12th St Green St",
                           "folderUrl":  "index_files/Ridge%20St%20%26%20btw%2012th%20St%20Green%20St/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_073157_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_073157_DRO.jpg",
+                                             "url":  "index_files/Ridge%20St%20%26%20btw%2012th%20St%20Green%20St/IMG_20260516_073157_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_071301_DRO.jpg",
+                                             "url":  "index_files/Ridge%20St%20%26%20btw%2012th%20St%20Green%20St/IMG_20260522_071301_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_071310_DRO.jpg",
+                                             "url":  "index_files/Ridge%20St%20%26%20btw%2012th%20St%20Green%20St/IMG_20260522_071310_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
@@ -170,115 +569,438 @@
                           "folderUrl":  "index_files/S%209th%20St%20and%20Washington/",
                           "coverImageName":  null,
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260518_070230_DRO.jpg",
+                                             "url":  "index_files/S%209th%20St%20and%20Washington/IMG_20260518_070230_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "S 9th St between Washington Ave \u0026 Ellsworth",
                           "folderName":  "S 9th St between Washington Ave \u0026 Ellsworth",
                           "folderUrl":  "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260518_064641_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260518_064641_DRO.jpg",
+                                             "url":  "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260518_064641_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260518_064703_DRO.jpg",
+                                             "url":  "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260518_064703_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260518_064706_DRO.jpg",
+                                             "url":  "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260518_064706_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260518_064710_DRO.jpg",
+                                             "url":  "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260518_064710_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260518_070246_DRO.jpg",
+                                             "url":  "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260518_070246_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260518_070302_DRO.jpg",
+                                             "url":  "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260518_070302_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_094235_DRO.jpg",
+                                             "url":  "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260522_094235_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_094240_DRO.jpg",
+                                             "url":  "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260522_094240_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_094340_DRO.jpg",
+                                             "url":  "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260522_094340_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_094344_DRO.jpg",
+                                             "url":  "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260522_094344_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "South and 2nd",
                           "folderName":  "South and 2nd",
                           "folderUrl":  "index_files/South%20and%202nd/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_094419_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_094419_DRO.jpg",
+                                             "url":  "index_files/South%20and%202nd/IMG_20260516_094419_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_094423_DRO.jpg",
+                                             "url":  "index_files/South%20and%202nd/IMG_20260516_094423_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_094429_DRO.jpg",
+                                             "url":  "index_files/South%20and%202nd/IMG_20260516_094429_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_094431_DRO.jpg",
+                                             "url":  "index_files/South%20and%202nd/IMG_20260516_094431_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_090810_DRO.jpg",
+                                             "url":  "index_files/South%20and%202nd/IMG_20260522_090810_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_090813_DRO.jpg",
+                                             "url":  "index_files/South%20and%202nd/IMG_20260522_090813_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_082322_DRO.jpg",
+                                             "url":  "index_files/South%20and%202nd/IMG_20260525_082322_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_082325_DRO.jpg",
+                                             "url":  "index_files/South%20and%202nd/IMG_20260525_082325_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_082329_DRO.jpg",
+                                             "url":  "index_files/South%20and%202nd/IMG_20260525_082329_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "South btw 2 and 3rd",
                           "folderName":  "South btw 2 and 3rd",
                           "folderUrl":  "index_files/South%20btw%202%20and%203rd/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_094103_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_094103_DRO.jpg",
+                                             "url":  "index_files/South%20btw%202%20and%203rd/IMG_20260516_094103_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_094108_DRO.jpg",
+                                             "url":  "index_files/South%20btw%202%20and%203rd/IMG_20260516_094108_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_094114_DRO.jpg",
+                                             "url":  "index_files/South%20btw%202%20and%203rd/IMG_20260516_094114_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_090835_DRO.jpg",
+                                             "url":  "index_files/South%20btw%202%20and%203rd/IMG_20260522_090835_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_090840_DRO.jpg",
+                                             "url":  "index_files/South%20btw%202%20and%203rd/IMG_20260522_090840_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_082256_DRO.jpg",
+                                             "url":  "index_files/South%20btw%202%20and%203rd/IMG_20260525_082256_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_082259_DRO.jpg",
+                                             "url":  "index_files/South%20btw%202%20and%203rd/IMG_20260525_082259_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "Spring Garden \u0026 N 13th St",
                           "folderName":  "Spring Garden \u0026 N 13th St",
                           "folderUrl":  "index_files/Spring%20Garden%20%26%20N%2013th%20St/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_074041_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_074041_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20%26%20N%2013th%20St/IMG_20260516_074041_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_074047_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20%26%20N%2013th%20St/IMG_20260516_074047_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_072127_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20%26%20N%2013th%20St/IMG_20260522_072127_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_072131_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20%26%20N%2013th%20St/IMG_20260522_072131_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_073139_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20%26%20N%2013th%20St/IMG_20260525_073139_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_073143_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20%26%20N%2013th%20St/IMG_20260525_073143_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_073156_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20%26%20N%2013th%20St/IMG_20260525_073156_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "Spring Garden btw 11 \u0026 12",
                           "folderName":  "Spring Garden btw 11 \u0026 12",
                           "folderUrl":  "index_files/Spring%20Garden%20btw%2011%20%26%2012/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_075737_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_075737_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20btw%2011%20%26%2012/IMG_20260516_075737_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_075745_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20btw%2011%20%26%2012/IMG_20260516_075745_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_073248_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20btw%2011%20%26%2012/IMG_20260522_073248_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_073308_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20btw%2011%20%26%2012/IMG_20260522_073308_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_073311_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20btw%2011%20%26%2012/IMG_20260522_073311_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_073615_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20btw%2011%20%26%2012/IMG_20260525_073615_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_073619_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20btw%2011%20%26%2012/IMG_20260525_073619_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "Spring Garden st \u0026 Broad st",
                           "folderName":  "Spring Garden st \u0026 Broad st",
                           "folderUrl":  "index_files/Spring%20Garden%20st%20%26%20Broad%20st/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_070205_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_070205_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20st%20%26%20Broad%20st/IMG_20260516_070205_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_070216_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20st%20%26%20Broad%20st/IMG_20260516_070216_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_062505_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20st%20%26%20Broad%20st/IMG_20260522_062505_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_062511_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20st%20%26%20Broad%20st/IMG_20260522_062511_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_062519_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20st%20%26%20Broad%20st/IMG_20260522_062519_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_063149_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20st%20%26%20Broad%20st/IMG_20260525_063149_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_063153_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20st%20%26%20Broad%20st/IMG_20260525_063153_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "Spring Garden St \u0026 N 10th St",
                           "folderName":  "Spring Garden St \u0026 N 10th St",
                           "folderUrl":  "index_files/Spring%20Garden%20St%20%26%20N%2010th%20St/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_080154_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_080154_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2010th%20St/IMG_20260516_080154_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_080200_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2010th%20St/IMG_20260516_080200_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_080203_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2010th%20St/IMG_20260516_080203_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_074539_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2010th%20St/IMG_20260522_074539_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_074545_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2010th%20St/IMG_20260522_074545_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_074041_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2010th%20St/IMG_20260525_074041_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_074045_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2010th%20St/IMG_20260525_074045_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "Spring Garden St \u0026 N 11th St",
                           "folderName":  "Spring Garden St \u0026 N 11th St",
                           "folderUrl":  "index_files/Spring%20Garden%20St%20%26%20N%2011th%20St/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_075849_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_075849_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2011th%20St/IMG_20260516_075849_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_075855_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2011th%20St/IMG_20260516_075855_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_075902_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2011th%20St/IMG_20260516_075902_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_073331_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2011th%20St/IMG_20260522_073331_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_073336_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2011th%20St/IMG_20260522_073336_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_073638_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2011th%20St/IMG_20260525_073638_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_073643_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2011th%20St/IMG_20260525_073643_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "Spring Garden St \u0026 N 12th St",
                           "folderName":  "Spring Garden St \u0026 N 12th St",
                           "folderUrl":  "index_files/Spring%20Garden%20St%20%26%20N%2012th%20St/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_073607_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_073607_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2012th%20St/IMG_20260516_073607_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_073623_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2012th%20St/IMG_20260516_073623_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_071423_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2012th%20St/IMG_20260522_071423_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_071427_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2012th%20St/IMG_20260522_071427_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_071451_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2012th%20St/IMG_20260522_071451_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_072702_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2012th%20St/IMG_20260525_072702_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_072705_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20%26%20N%2012th%20St/IMG_20260525_072705_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "Spring Garden St bt 12th St \u0026 13th St",
                           "folderName":  "Spring Garden St bt 12th St \u0026 13th St",
                           "folderUrl":  "index_files/Spring%20Garden%20St%20bt%2012th%20St%20%26%2013th%20St/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260516_073718_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260516_073718_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20bt%2012th%20St%20%26%2013th%20St/IMG_20260516_073718_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_073721_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20bt%2012th%20St%20%26%2013th%20St/IMG_20260516_073721_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260516_073724_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20bt%2012th%20St%20%26%2013th%20St/IMG_20260516_073724_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_065840_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20bt%2012th%20St%20%26%2013th%20St/IMG_20260522_065840_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260525_072639_DRO.jpg",
+                                             "url":  "index_files/Spring%20Garden%20St%20bt%2012th%20St%20%26%2013th%20St/IMG_20260525_072639_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "Washington Ave \u0026 S 9th St",
                           "folderName":  "Washington Ave \u0026 S 9th St",
                           "folderUrl":  "index_files/Washington%20Ave%20%26%20S%209th%20St/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260518_065818_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260518_065818_DRO.jpg",
+                                             "url":  "index_files/Washington%20Ave%20%26%20S%209th%20St/IMG_20260518_065818_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260518_065832_DRO.jpg",
+                                             "url":  "index_files/Washington%20Ave%20%26%20S%209th%20St/IMG_20260518_065832_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260518_065837_DRO.jpg",
+                                             "url":  "index_files/Washington%20Ave%20%26%20S%209th%20St/IMG_20260518_065837_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_094452_DRO.jpg",
+                                             "url":  "index_files/Washington%20Ave%20%26%20S%209th%20St/IMG_20260522_094452_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_094456_DRO.jpg",
+                                             "url":  "index_files/Washington%20Ave%20%26%20S%209th%20St/IMG_20260522_094456_DRO.jpg"
+                                         }
                                      ]
                       },
                       {
                           "location":  "Washington Ave \u0026 S Darien St",
                           "folderName":  "Washington Ave \u0026 S Darien St",
                           "folderUrl":  "index_files/Washington%20Ave%20%26%20S%20Darien%20St/",
-                          "coverImageName":  null,
+                          "coverImageName":  "IMG_20260518_070634_DRO.jpg",
                           "images":  [
-
+                                         {
+                                             "name":  "IMG_20260518_070634_DRO.jpg",
+                                             "url":  "index_files/Washington%20Ave%20%26%20S%20Darien%20St/IMG_20260518_070634_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260518_070638_DRO.jpg",
+                                             "url":  "index_files/Washington%20Ave%20%26%20S%20Darien%20St/IMG_20260518_070638_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260518_070641_DRO.jpg",
+                                             "url":  "index_files/Washington%20Ave%20%26%20S%20Darien%20St/IMG_20260518_070641_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_094543_DRO.jpg",
+                                             "url":  "index_files/Washington%20Ave%20%26%20S%20Darien%20St/IMG_20260522_094543_DRO.jpg"
+                                         },
+                                         {
+                                             "name":  "IMG_20260522_094549_DRO.jpg",
+                                             "url":  "index_files/Washington%20Ave%20%26%20S%20Darien%20St/IMG_20260522_094549_DRO.jpg"
+                                         }
                                      ]
                       }
                   ]
