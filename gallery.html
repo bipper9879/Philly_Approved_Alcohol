@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Location Photos</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f1e8;
+      --panel: #fffaf2;
+      --ink: #1f1a17;
+      --muted: #6c625b;
+      --line: #d8ccbb;
+      --accent: #1f6f5f;
+      --accent-strong: #12483d;
+      --button: #f2e4cf;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(31, 111, 95, 0.12), transparent 28%),
+        linear-gradient(180deg, #f9f4ec 0%, var(--bg) 100%);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    .hero,
+    .panel,
+    .thumb {
+      background: rgba(255, 250, 242, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 14px 40px rgba(42, 32, 22, 0.08);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1;
+    }
+
+    .subcopy {
+      margin: 14px 0 0;
+      max-width: 60ch;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .hero-actions,
+    .request-actions,
+    .thumb-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .button,
+    .button:visited {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--accent-strong);
+      color: var(--accent-strong);
+      background: var(--button);
+      text-decoration: none;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .button.primary,
+    .button.primary:visited {
+      color: #fffaf2;
+      background: var(--accent-strong);
+    }
+
+    .button.ghost,
+    .button.ghost:visited {
+      background: transparent;
+    }
+
+    .layout {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+    }
+
+    .panel {
+      padding: 20px;
+    }
+
+    .cover-frame {
+      display: grid;
+      place-items: center;
+      min-height: 340px;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #efe2d0;
+      border: 1px solid var(--line);
+    }
+
+    .cover-frame img {
+      display: block;
+      max-width: 100%;
+      max-height: 72vh;
+      object-fit: contain;
+    }
+
+    .empty-state {
+      padding: 36px 24px;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .meta {
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .meta strong {
+      color: var(--ink);
+    }
+
+    .thumb-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-top: 24px;
+    }
+
+    .thumb {
+      overflow: hidden;
+    }
+
+    .thumb img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: #efe2d0;
+    }
+
+    .thumb-body {
+      padding: 14px;
+    }
+
+    .thumb-name {
+      margin: 0;
+      font-size: 0.98rem;
+      word-break: break-word;
+    }
+
+    .status {
+      margin-top: 12px;
+      color: var(--accent-strong);
+      font-weight: 700;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 840px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      main {
+        padding: 20px 14px 48px;
+      }
+
+      .hero,
+      .panel {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Philly Approved Alcohol</p>
+      <h1 id="location-title">Loading location...</h1>
+      <p class="subcopy" id="location-summary">This page shows the current cover image, the rest of the images for this location, and a request path if you want a different image to be the public default.</p>
+      <div class="hero-actions">
+        <a class="button ghost" href="./index.html">Back to spreadsheet</a>
+        <a class="button ghost hidden" id="open-cover-link" target="_blank" rel="noopener">Open cover image</a>
+      </div>
+    </section>
+
+    <div class="layout">
+      <section class="panel">
+        <div class="cover-frame" id="cover-frame">
+          <div class="empty-state" id="cover-empty">No images are published for this location yet.</div>
+          <img id="cover-image" class="hidden" alt="Selected cover image">
+        </div>
+        <p class="status hidden" id="cover-status"></p>
+      </section>
+
+      <aside class="panel">
+        <div class="meta" id="location-meta"></div>
+        <div class="request-actions" id="default-request-actions"></div>
+      </aside>
+    </div>
+
+    <section class="thumb-grid" id="thumb-grid"></section>
+  </main>
+
+  <script>
+    const emailAddress = "bipper9879@hotmail.com";
+    const issueBaseUrl = "https://github.com/bipper9879/Philly_Approved_Alcohol/issues/new";
+    const folderListUrl = "./gallery-data.json";
+
+    const titleEl = document.getElementById("location-title");
+    const summaryEl = document.getElementById("location-summary");
+    const metaEl = document.getElementById("location-meta");
+    const thumbGridEl = document.getElementById("thumb-grid");
+    const coverFrameEl = document.getElementById("cover-frame");
+    const coverEmptyEl = document.getElementById("cover-empty");
+    const coverImageEl = document.getElementById("cover-image");
+    const coverStatusEl = document.getElementById("cover-status");
+    const defaultRequestActionsEl = document.getElementById("default-request-actions");
+    const openCoverLinkEl = document.getElementById("open-cover-link");
+
+    function normalizeLocationName(value) {
+      return (value || "")
+        .replace(/\u00a0/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function getLocationParam() {
+      const params = new URLSearchParams(window.location.search);
+      return normalizeLocationName(params.get("location"));
+    }
+
+    function getLocalCoverKey(location) {
+      return `philly-cover:${location}`;
+    }
+
+    function buildIssueUrl(location, imageName, imageUrl) {
+      const title = `Cover photo request: ${location}`;
+      const lines = [
+        `Location: ${location}`,
+        `Requested image: ${imageName || "No image published yet"}`,
+        `Image URL: ${imageUrl || "Not available"}`,
+        `Requested from: ${window.location.href}`
+      ];
+
+      return `${issueBaseUrl}?title=${encodeURIComponent(title)}&body=${encodeURIComponent(lines.join("\n"))}`;
+    }
+
+    function buildMailtoUrl(location, imageName, imageUrl) {
+      const subject = `Cover photo request for ${location}`;
+      const body = [
+        `Location: ${location}`,
+        `Requested image: ${imageName || "No image published yet"}`,
+        `Image URL: ${imageUrl || "Not available"}`,
+        `Requested from: ${window.location.href}`
+      ].join("\n");
+
+      return `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
+    function makeButton(label, href, className) {
+      const link = document.createElement("a");
+      link.className = `button ${className || "ghost"}`.trim();
+      link.href = href;
+      link.textContent = label;
+      return link;
+    }
+
+    function setCoverImage(location, image, reason) {
+      if (!image) {
+        coverImageEl.classList.add("hidden");
+        coverEmptyEl.classList.remove("hidden");
+        coverStatusEl.classList.add("hidden");
+        openCoverLinkEl.classList.add("hidden");
+        return;
+      }
+
+      coverImageEl.src = image.url;
+      coverImageEl.alt = `${location} cover image`;
+      coverImageEl.classList.remove("hidden");
+      coverEmptyEl.classList.add("hidden");
+      coverStatusEl.textContent = reason;
+      coverStatusEl.classList.remove("hidden");
+      openCoverLinkEl.href = image.url;
+      openCoverLinkEl.classList.remove("hidden");
+    }
+
+    function renderRequestActions(location, image) {
+      defaultRequestActionsEl.innerHTML = "";
+      defaultRequestActionsEl.appendChild(makeButton(
+        "Request cover change in GitHub",
+        buildIssueUrl(location, image && image.name, image && image.url),
+        "primary"
+      ));
+      defaultRequestActionsEl.appendChild(makeButton(
+        "Email cover request",
+        buildMailtoUrl(location, image && image.name, image && image.url),
+        "ghost"
+      ));
+    }
+
+    function renderThumb(location, image) {
+      const card = document.createElement("article");
+      card.className = "thumb";
+
+      const img = document.createElement("img");
+      img.src = image.url;
+      img.alt = `${location} - ${image.name}`;
+      card.appendChild(img);
+
+      const body = document.createElement("div");
+      body.className = "thumb-body";
+
+      const name = document.createElement("p");
+      name.className = "thumb-name";
+      name.textContent = image.name;
+      body.appendChild(name);
+
+      const actions = document.createElement("div");
+      actions.className = "thumb-actions";
+
+      const browserDefaultButton = document.createElement("button");
+      browserDefaultButton.type = "button";
+      browserDefaultButton.className = "button";
+      browserDefaultButton.textContent = "Use as my browser default";
+      browserDefaultButton.addEventListener("click", () => {
+        localStorage.setItem(getLocalCoverKey(location), image.name);
+        setCoverImage(location, image, "Using your browser-only default selection.");
+        renderRequestActions(location, image);
+      });
+      actions.appendChild(browserDefaultButton);
+
+      actions.appendChild(makeButton(
+        "Make this the public cover",
+        buildIssueUrl(location, image.name, image.url),
+        "primary"
+      ));
+
+      actions.appendChild(makeButton(
+        "Email this request",
+        buildMailtoUrl(location, image.name, image.url),
+        "ghost"
+      ));
+
+      body.appendChild(actions);
+      card.appendChild(body);
+      return card;
+    }
+
+    function findEntry(data, location) {
+      return data.locations.find((entry) => normalizeLocationName(entry.location) === location);
+    }
+
+    function chooseCover(entry, location) {
+      if (!entry || !entry.images || !entry.images.length) {
+        return null;
+      }
+
+      const savedName = localStorage.getItem(getLocalCoverKey(location));
+      if (savedName) {
+        const savedMatch = entry.images.find((image) => image.name === savedName);
+        if (savedMatch) {
+          return { image: savedMatch, reason: "Using your browser-only default selection." };
+        }
+      }
+
+      if (entry.coverImageName) {
+        const coverMatch = entry.images.find((image) => image.name === entry.coverImageName);
+        if (coverMatch) {
+          return { image: coverMatch, reason: "Showing the published public cover image." };
+        }
+      }
+
+      return { image: entry.images[0], reason: "Showing the first published image for this location." };
+    }
+
+    async function loadPage() {
+      const location = getLocationParam();
+      if (!location) {
+        titleEl.textContent = "No location selected";
+        summaryEl.textContent = "Open this page from the spreadsheet so it knows which location gallery to load.";
+        coverFrameEl.innerHTML = '<div class="empty-state">A location name is required in the page URL.</div>';
+        return;
+      }
+
+      titleEl.textContent = location;
+
+      let data;
+      try {
+        const response = await fetch(folderListUrl, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`Unable to load gallery data: ${response.status}`);
+        }
+        data = await response.json();
+      } catch (error) {
+        summaryEl.textContent = "The gallery data file could not be loaded yet.";
+        metaEl.innerHTML = `<div><strong>Error:</strong> ${error.message}</div>`;
+        renderRequestActions(location, null);
+        return;
+      }
+
+      const entry = findEntry(data, location);
+      if (!entry) {
+        summaryEl.textContent = "This location is not matched to a folder in the published gallery data yet.";
+        metaEl.innerHTML = "<div><strong>Status:</strong> No matching folder entry was found.</div>";
+        renderRequestActions(location, null);
+        return;
+      }
+
+      summaryEl.textContent = entry.images.length
+        ? "Choose a photo to preview, keep a personal browser-only default, or send a public cover request for everyone else."
+        : "This location folder exists, but no photos are published there yet. Once images are added, the page will show a cover and the full gallery.";
+
+      metaEl.innerHTML = `
+        <div><strong>Folder:</strong> ${entry.folderName}</div>
+        <div><strong>Published images:</strong> ${entry.images.length}</div>
+        <div><strong>Public cover rule:</strong> ${entry.coverImageName || "first image when available"}</div>
+        <div><strong>Fallback email:</strong> ${data.email || emailAddress}</div>
+      `;
+
+      const coverChoice = chooseCover(entry, location);
+      setCoverImage(location, coverChoice && coverChoice.image, coverChoice && coverChoice.reason);
+      renderRequestActions(location, coverChoice && coverChoice.image);
+
+      thumbGridEl.innerHTML = "";
+      if (!entry.images.length) {
+        return;
+      }
+
+      entry.images.forEach((image) => {
+        thumbGridEl.appendChild(renderThumb(location, image));
+      });
+    }
+
+    loadPage();
+  </script>
+</body>
+</html>

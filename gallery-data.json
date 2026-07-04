@@ -1,0 +1,285 @@
+﻿{
+    "email":  "bipper9879@hotmail.com",
+    "issueUrlBase":  "https://github.com/bipper9879/Philly_Approved_Alcohol/issues/new",
+    "locations":  [
+                      {
+                          "location":  "10th St \u0026 Appletree St",
+                          "folderName":  "10th St \u0026 Appletree St",
+                          "folderUrl":  "index_files/10th%20St%20%26%20Appletree%20St/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "10th St \u0026 Spring Garden",
+                          "folderName":  "10th St \u0026 Spring Garden",
+                          "folderUrl":  "index_files/10th%20St%20%26%20Spring%20Garden/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "12th \u0026 Market",
+                          "folderName":  "12th \u0026 Market",
+                          "folderUrl":  "index_files/12th%20%26%20Market/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "12th St \u0026 Ridge St",
+                          "folderName":  "12th St \u0026 Ridge St",
+                          "folderUrl":  "index_files/12th%20St%20%26%20Ridge%20St/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "13th and Walnut",
+                          "folderName":  "13th and Walnut",
+                          "folderUrl":  "index_files/13th%20and%20Walnut/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "24 and Washington",
+                          "folderName":  "24 and Washington",
+                          "folderUrl":  "index_files/24%20and%20Washington/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "504 N 10th St \u0026 Buttonwood St",
+                          "folderName":  "504 N 10th St \u0026 Buttonwood St",
+                          "folderUrl":  "index_files/504%20N%2010th%20St%20%26%20Buttonwood%20St/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "8th and Market",
+                          "folderName":  "8th and Market",
+                          "folderUrl":  "index_files/8th%20and%20Market/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Broad St bt Girard Av \u0026 Poplar (Left Side)",
+                          "folderName":  "Broad St bt Girard Av \u0026 Poplar (Left Side)",
+                          "folderUrl":  "index_files/Broad%20St%20bt%20Girard%20Av%20%26%20Poplar%20(Left%20Side)/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Broad St btw Poplar and Gerard (Right Side)",
+                          "folderName":  "Broad St btw Poplar and Gerard (Right Side)",
+                          "folderUrl":  "index_files/Broad%20St%20btw%20Poplar%20and%20Gerard%20(Right%20Side)/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Clay St \u0026 Ridge Ave",
+                          "folderName":  "Clay St \u0026 Ridge Ave",
+                          "folderUrl":  "index_files/Clay%20St%20%26%20Ridge%20Ave/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Market \u0026 12th",
+                          "folderName":  "Market \u0026 12th",
+                          "folderUrl":  "index_files/Market%20%26%2012th/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "N 11th st \u0026 Nectarine st",
+                          "folderName":  "N 11th st \u0026 Nectarine st",
+                          "folderUrl":  "index_files/N%2011th%20st%20%26%20Nectarine%20st/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "N 15th St \u0026 Race St",
+                          "folderName":  "N 15th St \u0026 Race St",
+                          "folderUrl":  "index_files/N%2015th%20St%20%26%20Race%20St/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Needs_Manual_Sorting",
+                          "folderName":  "Needs_Manual_Sorting",
+                          "folderUrl":  "index_files/Needs_Manual_Sorting/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Ridge and Clay",
+                          "folderName":  "Ridge and Clay",
+                          "folderUrl":  "index_files/Ridge%20and%20Clay/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Ridge Ave \u0026 N 12th St",
+                          "folderName":  "Ridge Ave \u0026 N 12th St",
+                          "folderUrl":  "index_files/Ridge%20Ave%20%26%20N%2012th%20St/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Ridge St \u0026 btw 12th St Green St",
+                          "folderName":  "Ridge St \u0026 btw 12th St Green St",
+                          "folderUrl":  "index_files/Ridge%20St%20%26%20btw%2012th%20St%20Green%20St/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "S 9th St and Washington",
+                          "folderName":  "S 9th St and Washington",
+                          "folderUrl":  "index_files/S%209th%20St%20and%20Washington/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "S 9th St between Washington Ave \u0026 Ellsworth",
+                          "folderName":  "S 9th St between Washington Ave \u0026 Ellsworth",
+                          "folderUrl":  "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "South and 2nd",
+                          "folderName":  "South and 2nd",
+                          "folderUrl":  "index_files/South%20and%202nd/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "South btw 2 and 3rd",
+                          "folderName":  "South btw 2 and 3rd",
+                          "folderUrl":  "index_files/South%20btw%202%20and%203rd/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Spring Garden \u0026 N 13th St",
+                          "folderName":  "Spring Garden \u0026 N 13th St",
+                          "folderUrl":  "index_files/Spring%20Garden%20%26%20N%2013th%20St/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Spring Garden btw 11 \u0026 12",
+                          "folderName":  "Spring Garden btw 11 \u0026 12",
+                          "folderUrl":  "index_files/Spring%20Garden%20btw%2011%20%26%2012/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Spring Garden st \u0026 Broad st",
+                          "folderName":  "Spring Garden st \u0026 Broad st",
+                          "folderUrl":  "index_files/Spring%20Garden%20st%20%26%20Broad%20st/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Spring Garden St \u0026 N 10th St",
+                          "folderName":  "Spring Garden St \u0026 N 10th St",
+                          "folderUrl":  "index_files/Spring%20Garden%20St%20%26%20N%2010th%20St/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Spring Garden St \u0026 N 11th St",
+                          "folderName":  "Spring Garden St \u0026 N 11th St",
+                          "folderUrl":  "index_files/Spring%20Garden%20St%20%26%20N%2011th%20St/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Spring Garden St \u0026 N 12th St",
+                          "folderName":  "Spring Garden St \u0026 N 12th St",
+                          "folderUrl":  "index_files/Spring%20Garden%20St%20%26%20N%2012th%20St/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Spring Garden St bt 12th St \u0026 13th St",
+                          "folderName":  "Spring Garden St bt 12th St \u0026 13th St",
+                          "folderUrl":  "index_files/Spring%20Garden%20St%20bt%2012th%20St%20%26%2013th%20St/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Washington Ave \u0026 S 9th St",
+                          "folderName":  "Washington Ave \u0026 S 9th St",
+                          "folderUrl":  "index_files/Washington%20Ave%20%26%20S%209th%20St/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      },
+                      {
+                          "location":  "Washington Ave \u0026 S Darien St",
+                          "folderName":  "Washington Ave \u0026 S Darien St",
+                          "folderUrl":  "index_files/Washington%20Ave%20%26%20S%20Darien%20St/",
+                          "coverImageName":  null,
+                          "images":  [
+
+                                     ]
+                      }
+                  ]
+}
