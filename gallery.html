@@ -280,6 +280,13 @@
         .trim();
     }
 
+    function normalizeLocationKey(value) {
+      return normalizeLocationName(value)
+        .toLowerCase()
+        .replace(/&/g, " and ")
+        .replace(/[^a-z0-9]/g, "");
+    }
+
     function getLocationParam() {
       const params = new URLSearchParams(window.location.search);
       return normalizeLocationName(params.get("location"));
@@ -403,7 +410,22 @@
     }
 
     function findEntry(data, location) {
-      return data.locations.find((entry) => normalizeLocationName(entry.location) === location);
+      const inputKey = normalizeLocationKey(location);
+      const exact = data.locations.find((entry) => normalizeLocationKey(entry.location) === inputKey);
+      if (exact) {
+        return exact;
+      }
+
+      const partialMatches = data.locations.filter((entry) => {
+        const entryKey = normalizeLocationKey(entry.location);
+        return entryKey.includes(inputKey) || inputKey.includes(entryKey);
+      });
+
+      if (partialMatches.length === 1) {
+        return partialMatches[0];
+      }
+
+      return null;
     }
 
     function chooseCover(entry, location) {
