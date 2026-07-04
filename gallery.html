@@ -73,7 +73,8 @@
 
     .hero-actions,
     .request-actions,
-    .thumb-actions {
+    .thumb-actions,
+    .gallery-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
@@ -234,7 +235,11 @@
       </aside>
     </div>
 
-    <section class="thumb-grid" id="thumb-grid"></section>
+    <div class="gallery-actions hidden" id="gallery-actions">
+      <button class="button ghost" id="toggle-gallery" type="button" aria-expanded="false">Show all photos</button>
+    </div>
+
+    <section class="thumb-grid hidden" id="thumb-grid"></section>
   </main>
 
   <script>
@@ -252,6 +257,21 @@
     const coverStatusEl = document.getElementById("cover-status");
     const defaultRequestActionsEl = document.getElementById("default-request-actions");
     const openCoverLinkEl = document.getElementById("open-cover-link");
+    const galleryActionsEl = document.getElementById("gallery-actions");
+    const toggleGalleryButtonEl = document.getElementById("toggle-gallery");
+
+    function setGalleryExpanded(isExpanded) {
+      if (isExpanded) {
+        thumbGridEl.classList.remove("hidden");
+        toggleGalleryButtonEl.textContent = "Hide all photos";
+        toggleGalleryButtonEl.setAttribute("aria-expanded", "true");
+        return;
+      }
+
+      thumbGridEl.classList.add("hidden");
+      toggleGalleryButtonEl.textContent = "Show all photos";
+      toggleGalleryButtonEl.setAttribute("aria-expanded", "false");
+    }
 
     function normalizeLocationName(value) {
       return (value || "")
@@ -459,8 +479,16 @@
 
       thumbGridEl.innerHTML = "";
       if (!entry.images.length) {
+        galleryActionsEl.classList.add("hidden");
         return;
       }
+
+      galleryActionsEl.classList.remove("hidden");
+      setGalleryExpanded(false);
+      toggleGalleryButtonEl.onclick = () => {
+        const expanded = toggleGalleryButtonEl.getAttribute("aria-expanded") === "true";
+        setGalleryExpanded(!expanded);
+      };
 
       entry.images.forEach((image) => {
         thumbGridEl.appendChild(renderThumb(location, image));
