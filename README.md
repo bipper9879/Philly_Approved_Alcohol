@@ -9,7 +9,7 @@ This repo now includes a Node.js + Express app that provides:
 
 - A modern public interface at `/app/` that only shows the current cover image per location.
 - A public request form to submit cover-change requests.
-- A reviewer interface at `/app/reviewer.html` that can view all photos for a location and set a public cover override.
+- A reviewer interface at `/app/reviewer.html` that can view all photos for a location and submit reviewed image selections for owner approval.
 - Legacy static pages still available (`/legacy`, `/index.html`, `/gallery.html`).
 
 ### Local setup
@@ -268,3 +268,73 @@ Each workflow action should store:
 - Public role must not access full folder images.
 - Public role must not see reviewer/owner consoles.
 - Public role must not bypass approval workflow.
+
+## Azure Deployment Blocker and Recovery
+
+If Azure CLI deployment fails with:
+- `Current Limit (Total VMs): 0`
+- `Operation cannot be completed without additional quota`
+
+then App Service Plan creation is blocked at the subscription level.
+
+### Switch subscriptions
+
+List subscriptions:
+
+`az account list -o table`
+
+Set active subscription:
+
+`az account set --subscription "<subscription-id-or-name>"`
+
+Confirm active subscription:
+
+`az account show -o table`
+
+### Required quota fix
+
+Request an Azure quota increase in the active subscription/region:
+- Quota type: `Total VMs`
+- Minimum target: `1`
+
+Until quota is approved, App Service deployment cannot proceed.
+
+### Runtime quoting note (PowerShell + az.cmd)
+
+When creating the web app on Windows PowerShell, use:
+
+`az webapp create --name philly-alcohol-app --resource-group philly-alcohol-rg --plan philly-alcohol-plan --runtime "NODE^|20-lts"`
+
+### Temporary fallback while waiting for quota
+
+Run locally with `npm run dev` and continue workflow testing until Azure quota is approved.
+
+## Session Resume Snapshot
+
+Use this section to resume quickly next month.
+
+### Current working app routes
+
+- Public: `http://localhost:3000/app/`
+- Reviewer: `http://localhost:3000/app/reviewer.html`
+- Owner: `http://localhost:3000/app/owner.html`
+- Legacy: `http://localhost:3000/legacy`
+
+### Current dev credentials
+
+- Reviewer: `reviewer@local.test` / `philly-reviewer-dev`
+- Owner: `owner@local.test` / `philly-owner-dev`
+
+### Current workflow status
+
+- Public can submit location-level request tickets.
+- Reviewer can browse location photos and submit reviewed image selections.
+- Owner can approve/reject and set cover directly.
+- Site codes are parsed from workbook (column A) into `gallery-data.json`.
+
+### Known remaining polish items
+
+- Ticket ordering should keep pending/reviewed at top and completed below.
+- Reviewer flow messaging needs final wording cleanup.
+- Folder-open behavior and queue interaction need one final UX pass.
+- Azure deployment blocked by tenant/auth/subscription context issues; local workflow is working.
