@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reviewer Console</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">Philly Approved Alcohol</p>
+      <h1>Reviewer Console</h1>
+      <p>Reviewer access can see full image folders and set the public cover image.</p>
+    </div>
+    <nav class="site-nav">
+      <a href="./">Public</a>
+      <a href="./reviewer.html">Reviewer</a>
+      <a href="./owner.html">Owner</a>
+      <a href="/legacy">Legacy Spreadsheet</a>
+    </nav>
+  </header>
+
+  <main class="single-layout">
+    <section class="panel">
+      <h2>Access</h2>
+      <form id="auth-form" class="form">
+        <label>
+          Reviewer email
+          <input id="email" type="email" required>
+        </label>
+        <label>
+          Reviewer key
+          <input id="key" type="password" required>
+        </label>
+        <button type="submit" class="button button-primary">Connect reviewer access</button>
+      </form>
+      <p id="auth-status" class="status"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Cover requests</h2>
+      <div id="request-list" class="list"></div>
+    </section>
+
+    <section class="toolbar">
+      <label for="search">Search locations</label>
+      <input id="search" type="search" placeholder="Start typing a street or location...">
+    </section>
+
+    <section id="location-cards" class="cards"></section>
+  </main>
+
+  <template id="location-card-template">
+    <article class="card">
+      <div class="cover-frame">
+        <img alt="">
+      </div>
+      <div class="card-body">
+        <p class="site-id-label"></p>
+        <h2></h2>
+        <p class="meta"></p>
+        <div class="actions">
+          <button class="button button-primary" type="button">Load full images</button>
+        </div>
+      </div>
+      <div class="accordion-panel hidden"></div>
+    </article>
+  </template>
+
+  <template id="image-template">
+    <article class="card">
+      <div class="cover-frame">
+        <img alt="">
+      </div>
+      <div class="card-body">
+        <p class="meta"></p>
+        <button class="button button-primary" type="button">Request this as cover</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="./reviewer.js?v=20260705a"></script>
+</body>
+</html>
+

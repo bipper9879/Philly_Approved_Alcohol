@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owner Console</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">Philly Approved Alcohol</p>
+      <h1>Owner Console</h1>
+      <p>Approve or reject cover requests, or set covers directly.</p>
+    </div>
+    <nav class="site-nav">
+      <a href="./">Public</a>
+      <a href="./reviewer.html">Reviewer</a>
+      <a href="./owner.html">Owner</a>
+      <a href="/legacy">Legacy</a>
+    </nav>
+  </header>
+
+  <main class="single-layout">
+    <section class="panel">
+      <h2>Owner access</h2>
+      <form id="auth-form" class="form">
+        <label>Owner email <input id="email" type="email" required></label>
+        <label>Owner key <input id="key" type="password" required></label>
+        <button type="submit" class="button button-primary">Connect owner access</button>
+      </form>
+      <p id="auth-status" class="status"></p>
+    </section>
+
+    <section class="panel" id="queue-section">
+      <h2>Cover request queue</h2>
+      <div id="request-list" class="list"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Set cover directly</h2>
+      <p>Pick a location, browse photos, and set the cover without waiting for a request. A tracking ticket is still created.</p>
+      <div class="toolbar">
+        <label for="search">Search locations</label>
+        <input id="search" type="search" placeholder="Start typing...">
+      </div>
+      <section id="location-cards" class="cards"></section>
+    </section>
+
+    <section id="detail-panel" class="panel hidden">
+      <h2 id="detail-title">Location images</h2>
+      <p id="detail-meta" class="meta"></p>
+      <div id="owner-grid" class="cards"></div>
+    </section>
+  </main>
+
+  <template id="request-template">
+    <div class="list-row">
+      <div class="list-row-header">
+        <strong class="req-location"></strong>
+        <span class="badge"></span>
+      </div>
+      <span class="req-requester"></span>
+      <span class="req-note"></span>
+      <div class="req-preview"></div>
+      <div class="req-actions"></div>
+      <span class="muted req-date"></span>
+    </div>
+  </template>
+
+  <template id="location-card-template">
+    <article class="card" style="cursor:pointer">
+      <div class="cover-frame"><img alt=""></div>
+      <div class="card-body">
+        <h2></h2>
+        <p class="meta"></p>
+      </div>
+    </article>
+  </template>
+
+  <template id="image-template">
+    <article class="card">
+      <div class="cover-frame"><img alt=""></div>
+      <div class="card-body">
+        <p class="meta"></p>
+        <button class="button button-primary" type="button">Set as public cover</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="./owner.js"></script>
+</body>
+</html>

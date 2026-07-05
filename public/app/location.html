@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Location Cover</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">Philly Approved Alcohol</p>
+      <h1 id="title">Location</h1>
+      <p>This page intentionally shows only the public cover image.</p>
+    </div>
+    <nav class="site-nav">
+      <a href="./">Public</a>
+      <a href="./reviewer.html">Reviewer</a>
+      <a href="./owner.html">Owner</a>
+      <a href="/legacy">Legacy Spreadsheet</a>
+    </nav>
+  </header>
+
+  <main class="single-layout">
+    <section class="panel">
+      <div id="cover" class="cover-frame large"></div>
+      <p id="meta" class="meta"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Request a different cover image</h2>
+      <p>Your request goes to the reviewer queue. Public users cannot see folder images.</p>
+      <form id="request-form" class="form">
+        <label>
+          Your name
+          <input id="requester-name" required>
+        </label>
+        <label>
+          Your email
+          <input id="requester-email" type="email" required>
+        </label>
+        <label>
+          Request notes
+          <textarea id="request-note" rows="4" placeholder="Describe the photo you want as the cover."></textarea>
+        </label>
+        <button type="submit" class="button button-primary">Send request</button>
+      </form>
+      <p id="request-status" class="status"></p>
+    </section>
+  </main>
+
+  <script src="./location.js"></script>
+</body>
+</html>

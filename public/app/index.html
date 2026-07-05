@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Philly Approved Alcohol</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">Philly Approved Alcohol</p>
+      <h1>Public Cover Gallery</h1>
+      <p>Public viewers can only see each location's selected cover image.</p>
+    </div>
+    <nav class="site-nav">
+      <a href="./">Public</a>
+      <a href="./reviewer.html">Reviewer</a>
+      <a href="./owner.html">Owner</a>
+      <a href="/legacy">Legacy Spreadsheet</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="toolbar">
+      <label for="search">Search locations</label>
+      <input id="search" type="search" placeholder="Start typing a street or location...">
+    </section>
+    <section id="cards" class="cards"></section>
+  </main>
+
+  <template id="card-template">
+    <article class="card">
+      <div class="cover-frame">
+        <img alt="">
+      </div>
+      <div class="card-body">
+        <p class="site-id-label"></p>
+        <h2></h2>
+        <p class="meta"></p>
+        <div class="actions">
+          <a class="button button-primary">Open location</a>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="./public.js"></script>
+</body>
+</html>

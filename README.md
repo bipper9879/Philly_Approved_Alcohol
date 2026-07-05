@@ -3,6 +3,40 @@
 Public site:
 https://bipper9879.github.io/Philly_Approved_Alcohol
 
+## New Website + API (Local Server MVP)
+
+This repo now includes a Node.js + Express app that provides:
+
+- A modern public interface at `/app/` that only shows the current cover image per location.
+- A public request form to submit cover-change requests.
+- A reviewer interface at `/app/reviewer.html` that can view all photos for a location and set a public cover override.
+- Legacy static pages still available (`/legacy`, `/index.html`, `/gallery.html`).
+
+### Local setup
+
+1. Install Node.js 20+.
+2. Install packages:
+
+   `npm install`
+
+3. Copy env template:
+
+   `Copy-Item .env.example .env`
+
+4. Edit `.env` for reviewer controls:
+   - `REVIEWER_KEY`
+   - `REVIEWER_EMAIL_ALLOWLIST`
+   - `REVIEWER_EMAIL_DOMAIN_ALLOWLIST`
+
+5. Start server:
+
+   `npm run dev`
+
+6. Open:
+   - Public: `http://localhost:3000/app/`
+   - Reviewer: `http://localhost:3000/app/reviewer.html`
+   - Legacy spreadsheet: `http://localhost:3000/legacy`
+
 ## What This Site Does
 
 This project publishes a location gallery website from GitHub Pages.
@@ -34,6 +68,14 @@ This project publishes a location gallery website from GitHub Pages.
   - Rebuilds gallery-data.json from folders and images.
 - scripts/set-cover-from-image.ps1
   - Helper script to set cover.jpg from an image, rebuild data, commit, and optionally push.
+- server.js
+  - Express API + web server for public/reviewer experiences.
+- public/app/
+  - New UI pages (public list, public location page, reviewer console).
+- data/cover-overrides.json
+  - Reviewer-selected cover overrides by location.
+- data/cover-requests.json
+  - Stored public cover requests for reviewer queue.
 
 ## Cover Image Rules
 
@@ -163,3 +205,66 @@ Why:
 4. Test one location gallery:
 	- Cover first
 	- Show all photos toggle works
+
+## Target Authentication and RBAC End State
+
+This section describes the intended production security model after the current local/dev key phase.
+
+### Identity Provider
+
+- Microsoft Entra ID (Azure AD) is the source of identity.
+- Users must authenticate with organizational accounts.
+
+### Tenant and Domain Rules
+
+- Only approved tenant users may sign in.
+- Primary domain allow rule: `*@npa.net`.
+- Optional explicit allowlist/denylist can be applied for edge cases.
+
+### RBAC Roles
+
+- **Public**
+  - Can view public cover-only pages.
+  - Can submit a generic cover-review request.
+  - Cannot browse full image folders.
+- **Reviewer**
+  - Can browse full image sets for assigned locations.
+  - Can select an image and submit a reviewed ticket for owner approval.
+  - Cannot directly publish final cover to production.
+- **Owner/Admin**
+  - Can approve/reject reviewed tickets.
+  - Can set cover directly (with automatic ticket/audit trail).
+  - Can manage role assignments and policy settings.
+
+### Role Assignment Source
+
+- Preferred: Entra App Roles and/or Entra Security Groups.
+- API authorization should resolve user roles from token claims and/or group membership.
+
+### Enforcement Points
+
+- Authorization is enforced server-side in API middleware.
+- UI visibility is convenience only and must never be the primary security boundary.
+
+### Audit and Traceability
+
+Each workflow action should store:
+- requester identity and timestamp
+- reviewer identity and timestamp
+- approver identity and timestamp
+- selected image metadata
+- final decision and reason/note
+
+### Migration Path (Current -> Target)
+
+1. Current phase: local dev keys + email allowlists for rapid MVP testing.
+2. Next phase: add Entra sign-in and token validation middleware.
+3. Replace key-based checks with role claims.
+4. Enforce domain/tenant policy in auth pipeline.
+5. Move secrets/settings to Azure App Service configuration (or Key Vault).
+
+### Non-Goals for Public Role
+
+- Public role must not access full folder images.
+- Public role must not see reviewer/owner consoles.
+- Public role must not bypass approval workflow.
