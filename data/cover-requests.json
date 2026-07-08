@@ -1,5 +1,36 @@
 [
   {
+    "id": "req_1783381492106",
+    "createdAt": "2026-07-06T23:44:52.106Z",
+    "status": "approved",
+    "locationId": "10thstandspringgarden",
+    "locationName": "10th St & Spring Garden",
+    "requesterName": "reviewer@local.test",
+    "requesterEmail": "reviewer@local.test",
+    "note": "",
+    "requestedImageName": "IMG_20260525_074158_DRO.jpg",
+    "requestedImageUrl": "index_files/10th%20St%20%26%20Spring%20Garden/IMG_20260525_074158_DRO.jpg",
+    "resolvedBy": "owner@local.test",
+    "resolvedAt": "2026-07-06T23:45:21.088Z",
+    "archivedAt": "2026-07-06T23:45:21.088Z",
+    "archivedBy": "owner@local.test"
+  },
+  {
+    "id": "req_1783381415889",
+    "createdAt": "2026-07-06T23:43:35.889Z",
+    "status": "dismissed",
+    "locationId": "10thstandspringgarden",
+    "locationName": "10th St & Spring Garden",
+    "requesterName": "Brendan",
+    "requesterEmail": "bipper9879@gmail.com",
+    "note": "this is just the customer but could be sales force if you do not want to give them all access to the entire folder",
+    "resolvedBy": "owner@local.test",
+    "resolvedAt": "2026-07-07T03:27:57.282Z",
+    "archivedAt": "2026-07-07T03:27:57.282Z",
+    "archivedBy": "owner@local.test",
+    "archivedReason": "Stale pending request without selected image."
+  },
+  {
     "id": "req_1783217983669",
     "createdAt": "2026-07-05T02:19:43.669Z",
     "status": "approved",
@@ -11,7 +42,9 @@
     "requestedImageName": "IMG_20260516_073247_DRO.jpg",
     "requestedImageUrl": "index_files/12th%20St%20%26%20Ridge%20St/IMG_20260516_073247_DRO.jpg",
     "resolvedBy": "owner@local.test",
-    "resolvedAt": "2026-07-05T02:21:29.236Z"
+    "resolvedAt": "2026-07-05T02:21:29.236Z",
+    "archivedAt": "2026-07-05T02:21:29.236Z",
+    "archivedBy": "owner@local.test"
   },
   {
     "id": "req_1783217953867",
@@ -25,7 +58,9 @@
     "requestedImageName": "IMG_20260518_064710_DRO.jpg",
     "requestedImageUrl": "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260518_064710_DRO.jpg",
     "resolvedBy": "owner@local.test",
-    "resolvedAt": "2026-07-05T02:21:32.358Z"
+    "resolvedAt": "2026-07-05T02:21:32.358Z",
+    "archivedAt": "2026-07-05T02:21:32.358Z",
+    "archivedBy": "owner@local.test"
   },
   {
     "id": "req_1783217931258",
@@ -39,7 +74,9 @@
     "requestedImageName": "IMG_20260522_094344_DRO.jpg",
     "requestedImageUrl": "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260522_094344_DRO.jpg",
     "resolvedBy": "owner@local.test",
-    "resolvedAt": "2026-07-05T02:21:37.451Z"
+    "resolvedAt": "2026-07-05T02:21:37.451Z",
+    "archivedAt": "2026-07-05T02:21:37.451Z",
+    "archivedBy": "owner@local.test"
   },
   {
     "id": "req_1783217903358",
@@ -53,7 +90,9 @@
     "requestedImageName": "IMG_20260518_064710_DRO.jpg",
     "requestedImageUrl": "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260518_064710_DRO.jpg",
     "resolvedBy": "owner@local.test",
-    "resolvedAt": "2026-07-05T02:21:49.012Z"
+    "resolvedAt": "2026-07-05T02:21:49.012Z",
+    "archivedAt": "2026-07-05T02:21:49.012Z",
+    "archivedBy": "owner@local.test"
   },
   {
     "id": "req_1783217865174",
@@ -67,7 +106,9 @@
     "requestedImageName": "IMG_20260518_064710_DRO.jpg",
     "requestedImageUrl": "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260518_064710_DRO.jpg",
     "resolvedBy": "owner@local.test",
-    "resolvedAt": "2026-07-05T02:21:52.319Z"
+    "resolvedAt": "2026-07-05T02:21:52.319Z",
+    "archivedAt": "2026-07-05T02:21:52.319Z",
+    "archivedBy": "owner@local.test"
   },
   {
     "id": "req_1783217819193",
@@ -81,7 +122,9 @@
     "requestedImageName": "IMG_20260518_064710_DRO.jpg",
     "requestedImageUrl": "index_files/S%209th%20St%20between%20Washington%20Ave%20%26%20Ellsworth/IMG_20260518_064710_DRO.jpg",
     "resolvedBy": "owner@local.test",
-    "resolvedAt": "2026-07-05T02:21:55.289Z"
+    "resolvedAt": "2026-07-05T02:21:55.289Z",
+    "archivedAt": "2026-07-05T02:21:55.289Z",
+    "archivedBy": "owner@local.test"
   },
   {
     "id": "req_1783216834784",
@@ -93,67 +136,99 @@
     "requesterEmail": "bipper9879@gmail.com",
     "note": "saa",
     "resolvedBy": "owner@local.test",
-    "resolvedAt": "2026-07-05T02:23:19.120Z"
+    "resolvedAt": "2026-07-05T02:23:19.120Z",
+    "archivedAt": "2026-07-05T02:23:19.120Z",
+    "archivedBy": "owner@local.test"
   },
   {
     "id": "req_1783216182217",
     "createdAt": "2026-07-05T01:49:42.217Z",
-    "status": "pending",
+    "status": "dismissed",
     "locationId": "12thstandridgest",
     "locationName": "12th St & Ridge St",
     "requesterName": "Brendan",
     "requesterEmail": "bipper9879@gmail.com",
-    "note": "dsds"
+    "note": "dsds",
+    "resolvedBy": "owner@local.test",
+    "resolvedAt": "2026-07-07T03:27:57.282Z",
+    "archivedAt": "2026-07-07T03:27:57.282Z",
+    "archivedBy": "owner@local.test",
+    "archivedReason": "Stale pending request without selected image."
   },
   {
     "id": "req_1783216170683",
     "createdAt": "2026-07-05T01:49:30.683Z",
-    "status": "pending",
+    "status": "dismissed",
     "locationId": "12thstandridgest",
     "locationName": "12th St & Ridge St",
     "requesterName": "Brendan",
     "requesterEmail": "bipper9879@gmail.com",
-    "note": "dsds"
+    "note": "dsds",
+    "resolvedBy": "owner@local.test",
+    "resolvedAt": "2026-07-07T03:27:57.282Z",
+    "archivedAt": "2026-07-07T03:27:57.282Z",
+    "archivedBy": "owner@local.test",
+    "archivedReason": "Stale pending request without selected image."
   },
   {
     "id": "req_1783216117612",
     "createdAt": "2026-07-05T01:48:37.612Z",
-    "status": "pending",
+    "status": "dismissed",
     "locationId": "southbtw2and3rd",
     "locationName": "South btw 2 and 3rd",
     "requesterName": "Brendan",
     "requesterEmail": "bipper9879@gmail.com",
-    "note": "dd"
+    "note": "dd",
+    "resolvedBy": "owner@local.test",
+    "resolvedAt": "2026-07-07T03:27:57.282Z",
+    "archivedAt": "2026-07-07T03:27:57.282Z",
+    "archivedBy": "owner@local.test",
+    "archivedReason": "Stale pending request without selected image."
   },
   {
     "id": "req_1783216087963",
     "createdAt": "2026-07-05T01:48:07.963Z",
-    "status": "pending",
+    "status": "dismissed",
     "locationId": "southbtw2and3rd",
     "locationName": "South btw 2 and 3rd",
     "requesterName": "Brendan",
     "requesterEmail": "bipper9879@gmail.com",
-    "note": "dd"
+    "note": "dd",
+    "resolvedBy": "owner@local.test",
+    "resolvedAt": "2026-07-07T03:27:57.282Z",
+    "archivedAt": "2026-07-07T03:27:57.282Z",
+    "archivedBy": "owner@local.test",
+    "archivedReason": "Stale pending request without selected image."
   },
   {
     "id": "req_1783215678667",
     "createdAt": "2026-07-05T01:41:18.667Z",
-    "status": "pending",
+    "status": "dismissed",
     "locationId": "broadstbtwpoplarandgerardrightside",
     "locationName": "Broad St btw Poplar and Gerard (Right Side)",
     "requesterName": "Brendan",
     "requesterEmail": "bipper9879@gmail.com",
-    "note": "deed"
+    "note": "deed",
+    "resolvedBy": "owner@local.test",
+    "resolvedAt": "2026-07-07T03:27:57.282Z",
+    "archivedAt": "2026-07-07T03:27:57.282Z",
+    "archivedBy": "owner@local.test",
+    "archivedReason": "Stale pending request without selected image."
   },
   {
     "id": "req_1783215399654",
     "createdAt": "2026-07-05T01:36:39.654Z",
-    "status": "pending",
+    "status": "dismissed",
     "locationId": "10thstandappletreest",
     "locationName": "10th St & Appletree St",
     "requesterName": "Brendan",
     "requesterEmail": "bipper9879@gmail.com",
-    "note": "maybe"
+    "note": "maybe",
+    "resolvedBy": "owner@local.test",
+    "resolvedAt": "2026-07-07T03:27:57.282Z",
+    "archivedAt": "2026-07-07T03:27:57.282Z",
+    "archivedBy": "owner@local.test",
+    "archivedReason": "Stale pending request without selected image."
   },
   {
     "id": "req_1783213898877",
@@ -166,6 +241,8 @@
     "note": "",
     "resolvedBy": "reviewer@local.test",
     "resolvedAt": "2026-07-05T01:15:24.754Z",
-    "resolvedImageName": "IMG_20260525_062542_DRO.jpg"
+    "resolvedImageName": "IMG_20260525_062542_DRO.jpg",
+    "archivedAt": "2026-07-05T01:15:24.754Z",
+    "archivedBy": "reviewer@local.test"
   }
 ]

@@ -108,7 +108,7 @@ select {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .panel {
@@ -208,6 +208,11 @@ select {
 .list {
   display: grid;
   gap: 10px;
+}
+
+.queue-controls,
+.queue-footer {
+  margin: 10px 0;
 }
 
 .list-row {

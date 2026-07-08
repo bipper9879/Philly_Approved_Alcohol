@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reviewer Console</title>
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css?v=20260706c">
 </head>
 <body>
   <header class="site-header">
     <div>
       <p class="eyebrow">Philly Approved Alcohol</p>
       <h1>Reviewer Console</h1>
-      <p>Reviewer access can see full image folders and set the public cover image.</p>
+      <p>Reviewer access can see eligible full image folders and submit selections for owner approval.</p>
     </div>
     <nav class="site-nav">
       <a href="./">Public</a>
@@ -40,6 +40,9 @@
 
     <section class="panel">
       <h2>Cover requests</h2>
+      <div class="queue-controls">
+        <button id="toggle-pending" type="button" class="button">Collapse pending</button>
+      </div>
       <div id="request-list" class="list"></div>
     </section>
 
@@ -49,6 +52,14 @@
     </section>
 
     <section id="location-cards" class="cards"></section>
+
+    <section class="panel">
+      <h2>Archived requests</h2>
+      <div class="queue-footer">
+        <button id="toggle-archived" type="button" class="button">View archived requests</button>
+      </div>
+      <div id="archived-request-list" class="list hidden"></div>
+    </section>
   </main>
 
   <template id="location-card-template">
@@ -80,7 +91,6 @@
     </article>
   </template>
 
-  <script src="./reviewer.js?v=20260705a"></script>
+  <script src="./reviewer.js?v=20260706c"></script>
 </body>
 </html>
-

@@ -1,6 +1,9 @@
 const titleEl = document.getElementById("title");
 const coverEl = document.getElementById("cover");
 const metaEl = document.getElementById("meta");
+const coordsEl = document.getElementById("location-coords");
+const streetViewContainer = document.getElementById("street-view-container");
+const streetViewFrame = document.getElementById("street-view-frame");
 const requestFormEl = document.getElementById("request-form");
 const requestStatusEl = document.getElementById("request-status");
 
@@ -36,6 +39,31 @@ function renderCover(locationName, coverImage) {
   coverEl.appendChild(img);
 }
 
+function renderLocationMeta(payload) {
+  if (payload.lat && payload.lon) {
+    coordsEl.textContent = `Lat: ${payload.lat}  |  Lon: ${payload.lon}`;
+    coordsEl.classList.remove("hidden");
+  } else {
+    coordsEl.classList.add("hidden");
+  }
+
+  if (payload.streetViewUrl) {
+    streetViewContainer.innerHTML = "";
+    const link = document.createElement("a");
+    link.href = payload.streetViewUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.className = "button";
+    link.style.marginTop = "12px";
+    link.style.display = "inline-flex";
+    link.textContent = "Open Street View";
+    streetViewContainer.appendChild(link);
+    streetViewContainer.classList.remove("hidden");
+  } else {
+    streetViewContainer.classList.add("hidden");
+  }
+}
+
 async function loadLocation() {
   const locationName = getLocationParam();
   if (!locationName) {
@@ -56,6 +84,7 @@ async function loadLocation() {
 
   const payload = await response.json();
   renderCover(payload.locationName, payload.coverImage);
+  renderLocationMeta(payload);
   metaEl.textContent = `Public mode: only cover image shown. Total images in location: ${payload.imageCount}.`;
   return payload;
 }
@@ -100,5 +129,6 @@ requestFormEl.addEventListener("submit", async (event) => {
 });
 
 loadLocation().catch((error) => {
-  coverEl.innerHTML = `<div class=\"empty\">${error.message}</div>`;
+  coverEl.innerHTML = `<div class="empty">${error.message}</div>`;
 });
+

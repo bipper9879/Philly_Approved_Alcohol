@@ -9,7 +9,8 @@ This repo now includes a Node.js + Express app that provides:
 
 - A modern public interface at `/app/` that only shows the current cover image per location.
 - A public request form to submit cover-change requests.
-- A reviewer interface at `/app/reviewer.html` that can view all photos for a location and submit reviewed image selections for owner approval.
+- A reviewer interface at `/app/reviewer.html` that only shows workbook-eligible locations (Column D/E dynamic filter) and submits image selections for owner approval.
+- An owner interface at `/app/owner.html` that approves reviewer submissions and controls what is visible to public.
 - Legacy static pages still available (`/legacy`, `/index.html`, `/gallery.html`).
 
 ### Local setup
@@ -65,7 +66,9 @@ This project publishes a location gallery website from GitHub Pages.
 - gallery-data.json
   - Generated index of locations, images, and cover image name.
 - scripts/build-gallery-data.ps1
-  - Rebuilds gallery-data.json from folders and images.
+  - PowerShell wrapper that rebuilds gallery-data.json from workbook + image folders.
+- scripts/build-gallery-data.py
+  - Direct workbook parser (`.xlsx`) used by the wrapper script.
 - scripts/set-cover-from-image.ps1
   - Helper script to set cover.jpg from an image, rebuild data, commit, and optionally push.
 - server.js
@@ -92,7 +95,7 @@ When you add, remove, or rename images in index_files:
 
 1. Rebuild data
 
-	powershell -ExecutionPolicy Bypass -File .\scripts\build-gallery-data.ps1
+	powershell -ExecutionPolicy Bypass -File .\scripts\build-gallery-data.ps1 -WorkbookPath "C:\full\path\to\your-workbook.xlsx"
 
 2. Stage changes
 
@@ -110,6 +113,27 @@ When you add, remove, or rename images in index_files:
 
 	https://bipper9879.github.io/Philly_Approved_Alcohol
 
+## One-Command Workbook Sync
+
+If your source workbook changed, run this script to:
+1. pick workbook (or pass path),
+2. parse workbook directly (`.xlsx`) with Python,
+3. rebuild `gallery-data.json`.
+
+Command:
+
+`powershell -ExecutionPolicy Bypass -File .\scripts\sync-workbook-and-build.ps1 -WorkbookPath "C:\full\path\to\your-workbook.xlsx"`
+
+If you omit `-WorkbookPath`, the script opens a file picker dialog.
+
+`powershell -ExecutionPolicy Bypass -File .\scripts\sync-workbook-and-build.ps1`
+
+If workbook is locked/open, the script shows a popup asking you to save/close the workbook, then click OK to retry.
+
+Optional worksheet name:
+
+`powershell -ExecutionPolicy Bypass -File .\scripts\sync-workbook-and-build.ps1 -WorkbookPath "C:\full\path\to\your-workbook.xlsx" -WorksheetName "Sheet1"`
+
 ## Manual Cover Change (Step-by-Step)
 
 Use this when you accept a cover request ticket.
@@ -121,7 +145,7 @@ Use this when you accept a cover request ticket.
 
 2. Rebuild gallery data
 
-	powershell -ExecutionPolicy Bypass -File .\scripts\build-gallery-data.ps1
+	powershell -ExecutionPolicy Bypass -File .\scripts\build-gallery-data.ps1 -WorkbookPath "C:\full\path\to\your-workbook.xlsx"
 
 3. Stage
 
@@ -228,12 +252,14 @@ This section describes the intended production security model after the current 
   - Can submit a generic cover-review request.
   - Cannot browse full image folders.
 - **Reviewer**
-  - Can browse full image sets for assigned locations.
+  - Can browse full image sets only for workbook-eligible locations.
   - Can select an image and submit a reviewed ticket for owner approval.
   - Cannot directly publish final cover to production.
 - **Owner/Admin**
   - Can approve/reject reviewed tickets.
+  - Approval publishes that location to public.
   - Can set cover directly (with automatic ticket/audit trail).
+  - Can unpublish locations from public.
   - Can manage role assignments and policy settings.
 
 ### Role Assignment Source
@@ -338,3 +364,19 @@ Use this section to resume quickly next month.
 - Reviewer flow messaging needs final wording cleanup.
 - Folder-open behavior and queue interaction need one final UX pass.
 - Azure deployment blocked by tenant/auth/subscription context issues; local workflow is working.
+- Multi-city support: make the app city-aware so it can serve Philly, DC, Boston, or any city.
+  - Add city field to gallery-data.json per location.
+  - Support multiple city data files or one merged file with city filter.
+  - Add city picker to public/reviewer/owner UI.
+  - Filter all API responses by selected city.
+  - Update build script to accept city as a parameter.
+  - Wire WildPosting project output as the input to the build step (depends on WildPosting output format).
+  - WildPosting repos: C:\Users\bippe\OneDrive\Workspace\Projects\WildPosting (PowerShell) and WildPosting-DotNet (.NET).
+  - WildPosting workflow: installer completes location list, dumps photos, runs WildPosting to generate lat/lon/street view and sort photos by GPS match to master city location list.
+  - Do not start this work until WildPosting output format is finalized.
+- Street view currently shows as a link (Open Street View button). To embed inline, add Google Maps Embed API key.
+  - Get key from Google Cloud Console with Maps Embed API enabled.
+  - Add allowed referrers for localhost and production domain in key settings.
+  - Update .env with GOOGLE_MAPS_API_KEY and update location.js to use embed URL format:
+    https://www.google.com/maps/embed/v1/streetview?key=YOUR_KEY&location=LAT,LON
+  - No new key needed when moving to Azure; just add the new domain to allowed referrers.

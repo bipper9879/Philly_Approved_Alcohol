@@ -5,13 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Location Cover</title>
   <link rel="stylesheet" href="./styles.css">
+  <style>
+    .location-coords {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 8px 0 0;
+      letter-spacing: 0.03em;
+    }
+    .street-view-frame {
+      margin-top: 16px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      height: 220px;
+    }
+    .street-view-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
     <div>
       <p class="eyebrow">Philly Approved Alcohol</p>
       <h1 id="title">Location</h1>
-      <p>This page intentionally shows only the public cover image.</p>
+      <p id="location-sub">This page intentionally shows only the public cover image.</p>
+      <p id="location-coords" class="location-coords hidden"></p>
     </div>
     <nav class="site-nav">
       <a href="./">Public</a>
@@ -25,6 +47,9 @@
     <section class="panel">
       <div id="cover" class="cover-frame large"></div>
       <p id="meta" class="meta"></p>
+      <div id="street-view-container" class="street-view-frame hidden">
+        <iframe id="street-view-frame" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
     </section>
 
     <section class="panel">

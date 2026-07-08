@@ -1,6 +1,9 @@
 const authFormEl = document.getElementById("auth-form");
 const authStatusEl = document.getElementById("auth-status");
 const requestListEl = document.getElementById("request-list");
+const archivedRequestListEl = document.getElementById("archived-request-list");
+const togglePendingEl = document.getElementById("toggle-pending");
+const toggleArchivedEl = document.getElementById("toggle-archived");
 const searchInput = document.getElementById("search");
 const locationCardsEl = document.getElementById("location-cards");
 const locationCardTemplate = document.getElementById("location-card-template");
@@ -8,7 +11,8 @@ const imageTemplate = document.getElementById("image-template");
 
 let locations = [];
 let openLocationId = "";
-let queueRefreshTimer = null;
+let pendingCollapsed = false;
+let archivedVisible = false;
 
 function normalizeText(value) {
   return String(value || "")
@@ -42,59 +46,102 @@ async function fetchJson(url, options = {}) {
 }
 
 function statusBadge(status) {
-  const map = { pending: "🟡 Pending", reviewed: "🟣 Reviewed", resolved: "✅ Resolved", dismissed: "⛔ Dismissed", approved: "✅ Approved", rejected: "❌ Rejected" };
+  const map = { pending: "🟡 Pending owner approval", reviewed: "🟣 Reviewed", resolved: "✅ Resolved", dismissed: "⛔ Dismissed", approved: "✅ Approved", rejected: "❌ Rejected" };
   return map[status] || status;
 }
 
-function renderRequests(requests) {
+function sortRequests(requests) {
+  const rank = { pending: 0, reviewed: 1, approved: 2, rejected: 3, dismissed: 4, resolved: 5 };
+  return [...requests].sort((a, b) => {
+    const aRank = rank[a.status] ?? 99;
+    const bRank = rank[b.status] ?? 99;
+    if (aRank !== bRank) return aRank - bRank;
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+}
+
+function createRequestRow(request) {
+  const matchingLocation = locations.find((location) => location.locationId === request.locationId);
+  const siteCode = matchingLocation && matchingLocation.siteCode ? matchingLocation.siteCode : "No site code";
+
+  const row = document.createElement("div");
+  row.className = `list-row ${request.status !== "pending" ? "list-row-resolved" : ""}`;
+  row.dataset.locationId = request.locationId;
+  row.innerHTML = `
+    <div class="list-row-header">
+      <strong>${request.locationName}</strong>
+      <span class="badge">${statusBadge(request.status)}</span>
+    </div>
+    <span class="meta">Site: ${siteCode}</span>
+    <span>${request.requesterName} (${request.requesterEmail})</span>
+    <span>${request.note || "No note provided."}</span>
+    <span class="meta">${request.requestType === "reviewer-selection" ? "Submitted by reviewer for owner approval." : "Submitted by public requester."}</span>
+    <span class="muted">${new Date(request.createdAt).toLocaleString()}</span>
+  `;
+
+  row.style.cursor = "pointer";
+  row.title = "Open this location";
+  row.addEventListener("click", async () => {
+    const locationId = row.dataset.locationId;
+    if (!locationId) {
+      return;
+    }
+
+    if (searchInput.value) {
+      searchInput.value = "";
+      renderLocationCards(locations);
+    }
+
+    const card = locationCardsEl.querySelector(`[data-location-id="${locationId}"]`);
+    if (!card) {
+      authStatusEl.textContent = "Could not find a location card for that request.";
+      return;
+    }
+
+    await toggleLocationAccordion(locationId, card);
+  });
+
+  return row;
+}
+
+function setQueueToggleLabels(pendingCount, archivedCount) {
+  togglePendingEl.textContent = pendingCollapsed
+    ? `Show pending (${pendingCount})`
+    : `Collapse pending (${pendingCount})`;
+  toggleArchivedEl.textContent = archivedVisible
+    ? `Hide archived (${archivedCount})`
+    : `View archived requests (${archivedCount})`;
+}
+
+function renderRequests(activeRequests, archivedRequests) {
   requestListEl.innerHTML = "";
-  if (!requests.length) {
+  archivedRequestListEl.innerHTML = "";
+
+  const pending = sortRequests(activeRequests || []).filter((request) => request.status === "pending");
+  const archived = sortRequests(archivedRequests || []);
+  setQueueToggleLabels(pending.length, archived.length);
+
+  if (!pending.length) {
+    requestListEl.classList.remove("hidden");
     requestListEl.innerHTML = "<p class=\"empty\">No requests yet.</p>";
-    return;
+  } else if (pendingCollapsed) {
+    requestListEl.classList.add("hidden");
+  } else {
+    requestListEl.classList.remove("hidden");
+    pending.forEach((request) => {
+      requestListEl.appendChild(createRequestRow(request));
+    });
   }
 
-  requests.forEach((request) => {
-    const matchingLocation = locations.find((location) => location.locationId === request.locationId);
-    const siteCode = matchingLocation && matchingLocation.siteCode ? matchingLocation.siteCode : "No site code";
-
-    const row = document.createElement("div");
-    row.className = `list-row ${request.status !== "pending" ? "list-row-resolved" : ""}`;
-    row.dataset.locationId = request.locationId;
-    row.innerHTML = `
-      <div class="list-row-header">
-        <strong>${request.locationName}</strong>
-        <span class="badge">${statusBadge(request.status)}</span>
-      </div>
-      <span class="meta">Site: ${siteCode}</span>
-      <span>${request.requesterName} (${request.requesterEmail})</span>
-      <span>${request.note || "No note provided."}</span>
-      <span class="muted">${new Date(request.createdAt).toLocaleString()}</span>
-    `;
-
-    row.style.cursor = "pointer";
-    row.title = "Open this location";
-    row.addEventListener("click", async () => {
-      const locationId = row.dataset.locationId;
-      if (!locationId) {
-        return;
-      }
-
-      if (searchInput.value) {
-        searchInput.value = "";
-        renderLocationCards(locations);
-      }
-
-      const card = locationCardsEl.querySelector(`[data-location-id="${locationId}"]`);
-      if (!card) {
-        authStatusEl.textContent = "Could not find a location card for that request.";
-        return;
-      }
-
-      await toggleLocationAccordion(locationId, card);
+  if (!archived.length) {
+    archivedRequestListEl.innerHTML = "<p class=\"empty\">No archived requests.</p>";
+  } else {
+    archived.forEach((request) => {
+      archivedRequestListEl.appendChild(createRequestRow(request));
     });
+  }
 
-    requestListEl.appendChild(row);
-  });
+  archivedRequestListEl.classList.toggle("hidden", !archivedVisible);
 }
 
 
@@ -103,7 +150,7 @@ function buildAccordionImages(data, accordionEl) {
 
   const header = document.createElement("div");
   header.className = "accordion-header";
-  header.innerHTML = `<p class="meta">Reviewer mode — ${data.images.length} images. Select one to request as public cover.</p>`;
+  header.innerHTML = `<p class="meta">Reviewer mode — ${data.images.length} images. Select one and send it to owner approval.</p>`;
   accordionEl.appendChild(header);
 
   const grid = document.createElement("div");
@@ -122,7 +169,7 @@ function buildAccordionImages(data, accordionEl) {
       ? `${image.name} — current public cover`
       : image.name;
 
-    button.textContent = "Request this as cover";
+    button.textContent = "Submit for owner approval";
     button.addEventListener("click", async () => {
       const auth = getAuth();
       button.disabled = true;
@@ -137,12 +184,12 @@ function buildAccordionImages(data, accordionEl) {
           }
         );
         button.textContent = "✅ Requested!";
-        authStatusEl.textContent = `Cover request submitted for ${data.locationName}. The owner will review and approve.`;
+        authStatusEl.textContent = `Submitted for owner approval: ${data.locationName}. Public updates only after owner approval.`;
         await loadRequests();
       } catch (error) {
         authStatusEl.textContent = error.message;
         button.disabled = false;
-        button.textContent = "Request this as cover";
+        button.textContent = "Submit for owner approval";
       }
     });
 
@@ -199,7 +246,7 @@ async function loadRequests() {
   const requestsPayload = await fetchJson(
     `/api/reviewer/cover-requests?email=${encodeURIComponent(auth.email)}&key=${encodeURIComponent(auth.key)}`
   );
-  renderRequests(requestsPayload.requests || []);
+  renderRequests(requestsPayload.requests || [], requestsPayload.archivedRequests || []);
 }
 
 function renderLocationCards(items) {
@@ -224,7 +271,11 @@ function renderLocationCards(items) {
     siteLabel.textContent = location.siteCode || `Site #${location.siteId}`;
     siteLabel.className = "site-id-label";
     title.textContent = location.locationName;
-    meta.textContent = `${location.imageCount} image${location.imageCount !== 1 ? "s" : ""}`;
+    const filterMeta = location.reviewerFilterLabel && location.reviewerFilterValue != null
+      ? ` • ${location.reviewerFilterLabel}: ${location.reviewerFilterValue}`
+      : "";
+    const publishedMeta = location.published ? " • Public: live" : " • Public: hidden";
+    meta.textContent = `${location.imageCount} image${location.imageCount !== 1 ? "s" : ""}${filterMeta}${publishedMeta}`;
 
     if (location.coverImage && location.coverImage.url) {
       img.src = `/${location.coverImage.url}`;
@@ -256,8 +307,11 @@ function renderLocationCards(items) {
 }
 
 async function loadLocations() {
-  locationCardsEl.innerHTML = "<p class=\"empty\">Loading locations...</p>";
-  const payload = await fetchJson("/api/public/locations");
+  const auth = getAuth();
+  locationCardsEl.innerHTML = "<p class=\"empty\">Loading reviewer-eligible locations...</p>";
+  const payload = await fetchJson(
+    `/api/reviewer/locations?email=${encodeURIComponent(auth.email)}&key=${encodeURIComponent(auth.key)}`
+  );
   locations = payload.locations || [];
   renderLocationCards(locations);
 }
@@ -266,11 +320,12 @@ authFormEl.addEventListener("submit", async (event) => {
   event.preventDefault();
   authStatusEl.textContent = "Checking reviewer access...";
   try {
-    await loadRequests();
-    authStatusEl.textContent = "Reviewer access connected. Click any location card to browse its photos.";
+    await Promise.all([loadRequests(), loadLocations()]);
+    authStatusEl.textContent = "Reviewer access connected. Locations shown are filtered by workbook eligibility.";
   } catch (error) {
     authStatusEl.textContent = error.message;
     requestListEl.innerHTML = "";
+    locationCardsEl.innerHTML = "";
   }
 });
 
@@ -278,12 +333,23 @@ searchInput.addEventListener("input", () => {
   renderLocationCards(getFilteredLocations());
 });
 
-loadLocations().catch((error) => {
-  authStatusEl.textContent = error.message;
+togglePendingEl.addEventListener("click", () => {
+  pendingCollapsed = !pendingCollapsed;
+  requestListEl.classList.toggle("hidden", pendingCollapsed);
+  const pendingCount = requestListEl.querySelectorAll(".list-row").length;
+  const archivedCount = archivedRequestListEl.querySelectorAll(".list-row").length;
+  setQueueToggleLabels(pendingCount, archivedCount);
 });
 
+toggleArchivedEl.addEventListener("click", () => {
+  archivedVisible = !archivedVisible;
+  archivedRequestListEl.classList.toggle("hidden", !archivedVisible);
+  const pendingCount = requestListEl.querySelectorAll(".list-row").length;
+  const archivedCount = archivedRequestListEl.querySelectorAll(".list-row").length;
+  setQueueToggleLabels(pendingCount, archivedCount);
+});
 
-
+locationCardsEl.innerHTML = "<p class=\"empty\">Connect reviewer access to load eligible locations.</p>";
 
 
 

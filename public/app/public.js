@@ -15,7 +15,7 @@ function renderCards(items) {
   cardsRoot.innerHTML = "";
 
   if (!items.length) {
-    cardsRoot.innerHTML = "<p class=\"empty\">No locations matched your search.</p>";
+    cardsRoot.innerHTML = "<p class=\"empty\">No locations are published for public view right now.</p>";
     return;
   }
 

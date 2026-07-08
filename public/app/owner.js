@@ -1,6 +1,9 @@
 const authFormEl = document.getElementById("auth-form");
 const authStatusEl = document.getElementById("auth-status");
 const requestListEl = document.getElementById("request-list");
+const archivedRequestListEl = document.getElementById("archived-request-list");
+const togglePendingEl = document.getElementById("toggle-pending");
+const toggleArchivedEl = document.getElementById("toggle-archived");
 const searchInput = document.getElementById("search");
 const locationCardsEl = document.getElementById("location-cards");
 const detailPanelEl = document.getElementById("detail-panel");
@@ -13,6 +16,8 @@ const imageTemplate = document.getElementById("image-template");
 
 let locations = [];
 let selectedLocationId = "";
+let pendingCollapsed = false;
+let archivedVisible = false;
 
 function normalizeText(value) {
   return String(value || "")
@@ -39,7 +44,7 @@ async function fetchJson(url, options = {}) {
 
 function statusBadge(status) {
   const map = {
-    pending: "🟡 Pending",
+    pending: "🟡 Pending owner approval",
     approved: "✅ Approved",
     rejected: "❌ Rejected",
     dismissed: "⛔ Dismissed"
@@ -47,119 +52,156 @@ function statusBadge(status) {
   return map[status] || status;
 }
 
+function sortRequests(requests) {
+  const rank = { pending: 0, approved: 1, rejected: 2, dismissed: 3 };
+  return [...requests].sort((a, b) => {
+    const aRank = rank[a.status] ?? 99;
+    const bRank = rank[b.status] ?? 99;
+    if (aRank !== bRank) return aRank - bRank;
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+}
+
 async function loadRequests() {
   const auth = getAuth();
   const payload = await fetchJson(
     `/api/owner/cover-requests?email=${encodeURIComponent(auth.email)}&key=${encodeURIComponent(auth.key)}`
   );
-  renderRequests(payload.requests || []);
+  renderRequests(payload.requests || [], payload.archivedRequests || []);
 }
 
-function renderRequests(requests) {
-  requestListEl.innerHTML = "";
+function setQueueToggleLabels(pendingCount, archivedCount) {
+  togglePendingEl.textContent = pendingCollapsed
+    ? `Show pending (${pendingCount})`
+    : `Collapse pending (${pendingCount})`;
+  toggleArchivedEl.textContent = archivedVisible
+    ? `Hide archived (${archivedCount})`
+    : `View archived requests (${archivedCount})`;
+}
 
-  if (!requests.length) {
-    requestListEl.innerHTML = "<p class=\"empty\">No requests yet.</p>";
-    return;
+function createRequestRow(request, interactive) {
+  const fragment = requestTemplate.content.cloneNode(true);
+  fragment.querySelector(".req-location").textContent = request.locationName;
+  fragment.querySelector(".badge").textContent = statusBadge(request.status);
+  fragment.querySelector(".req-requester").textContent =
+    `${request.requesterName} (${request.requesterEmail})`;
+  fragment.querySelector(".req-note").textContent = request.note || "No note.";
+  fragment.querySelector(".muted.req-date").textContent =
+    new Date(request.createdAt).toLocaleString();
+
+  const preview = fragment.querySelector(".req-preview");
+  if (request.requestedImageUrl) {
+    const img = document.createElement("img");
+    img.src = `/${request.requestedImageUrl}`;
+    img.alt = `Requested cover: ${request.requestedImageName}`;
+    img.style.cssText = "max-width:100%;max-height:220px;border-radius:10px;margin-top:8px;object-fit:contain;background:#ece2d3;";
+    preview.appendChild(img);
+
+    const nameEl = document.createElement("p");
+    nameEl.className = "meta";
+    nameEl.textContent = request.requestedImageName;
+    preview.appendChild(nameEl);
   }
 
-  requests.forEach((request) => {
-    const fragment = requestTemplate.content.cloneNode(true);
-    fragment.querySelector(".req-location").textContent = request.locationName;
-    fragment.querySelector(".badge").textContent = statusBadge(request.status);
-    fragment.querySelector(".req-requester").textContent =
-      `${request.requesterName} (${request.requesterEmail})`;
-    fragment.querySelector(".req-note").textContent = request.note || "No note.";
-    fragment.querySelector(".muted.req-date").textContent =
-      new Date(request.createdAt).toLocaleString();
+  const actionsEl = fragment.querySelector(".req-actions");
+  actionsEl.style.marginTop = "10px";
+  actionsEl.style.display = "flex";
+  actionsEl.style.gap = "8px";
+  actionsEl.style.flexWrap = "wrap";
 
-    const preview = fragment.querySelector(".req-preview");
-    if (request.requestedImageUrl) {
-      const img = document.createElement("img");
-      img.src = `/${request.requestedImageUrl}`;
-      img.alt = `Requested cover: ${request.requestedImageName}`;
-      img.style.cssText = "max-width:100%;max-height:220px;border-radius:10px;margin-top:8px;object-fit:contain;background:#ece2d3;";
-      preview.appendChild(img);
+  if (interactive && request.status === "pending" && request.requestedImageName) {
+    const approveBtn = document.createElement("button");
+    approveBtn.className = "button button-primary";
+    approveBtn.type = "button";
+    approveBtn.textContent = "✅ Approve";
+    approveBtn.addEventListener("click", async () => {
+      approveBtn.disabled = true;
+      approveBtn.textContent = "Approving...";
+      const auth = getAuth();
+      try {
+        const result = await fetchJson(
+          `/api/owner/cover-requests/${request.id}/approve`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: auth.email, key: auth.key })
+          }
+        );
+        authStatusEl.textContent = `✅ Approved! Public cover updated for ${result.request.locationName}. Share: ${window.location.origin}${result.shareUrl}`;
+        await loadLocations();
+        await loadRequests();
+      } catch (error) {
+        authStatusEl.textContent = error.message;
+        approveBtn.disabled = false;
+        approveBtn.textContent = "✅ Approve";
+      }
+    });
 
-      const nameEl = document.createElement("p");
-      nameEl.className = "meta";
-      nameEl.textContent = request.requestedImageName;
-      preview.appendChild(nameEl);
-    }
+    const rejectBtn = document.createElement("button");
+    rejectBtn.className = "button";
+    rejectBtn.type = "button";
+    rejectBtn.textContent = "❌ Reject";
+    rejectBtn.addEventListener("click", async () => {
+      rejectBtn.disabled = true;
+      rejectBtn.textContent = "Rejecting...";
+      const auth = getAuth();
+      try {
+        await fetchJson(
+          `/api/owner/cover-requests/${request.id}/reject`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: auth.email, key: auth.key })
+          }
+        );
+        authStatusEl.textContent = "Request rejected.";
+        await loadRequests();
+      } catch (error) {
+        authStatusEl.textContent = error.message;
+        rejectBtn.disabled = false;
+        rejectBtn.textContent = "❌ Reject";
+      }
+    });
 
-    const actionsEl = fragment.querySelector(".req-actions");
-    actionsEl.style.marginTop = "10px";
-    actionsEl.style.display = "flex";
-    actionsEl.style.gap = "8px";
-    actionsEl.style.flexWrap = "wrap";
+    actionsEl.appendChild(approveBtn);
+    actionsEl.appendChild(rejectBtn);
+  }
 
-    if (request.status === "pending") {
-      const approveBtn = document.createElement("button");
-      approveBtn.className = "button button-primary";
-      approveBtn.type = "button";
-      approveBtn.textContent = "✅ Approve";
-      approveBtn.addEventListener("click", async () => {
-        approveBtn.disabled = true;
-        approveBtn.textContent = "Approving...";
-        const auth = getAuth();
-        try {
-          const result = await fetchJson(
-            `/api/owner/cover-requests/${request.id}/approve`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email: auth.email, key: auth.key })
-            }
-          );
-          authStatusEl.textContent = `✅ Approved! Public cover updated for ${result.request.locationName}. Share: ${window.location.origin}${result.shareUrl}`;
-          const freshLocations = await fetchJson("/api/public/locations");
-          locations = freshLocations.locations || [];
-          renderLocationCards(getFilteredLocations());
-          await loadRequests();
-        } catch (error) {
-          authStatusEl.textContent = error.message;
-          approveBtn.disabled = false;
-          approveBtn.textContent = "✅ Approve";
-        }
-      });
+  const row = fragment.querySelector(".list-row");
+  if (request.status !== "pending") {
+    row.classList.add("list-row-resolved");
+  }
+  return fragment;
+}
 
-      const rejectBtn = document.createElement("button");
-      rejectBtn.className = "button";
-      rejectBtn.type = "button";
-      rejectBtn.textContent = "❌ Reject";
-      rejectBtn.addEventListener("click", async () => {
-        rejectBtn.disabled = true;
-        rejectBtn.textContent = "Rejecting...";
-        const auth = getAuth();
-        try {
-          await fetchJson(
-            `/api/owner/cover-requests/${request.id}/reject`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email: auth.email, key: auth.key })
-            }
-          );
-          authStatusEl.textContent = `Request rejected.`;
-          await loadRequests();
-        } catch (error) {
-          authStatusEl.textContent = error.message;
-          rejectBtn.disabled = false;
-          rejectBtn.textContent = "❌ Reject";
-        }
-      });
+function renderRequests(activeRequests, archivedRequests) {
+  requestListEl.innerHTML = "";
+  archivedRequestListEl.innerHTML = "";
 
-      actionsEl.appendChild(approveBtn);
-      actionsEl.appendChild(rejectBtn);
-    }
+  const pending = sortRequests(activeRequests || []).filter((request) => request.status === "pending");
+  const archived = sortRequests(archivedRequests || []);
+  setQueueToggleLabels(pending.length, archived.length);
 
-    const row = fragment.querySelector(".list-row");
-    if (request.status !== "pending") {
-      row.classList.add("list-row-resolved");
-    }
+  if (!pending.length) {
+    requestListEl.classList.remove("hidden");
+    requestListEl.innerHTML = "<p class=\"empty\">No requests yet.</p>";
+  } else if (pendingCollapsed) {
+    requestListEl.classList.add("hidden");
+  } else {
+    requestListEl.classList.remove("hidden");
+    pending.forEach((request) => {
+      requestListEl.appendChild(createRequestRow(request, true));
+    });
+  }
 
-    requestListEl.appendChild(fragment);
-  });
+  if (!archived.length) {
+    archivedRequestListEl.innerHTML = "<p class=\"empty\">No archived requests.</p>";
+  } else {
+    archived.forEach((request) => {
+      archivedRequestListEl.appendChild(createRequestRow(request, false));
+    });
+  }
+  archivedRequestListEl.classList.toggle("hidden", !archivedVisible);
 }
 
 function getFilteredLocations() {
@@ -182,7 +224,7 @@ async function loadOwnerLocation(locationId) {
 
   try {
     const imagesPayload = await fetchJson(
-      `/api/reviewer/locations/${encodeURIComponent(locationId)}/images?email=${encodeURIComponent(auth.email)}&key=${encodeURIComponent(auth.key)}`
+      `/api/owner/locations/${encodeURIComponent(locationId)}/images?email=${encodeURIComponent(auth.email)}&key=${encodeURIComponent(auth.key)}`
     );
 
     detailPanelEl.classList.remove("hidden");
@@ -215,9 +257,7 @@ async function loadOwnerLocation(locationId) {
             }
           );
           authStatusEl.textContent = `✅ Cover set for ${imagesPayload.locationName}. Share: ${window.location.origin}${result.shareUrl}`;
-          const freshLocations = await fetchJson("/api/public/locations");
-          locations = freshLocations.locations || [];
-          renderLocationCards(getFilteredLocations());
+          await loadLocations();
           await loadOwnerLocation(locationId);
           await loadRequests();
         } catch (error) {
@@ -255,7 +295,8 @@ function renderLocationCards(items) {
     const meta = fragment.querySelector(".meta");
 
     title.textContent = location.locationName;
-    meta.textContent = `${location.imageCount} images`;
+    const visibility = location.published ? "Public: live" : "Public: hidden";
+    meta.textContent = `${location.imageCount} images • ${visibility}`;
 
     if (location.coverImage && location.coverImage.url) {
       img.src = `/${location.coverImage.url}`;
@@ -272,23 +313,62 @@ function renderLocationCards(items) {
       loadOwnerLocation(location.locationId);
     });
 
+    const actions = document.createElement("div");
+    actions.className = "actions";
+    const publishButton = document.createElement("button");
+    publishButton.type = "button";
+    publishButton.className = "button";
+    publishButton.textContent = location.published ? "Unpublish from public" : "Hidden (awaiting approval)";
+    if (!location.published) {
+      publishButton.disabled = true;
+    }
+    publishButton.addEventListener("click", async (event) => {
+      event.stopPropagation();
+      if (!location.published) {
+        authStatusEl.textContent = "Location is already hidden until an owner approval publishes it.";
+        return;
+      }
+
+      const auth = getAuth();
+      publishButton.disabled = true;
+      publishButton.textContent = "Updating...";
+      try {
+        await fetchJson(`/api/owner/locations/${encodeURIComponent(location.locationId)}/unpublish`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: auth.email, key: auth.key })
+        });
+        authStatusEl.textContent = `Unpublished ${location.locationName}.`;
+        await loadLocations();
+      } catch (error) {
+        authStatusEl.textContent = error.message;
+      } finally {
+        publishButton.disabled = false;
+      }
+    });
+    actions.appendChild(publishButton);
+    card.querySelector(".card-body").appendChild(actions);
+
     locationCardsEl.appendChild(fragment);
   });
 }
 
 async function loadLocations() {
-  locationCardsEl.innerHTML = "<p class=\"empty\">Loading locations...</p>";
-  const payload = await fetchJson("/api/public/locations");
+  const auth = getAuth();
+  locationCardsEl.innerHTML = "<p class=\"empty\">Loading owner locations...</p>";
+  const payload = await fetchJson(
+    `/api/owner/locations?email=${encodeURIComponent(auth.email)}&key=${encodeURIComponent(auth.key)}`
+  );
   locations = payload.locations || [];
-  renderLocationCards(locations);
+  renderLocationCards(getFilteredLocations());
 }
 
 authFormEl.addEventListener("submit", async (event) => {
   event.preventDefault();
   authStatusEl.textContent = "Checking owner access...";
   try {
-    await loadRequests();
-    authStatusEl.textContent = "Owner access connected. Review requests above or browse locations below.";
+    await Promise.all([loadRequests(), loadLocations()]);
+    authStatusEl.textContent = "Owner access connected. Approval publishes to public.";
   } catch (error) {
     authStatusEl.textContent = error.message;
   }
@@ -298,7 +378,20 @@ searchInput.addEventListener("input", () => {
   renderLocationCards(getFilteredLocations());
 });
 
-loadLocations().catch((error) => {
-  authStatusEl.textContent = error.message;
+togglePendingEl.addEventListener("click", () => {
+  pendingCollapsed = !pendingCollapsed;
+  requestListEl.classList.toggle("hidden", pendingCollapsed);
+  const pendingCount = requestListEl.querySelectorAll(".list-row").length;
+  const archivedCount = archivedRequestListEl.querySelectorAll(".list-row").length;
+  setQueueToggleLabels(pendingCount, archivedCount);
 });
 
+toggleArchivedEl.addEventListener("click", () => {
+  archivedVisible = !archivedVisible;
+  archivedRequestListEl.classList.toggle("hidden", !archivedVisible);
+  const pendingCount = requestListEl.querySelectorAll(".list-row").length;
+  const archivedCount = archivedRequestListEl.querySelectorAll(".list-row").length;
+  setQueueToggleLabels(pendingCount, archivedCount);
+});
+
+locationCardsEl.innerHTML = "<p class=\"empty\">Connect owner access to load locations.</p>";
