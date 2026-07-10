@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("node:fs");
 const path = require("node:path");
+const { spawnSync } = require("node:child_process");
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
@@ -14,6 +15,12 @@ const dataDir = path.join(repoRoot, "data");
 const coverOverridesPath = path.join(dataDir, "cover-overrides.json");
 const coverRequestsPath = path.join(dataDir, "cover-requests.json");
 const publishedLocationsPath = path.join(dataDir, "published-locations.json");
+const imageSourcePath = path.join(dataDir, "image-source.json");
+const citiesConfigPath = path.join(dataDir, "cities.json");
+const jobCatalogPath = path.join(dataDir, "job-catalog.json");
+const jobCatalogBuilderPath = path.join(repoRoot, "scripts", "build-job-catalog.py");
+const jobCatalogCsvPath = process.env.JOB_CATALOG_CSV_PATH || path.join(repoRoot, "data", "job-catalog.csv");
+let lastJobCatalogCsvMtimeMs = null;
 
 const reviewerKey = process.env.REVIEWER_KEY || "dev-reviewer-key";
 const ownerKey = process.env.OWNER_KEY || "dev-owner-key";
@@ -46,6 +53,19 @@ function ensureDataFiles() {
   if (!fs.existsSync(publishedLocationsPath)) {
     fs.writeFileSync(publishedLocationsPath, "{}", "utf8");
   }
+  if (!fs.existsSync(imageSourcePath)) {
+    saveJson(imageSourcePath, {
+      imagesRootPath: path.join(repoRoot, "index_files"),
+      city: null
+    });
+  }
+  if (!fs.existsSync(citiesConfigPath)) {
+    saveJson(citiesConfigPath, [
+      { id: "philly", name: "Philly", active: true },
+      { id: "dc", name: "DC", active: true },
+      { id: "boston", name: "Boston", active: true }
+    ]);
+  }
 }
 
 function normalizeText(value) {
@@ -60,6 +80,22 @@ function normalizeLocationKey(value) {
     .toLowerCase()
     .replace(/&/g, " and ")
     .replace(/[^a-z0-9]/g, "");
+}
+
+function normalizeJobToken(value) {
+  const raw = String(value ?? "").trim();
+  if (!raw) {
+    return "";
+  }
+  const numeric = Number(raw);
+  if (Number.isFinite(numeric)) {
+    const integer = Math.trunc(numeric);
+    if (Math.abs(numeric - integer) < 1e-9 && integer > 0) {
+      return String(integer);
+    }
+  }
+  const token = raw.replace(/\s+/g, "").toUpperCase();
+  return /^[A-Z0-9][A-Z0-9\-_]{1,}$/.test(token) ? token : "";
 }
 
 function loadJson(filePath, fallbackValue) {
@@ -149,6 +185,73 @@ function loadPublishedLocations() {
   return data && typeof data === "object" ? data : {};
 }
 
+function loadImageSource() {
+  const fallback = {
+    imagesRootPath: path.join(repoRoot, "index_files"),
+    city: null
+  };
+  const data = loadJson(imageSourcePath, fallback);
+  if (!data || typeof data !== "object") {
+    return fallback;
+  }
+  const configuredRoot = typeof data.imagesRootPath === "string"
+    ? data.imagesRootPath.trim()
+    : "";
+  return {
+    imagesRootPath: configuredRoot || fallback.imagesRootPath,
+    city: data.city || null
+  };
+}
+
+function loadCityRegistry() {
+  const data = loadJson(citiesConfigPath, []);
+  if (!Array.isArray(data)) {
+    return ["Philly", "DC", "Boston"];
+  }
+  const names = data
+    .filter((item) => item && typeof item === "object" && item.active !== false)
+    .map((item) => normalizeText(item.name))
+    .filter(Boolean);
+  return Array.from(new Set(names));
+}
+function refreshJobCatalogIfNeeded() {
+  if (!jobCatalogCsvPath) {
+    return;
+  }
+  if (!fs.existsSync(jobCatalogBuilderPath)) {
+    throw new Error(`Missing builder script: ${jobCatalogBuilderPath}`);
+  }
+  if (!fs.existsSync(jobCatalogCsvPath)) {
+    throw new Error(`CSV file not found: ${jobCatalogCsvPath}`);
+  }
+
+  const csvStats = fs.statSync(jobCatalogCsvPath);
+  const csvMtimeMs = csvStats.mtimeMs;
+  if (lastJobCatalogCsvMtimeMs != null && csvMtimeMs <= lastJobCatalogCsvMtimeMs && fs.existsSync(jobCatalogPath)) {
+    return;
+  }
+
+  const result = spawnSync("python", [
+    jobCatalogBuilderPath,
+    "--csv-path", jobCatalogCsvPath,
+    "--repo-root", repoRoot,
+    "--output", jobCatalogPath
+  ], {
+    cwd: repoRoot,
+    encoding: "utf8"
+  });
+
+  if (result.error) {
+    throw new Error(`Failed to start Python builder: ${result.error.message}`);
+  }
+  if (result.status !== 0) {
+    const details = normalizeText(result.stderr) || normalizeText(result.stdout) || "Unknown job catalog build error.";
+    throw new Error(details);
+  }
+
+  lastJobCatalogCsvMtimeMs = csvMtimeMs;
+}
+
 function isEmailAllowed(email) {
   const value = String(email || "").trim().toLowerCase();
   if (!value || !value.includes("@")) {
@@ -172,6 +275,13 @@ function assertReviewerAccess(req, res) {
 
   if (!isEmailAllowed(email)) {
     res.status(403).json({ error: "Reviewer email is not allowed." });
+    return null;
+  }
+
+  try {
+    refreshJobCatalogIfNeeded();
+  } catch (error) {
+    res.status(500).json({ error: `Job catalog refresh failed: ${error.message}` });
     return null;
   }
 
@@ -226,11 +336,22 @@ function getEffectiveCover(entry, overrides) {
 }
 
 function isReviewerEligible(entry) {
+  if (Array.isArray(entry.jobNumbers) && entry.jobNumbers.length > 0) {
+    return true;
+  }
   if (entry.reviewerFilterValue != null && entry.reviewerFilterValue !== "") {
     const value = Number(entry.reviewerFilterValue);
     return Number.isFinite(value) && value > 0 && value < 10;
   }
   return Boolean(entry.reviewerEligible);
+}
+
+function hasCityTag(entry) {
+  return Boolean(normalizeText(entry && entry.city));
+}
+
+function isReviewerVisibleEntry(entry) {
+  return isReviewerEligible(entry) && hasCityTag(entry);
 }
 
 function buildLocationSummary(entry, overrides, published) {
@@ -248,6 +369,8 @@ function buildLocationSummary(entry, overrides, published) {
     reviewerEligible: isReviewerEligible(entry),
     reviewerFilterLabel: entry.reviewerFilterLabel || null,
     reviewerFilterValue: entry.reviewerFilterValue ?? null,
+    city: entry.city || null,
+    jobNumbers: Array.isArray(entry.jobNumbers) ? entry.jobNumbers : [],
     published: Boolean(publication && publication.published),
     publishedAt: publication && publication.publishedAt ? publication.publishedAt : null
   };
@@ -255,6 +378,7 @@ function buildLocationSummary(entry, overrides, published) {
 
 app.use("/app", express.static(path.join(repoRoot, "public", "app")));
 app.use("/index_files", express.static(path.join(repoRoot, "index_files")));
+app.use("/images", express.static(loadImageSource().imagesRootPath));
 
 // Legacy pages remain available.
 app.get("/legacy", (_, res) => {
@@ -360,10 +484,17 @@ app.get("/api/reviewer/cover-requests", (req, res) => {
   if (prepared.dirty) {
     saveJson(coverRequestsPath, prepared.requests);
   }
+  const data = loadGalleryData();
+  const visibleLocationIds = new Set(
+    data.locations
+      .filter((entry) => isReviewerVisibleEntry(entry))
+      .map((entry) => normalizeLocationKey(entry.location))
+  );
+
   res.json({
     reviewerEmail,
-    requests: prepared.activeRequests,
-    archivedRequests: prepared.archivedRequests
+    requests: prepared.activeRequests.filter((request) => visibleLocationIds.has(request.locationId)),
+    archivedRequests: prepared.archivedRequests.filter((request) => visibleLocationIds.has(request.locationId))
   });
 });
 
@@ -373,14 +504,79 @@ app.get("/api/reviewer/locations", (req, res) => {
     return;
   }
 
+  const selectedCity = normalizeText(req.query.city);
+  const selectedJobNumber = normalizeJobToken(req.query.jobNumber);
+
   const data = loadGalleryData();
   const overrides = loadOverrides();
   const published = loadPublishedLocations();
-  const locations = data.locations
-    .filter((entry) => isReviewerEligible(entry))
+  let locations = data.locations
+    .filter((entry) => isReviewerVisibleEntry(entry))
     .map((entry) => buildLocationSummary(entry, overrides, published));
 
+  if (selectedCity) {
+    const normalizedSelectedCity = selectedCity.toLowerCase();
+    locations = locations.filter((entry) =>
+      normalizeText(entry.city).toLowerCase() === normalizedSelectedCity
+    );
+  }
+  if (selectedJobNumber) {
+    locations = locations.filter((entry) =>
+      Array.isArray(entry.jobNumbers) &&
+      entry.jobNumbers.map((job) => normalizeJobToken(job)).includes(selectedJobNumber)
+    );
+  }
+
   res.json({ reviewerEmail, locations });
+});
+
+app.get("/api/reviewer/filter-options", (req, res) => {
+  const reviewerEmail = assertReviewerAccess(req, res);
+  if (!reviewerEmail) {
+    return;
+  }
+
+  const data = loadGalleryData();
+  const cities = new Set(loadCityRegistry());
+  const jobNumbers = new Set();
+  const jobCities = {};
+
+  data.locations
+    .filter((entry) => isReviewerVisibleEntry(entry))
+    .forEach((entry) => {
+      const city = normalizeText(entry.city);
+      if (city) {
+        cities.add(city);
+      }
+      if (Array.isArray(entry.jobNumbers)) {
+        entry.jobNumbers.forEach((jobNumber) => {
+          const token = normalizeJobToken(jobNumber);
+          if (token) {
+            jobNumbers.add(token);
+            if (!jobCities[token]) {
+              jobCities[token] = new Set();
+            }
+            if (city) {
+              jobCities[token].add(city);
+            }
+          }
+        });
+      }
+    });
+
+  const serializedJobCities = Object.fromEntries(
+    Object.entries(jobCities).map(([job, citySet]) => [
+      job,
+      Array.from(citySet).sort((a, b) => a.localeCompare(b))
+    ])
+  );
+
+  res.json({
+    reviewerEmail,
+    cities: Array.from(cities).sort((a, b) => a.localeCompare(b)),
+    jobNumbers: Array.from(jobNumbers).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
+    jobCities: serializedJobCities
+  });
 });
 
 app.get("/api/reviewer/locations/:locationId/images", (req, res) => {
@@ -396,7 +592,7 @@ app.get("/api/reviewer/locations/:locationId/images", (req, res) => {
     res.status(404).json({ error: "Location not found." });
     return;
   }
-  if (!isReviewerEligible(entry)) {
+  if (!isReviewerVisibleEntry(entry)) {
     res.status(403).json({ error: "Location is not eligible for reviewer workflow." });
     return;
   }
@@ -429,7 +625,7 @@ app.post("/api/reviewer/locations/:locationId/cover", (req, res) => {
     res.status(404).json({ error: "Location not found." });
     return;
   }
-  if (!isReviewerEligible(entry)) {
+  if (!isReviewerVisibleEntry(entry)) {
     res.status(403).json({ error: "Location is not eligible for reviewer workflow." });
     return;
   }
@@ -708,5 +904,7 @@ app.post("/api/owner/locations/:locationId/unpublish", (req, res) => {
 
 ensureDataFiles();
 app.listen(port, () => {
-  console.log(`Philly Approved Alcohol server running at http://localhost:${port}`);
+  console.log(`buildPortfolio server running at http://localhost:${port}`);
 });
+
+

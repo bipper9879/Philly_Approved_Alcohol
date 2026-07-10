@@ -9,7 +9,7 @@
 <body>
   <header class="site-header">
     <div>
-      <p class="eyebrow">Philly Approved Alcohol</p>
+      <p id="review-context-label" class="eyebrow"></p>
       <h1>Reviewer Console</h1>
       <p>Reviewer access can see eligible full image folders and submit selections for owner approval.</p>
     </div>
@@ -47,6 +47,7 @@
     </section>
 
     <section class="toolbar">
+      <button id="change-filters" type="button" class="button" disabled>Change city/job</button>
       <label for="search">Search locations</label>
       <input id="search" type="search" placeholder="Start typing a street or location...">
     </section>
@@ -62,6 +63,24 @@
     </section>
   </main>
 
+  <dialog id="filter-dialog">
+    <form method="dialog" class="form">
+      <h2>Select reviewer view</h2>
+      <label>
+        Job
+        <select id="popup-job-select"></select>
+      </label>
+      <label>
+        City
+        <select id="popup-city-select"></select>
+      </label>
+      <div class="actions">
+        <button value="cancel" class="button" type="submit">Cancel</button>
+        <button id="popup-continue" value="continue" class="button button-primary" type="submit">Continue</button>
+      </div>
+    </form>
+  </dialog>
+
   <template id="location-card-template">
     <article class="card">
       <div class="cover-frame">
@@ -72,7 +91,7 @@
         <h2></h2>
         <p class="meta"></p>
         <div class="actions">
-          <button class="button button-primary" type="button">Load full images</button>
+          <button class="button button-primary" type="button">Open all images</button>
         </div>
       </div>
       <div class="accordion-panel hidden"></div>
@@ -91,6 +110,6 @@
     </article>
   </template>
 
-  <script src="./reviewer.js?v=20260706c"></script>
+  <script src="./reviewer.js?v=20260708e"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-# Philly Approved Alcohol
+# buildPortfolio
 
 Public site:
 https://bipper9879.github.io/Philly_Approved_Alcohol
@@ -79,6 +79,8 @@ This project publishes a location gallery website from GitHub Pages.
   - Reviewer-selected cover overrides by location.
 - data/cover-requests.json
   - Stored public cover requests for reviewer queue.
+- data/image-source.json
+  - Active image-root source used by `/images` route.
 
 ## Cover Image Rules
 
@@ -95,7 +97,7 @@ When you add, remove, or rename images in index_files:
 
 1. Rebuild data
 
-	powershell -ExecutionPolicy Bypass -File .\scripts\build-gallery-data.ps1 -WorkbookPath "C:\full\path\to\your-workbook.xlsx"
+	powershell -ExecutionPolicy Bypass -File .\scripts\build-gallery-data.ps1 -WorkbookPath "C:\full\path\to\your-workbook.xlsx" -ImagesRootPath "C:\full\path\to\images-root" -City "DC"
 
 2. Stage changes
 
@@ -122,9 +124,9 @@ If your source workbook changed, run this script to:
 
 Command:
 
-`powershell -ExecutionPolicy Bypass -File .\scripts\sync-workbook-and-build.ps1 -WorkbookPath "C:\full\path\to\your-workbook.xlsx"`
+`powershell -ExecutionPolicy Bypass -File .\scripts\sync-workbook-and-build.ps1 -WorkbookPath "C:\full\path\to\your-workbook.xlsx" -City "DC"`
 
-If you omit `-WorkbookPath`, the script opens a file picker dialog.
+If you omit `-WorkbookPath`, the script opens a file picker dialog. If you omit `-City`, the script requires a city selection before build runs.
 
 `powershell -ExecutionPolicy Bypass -File .\scripts\sync-workbook-and-build.ps1`
 
@@ -134,6 +136,29 @@ Optional worksheet name:
 
 `powershell -ExecutionPolicy Bypass -File .\scripts\sync-workbook-and-build.ps1 -WorkbookPath "C:\full\path\to\your-workbook.xlsx" -WorksheetName "Sheet1"`
 
+Optional image-root and city:
+
+`powershell -ExecutionPolicy Bypass -File .\scripts\sync-workbook-and-build.ps1 -WorkbookPath "C:\full\path\to\your-workbook.xlsx" -ImagesRootPath "C:\full\path\to\images-root" -City "DC"`
+
+
+## Job Catalog Build (CSV -> JSON)
+
+Use this to generate data/job-catalog.json from your planning/export CSV.
+
+Command:
+
+powershell -ExecutionPolicy Bypass -File .\scripts\build-job-catalog.ps1 -CsvPath "C:\full\path\to\job-catalog.csv"
+
+Required CSV columns:
+
+Post,Remove,job#,Campaign,Market/Borough
+
+Notes:
+
+- Keep source dates as MM/DD/YYYY in CSV.
+- Builder stores both display dates (MM/DD/YYYY) and normalized dates (YYYY-MM-DD) in JSON.
+- Any extra CSV columns are preserved under each job's attributes object for troubleshooting and future integrations.
+- Reviewer auto-refresh: reviewer API requests automatically rebuild data/job-catalog.json from JOB_CATALOG_CSV_PATH when the CSV file changes (no PowerShell execution-policy step needed at login).
 ## Manual Cover Change (Step-by-Step)
 
 Use this when you accept a cover request ticket.
@@ -145,7 +170,7 @@ Use this when you accept a cover request ticket.
 
 2. Rebuild gallery data
 
-	powershell -ExecutionPolicy Bypass -File .\scripts\build-gallery-data.ps1 -WorkbookPath "C:\full\path\to\your-workbook.xlsx"
+	powershell -ExecutionPolicy Bypass -File .\scripts\build-gallery-data.ps1 -WorkbookPath "C:\full\path\to\your-workbook.xlsx" -City "DC"
 
 3. Stage
 
@@ -358,6 +383,19 @@ Use this section to resume quickly next month.
 - Owner can approve/reject and set cover directly.
 - Site codes are parsed from workbook (column A) into `gallery-data.json`.
 
+### Planned client-facing flow (future sprints)
+
+- Client receives job-scoped link(s) so separate start-date jobs can be reviewed independently.
+- Reviewer logs in, picks job number first, and city is derived/scoped from job mapping.
+- Reviewer sees raw location-folder photos, selects a cover candidate, and submits to owner.
+- Owner approval remains the gate before public changes are visible.
+- Future automation target: owner approval triggers build link generation and email notification.
+
+### Architecture direction (to keep future integration easy)
+
+- Keep photo inventory in `gallery-data.json` and job/city planning in `data/job-catalog.json`.
+- Keep ingestion pluggable: local CSV now, external client feed later with the same normalized contract.
+- Keep reviewer flow consuming normalized job/city mapping so source-system changes do not require UI rewrites.`r`n
 ### Known remaining polish items
 
 - Ticket ordering should keep pending/reviewed at top and completed below.
@@ -380,3 +418,11 @@ Use this section to resume quickly next month.
   - Update .env with GOOGLE_MAPS_API_KEY and update location.js to use embed URL format:
     https://www.google.com/maps/embed/v1/streetview?key=YOUR_KEY&location=LAT,LON
   - No new key needed when moving to Azure; just add the new domain to allowed referrers.
+
+
+
+
+
+
+
+

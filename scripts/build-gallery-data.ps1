@@ -4,6 +4,9 @@ param(
 
     [string]$WorksheetName = "",
     [string]$RepoRoot = (Split-Path -Parent $PSScriptRoot),
+    [string]$ImagesRootPath = "",
+    [Parameter(Mandatory = $true)]
+    [string]$City,
     [string]$Email = "bipper9879@hotmail.com"
 )
 
@@ -29,6 +32,10 @@ $args = @(
 if (-not [string]::IsNullOrWhiteSpace($WorksheetName)) {
     $args += @("--worksheet-name", $WorksheetName)
 }
+if (-not [string]::IsNullOrWhiteSpace($ImagesRootPath)) {
+    $args += @("--images-root", $ImagesRootPath)
+}
+$args += @("--city", $City)
 
 & python @args
 if ($LASTEXITCODE -ne 0) {

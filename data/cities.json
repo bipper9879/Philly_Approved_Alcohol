@@ -1,0 +1,5 @@
+[
+  { "id": "philly", "name": "Philly", "active": true },
+  { "id": "dc", "name": "DC", "active": true },
+  { "id": "boston", "name": "Boston", "active": true }
+]

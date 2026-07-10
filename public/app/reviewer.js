@@ -1,9 +1,14 @@
 const authFormEl = document.getElementById("auth-form");
 const authStatusEl = document.getElementById("auth-status");
+const reviewContextLabelEl = document.getElementById("review-context-label");
 const requestListEl = document.getElementById("request-list");
 const archivedRequestListEl = document.getElementById("archived-request-list");
 const togglePendingEl = document.getElementById("toggle-pending");
 const toggleArchivedEl = document.getElementById("toggle-archived");
+const changeFiltersEl = document.getElementById("change-filters");
+const filterDialogEl = document.getElementById("filter-dialog");
+const popupCitySelectEl = document.getElementById("popup-city-select");
+const popupJobSelectEl = document.getElementById("popup-job-select");
 const searchInput = document.getElementById("search");
 const locationCardsEl = document.getElementById("location-cards");
 const locationCardTemplate = document.getElementById("location-card-template");
@@ -13,6 +18,10 @@ let locations = [];
 let openLocationId = "";
 let pendingCollapsed = false;
 let archivedVisible = false;
+let selectedFilters = { city: "All cities", jobNumber: "" };
+let availableCities = [];
+let availableJobs = [];
+let jobCityMap = {};
 
 function normalizeText(value) {
   return String(value || "")
@@ -21,19 +30,107 @@ function normalizeText(value) {
     .trim();
 }
 
-function getFilteredLocations() {
-  const query = normalizeText(searchInput.value).toLowerCase();
-  if (!query) return locations;
-  return locations.filter((item) =>
-    normalizeText(item.locationName).toLowerCase().includes(query)
-  );
-}
-
 function getAuth() {
   return {
     email: document.getElementById("email").value.trim(),
     key: document.getElementById("key").value.trim()
   };
+}
+
+function getSelectedFilters() {
+  return selectedFilters;
+}
+
+function updateReviewContextLabel() {
+  const { city, jobNumber } = selectedFilters;
+  if (!jobNumber) {
+    reviewContextLabelEl.textContent = "";
+    return;
+  }
+  const cityLabel = city && city !== "All cities" ? city : "All Cities";
+  reviewContextLabelEl.textContent = `${cityLabel} Raw Photos — ${jobNumber}`;
+}
+
+function populateSelect(selectEl, options, placeholder) {
+  selectEl.innerHTML = "";
+  if (!options.length) {
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent = placeholder;
+    selectEl.appendChild(option);
+    selectEl.disabled = true;
+    return;
+  }
+
+  options.forEach((value) => {
+    const option = document.createElement("option");
+    option.value = String(value);
+    option.textContent = String(value);
+    selectEl.appendChild(option);
+  });
+  selectEl.disabled = false;
+}
+
+function cityOptionsForJob(jobNumber) {
+  const allCities = availableCities.filter((city) => city !== "All cities");
+  const jobCities = (jobCityMap[jobNumber] || []).filter(Boolean);
+  const scoped = jobCities.length ? jobCities : allCities;
+  return ["All cities", ...scoped];
+}
+
+function syncPopupCitiesForJob(preserveSelection = true) {
+  const selectedJob = popupJobSelectEl.value;
+  const cityOptions = cityOptionsForJob(selectedJob);
+  const previousCity = preserveSelection ? popupCitySelectEl.value : "";
+  populateSelect(popupCitySelectEl, cityOptions, "No city options");
+
+  if (previousCity && cityOptions.includes(previousCity)) {
+    popupCitySelectEl.value = previousCity;
+  } else if (selectedFilters.city && cityOptions.includes(selectedFilters.city)) {
+    popupCitySelectEl.value = selectedFilters.city;
+  } else {
+    popupCitySelectEl.value = "All cities";
+  }
+}
+
+function getDialogResult() {
+  return new Promise((resolve) => {
+    const onClose = () => {
+      filterDialogEl.removeEventListener("close", onClose);
+      resolve(filterDialogEl.returnValue);
+    };
+    filterDialogEl.addEventListener("close", onClose);
+  });
+}
+
+async function promptForFilters(required = false) {
+  populateSelect(popupJobSelectEl, availableJobs, "No job options");
+  if (selectedFilters.jobNumber && availableJobs.includes(selectedFilters.jobNumber)) {
+    popupJobSelectEl.value = selectedFilters.jobNumber;
+  } else if (availableJobs.length > 0) {
+    popupJobSelectEl.value = availableJobs[0];
+  }
+
+  syncPopupCitiesForJob(false);
+  popupJobSelectEl.onchange = () => syncPopupCitiesForJob(true);
+
+  filterDialogEl.showModal();
+  const result = await getDialogResult();
+  popupJobSelectEl.onchange = null;
+
+  if (result !== "continue") {
+    if (required) {
+      throw new Error("Selection canceled.");
+    }
+    return false;
+  }
+
+  selectedFilters = {
+    city: popupCitySelectEl.value || "All cities",
+    jobNumber: popupJobSelectEl.value || ""
+  };
+  updateReviewContextLabel();
+  return true;
 }
 
 async function fetchJson(url, options = {}) {
@@ -45,8 +142,23 @@ async function fetchJson(url, options = {}) {
   return payload;
 }
 
+function getFilteredLocations() {
+  const query = normalizeText(searchInput.value).toLowerCase();
+  if (!query) return locations;
+  return locations.filter((item) =>
+    normalizeText(item.locationName).toLowerCase().includes(query)
+  );
+}
+
 function statusBadge(status) {
-  const map = { pending: "🟡 Pending owner approval", reviewed: "🟣 Reviewed", resolved: "✅ Resolved", dismissed: "⛔ Dismissed", approved: "✅ Approved", rejected: "❌ Rejected" };
+  const map = {
+    pending: "🟡 Pending owner approval",
+    reviewed: "🟣 Reviewed",
+    resolved: "✅ Resolved",
+    dismissed: "⛔ Dismissed",
+    approved: "✅ Approved",
+    rejected: "❌ Rejected"
+  };
   return map[status] || status;
 }
 
@@ -83,9 +195,7 @@ function createRequestRow(request) {
   row.title = "Open this location";
   row.addEventListener("click", async () => {
     const locationId = row.dataset.locationId;
-    if (!locationId) {
-      return;
-    }
+    if (!locationId) return;
 
     if (searchInput.value) {
       searchInput.value = "";
@@ -116,9 +226,14 @@ function setQueueToggleLabels(pendingCount, archivedCount) {
 function renderRequests(activeRequests, archivedRequests) {
   requestListEl.innerHTML = "";
   archivedRequestListEl.innerHTML = "";
+  const visibleLocationIds = new Set(locations.map((entry) => entry.locationId));
 
-  const pending = sortRequests(activeRequests || []).filter((request) => request.status === "pending");
-  const archived = sortRequests(archivedRequests || []);
+  const pending = sortRequests(activeRequests || []).filter((request) =>
+    request.status === "pending" && visibleLocationIds.has(request.locationId)
+  );
+  const archived = sortRequests(archivedRequests || []).filter((request) =>
+    visibleLocationIds.has(request.locationId)
+  );
   setQueueToggleLabels(pending.length, archived.length);
 
   if (!pending.length) {
@@ -143,7 +258,6 @@ function renderRequests(activeRequests, archivedRequests) {
 
   archivedRequestListEl.classList.toggle("hidden", !archivedVisible);
 }
-
 
 function buildAccordionImages(data, accordionEl) {
   accordionEl.innerHTML = "";
@@ -205,24 +319,27 @@ async function toggleLocationAccordion(locationId, cardEl) {
   }
 
   const accordionEl = cardEl.querySelector(".accordion-panel");
+  const button = cardEl.querySelector(".button-primary");
 
-  // Close if already open
   if (openLocationId === locationId) {
     openLocationId = "";
     accordionEl.classList.add("hidden");
     cardEl.classList.remove("card-active");
+    if (button) button.textContent = "Open all images";
     return;
   }
 
-  // Close previously open accordion
   const prev = locationCardsEl.querySelector(".card-active");
   if (prev) {
     prev.querySelector(".accordion-panel").classList.add("hidden");
     prev.classList.remove("card-active");
+    const prevBtn = prev.querySelector(".button-primary");
+    if (prevBtn) prevBtn.textContent = "Open all images";
   }
 
   openLocationId = locationId;
   cardEl.classList.add("card-active");
+  if (button) button.textContent = "Collapse";
   accordionEl.innerHTML = "<p class=\"empty\" style=\"padding:16px\">Loading images...</p>";
   accordionEl.classList.remove("hidden");
 
@@ -237,16 +354,33 @@ async function toggleLocationAccordion(locationId, cardEl) {
     authStatusEl.textContent = error.message;
     accordionEl.classList.add("hidden");
     cardEl.classList.remove("card-active");
+    if (button) button.textContent = "Open all images";
     openLocationId = "";
   }
 }
 
 async function loadRequests() {
   const auth = getAuth();
+  if (!auth.email || !auth.key) {
+    return;
+  }
   const requestsPayload = await fetchJson(
     `/api/reviewer/cover-requests?email=${encodeURIComponent(auth.email)}&key=${encodeURIComponent(auth.key)}`
   );
   renderRequests(requestsPayload.requests || [], requestsPayload.archivedRequests || []);
+}
+
+async function loadFilterOptions() {
+  const auth = getAuth();
+  const payload = await fetchJson(
+    `/api/reviewer/filter-options?email=${encodeURIComponent(auth.email)}&key=${encodeURIComponent(auth.key)}`
+  );
+  availableCities = (payload.cities || []).map((city) => String(city));
+  availableJobs = (payload.jobNumbers || []).map((job) => String(job));
+  jobCityMap = payload.jobCities || {};
+  if (!availableJobs.length) {
+    throw new Error("No city-tagged reviewer jobs are available. Re-sync with a City value first.");
+  }
 }
 
 function renderLocationCards(items) {
@@ -265,17 +399,15 @@ function renderLocationCards(items) {
     const title = fragment.querySelector("h2");
     const meta = fragment.querySelector(".meta");
     const button = fragment.querySelector(".button-primary");
-    const accordionEl = fragment.querySelector(".accordion-panel");
     card.dataset.locationId = location.locationId;
 
     siteLabel.textContent = location.siteCode || `Site #${location.siteId}`;
-    siteLabel.className = "site-id-label";
     title.textContent = location.locationName;
-    const filterMeta = location.reviewerFilterLabel && location.reviewerFilterValue != null
-      ? ` • ${location.reviewerFilterLabel}: ${location.reviewerFilterValue}`
+    const jobsMeta = Array.isArray(location.jobNumbers) && location.jobNumbers.length
+      ? ` • Jobs: ${location.jobNumbers.join(", ")}`
       : "";
     const publishedMeta = location.published ? " • Public: live" : " • Public: hidden";
-    meta.textContent = `${location.imageCount} image${location.imageCount !== 1 ? "s" : ""}${filterMeta}${publishedMeta}`;
+    meta.textContent = `${location.imageCount} image${location.imageCount !== 1 ? "s" : ""}${jobsMeta}${publishedMeta}`;
 
     if (location.coverImage && location.coverImage.url) {
       img.src = `/${location.coverImage.url}`;
@@ -288,15 +420,11 @@ function renderLocationCards(items) {
       card.classList.add("card-active");
     }
 
-    card.style.cursor = "pointer";
-
     const toggle = () => toggleLocationAccordion(location.locationId, card);
-
     card.addEventListener("click", (event) => {
       if (event.target.closest("button") && !event.target.closest(".button-primary")) return;
       toggle();
     });
-
     button.addEventListener("click", (event) => {
       event.stopPropagation();
       toggle();
@@ -308,24 +436,63 @@ function renderLocationCards(items) {
 
 async function loadLocations() {
   const auth = getAuth();
+  const filters = getSelectedFilters();
+  if (!filters.jobNumber) {
+    locations = [];
+    renderLocationCards(locations);
+    renderRequests([], []);
+    authStatusEl.textContent = "Select a job to load locations.";
+    updateReviewContextLabel();
+    return;
+  }
+
   locationCardsEl.innerHTML = "<p class=\"empty\">Loading reviewer-eligible locations...</p>";
-  const payload = await fetchJson(
-    `/api/reviewer/locations?email=${encodeURIComponent(auth.email)}&key=${encodeURIComponent(auth.key)}`
-  );
+  const params = {
+    email: auth.email,
+    key: auth.key,
+    jobNumber: filters.jobNumber
+  };
+  if (filters.city && filters.city !== "All cities") {
+    params.city = filters.city;
+  }
+
+  const payload = await fetchJson(`/api/reviewer/locations?${new URLSearchParams(params).toString()}`);
   locations = payload.locations || [];
   renderLocationCards(locations);
+  await loadRequests();
+  updateReviewContextLabel();
 }
 
 authFormEl.addEventListener("submit", async (event) => {
   event.preventDefault();
+
+  // Reset all prior state on each new connect attempt
+  openLocationId = "";
+  locations = [];
+  selectedFilters = { city: "All cities", jobNumber: "" };
+  availableCities = [];
+  availableJobs = [];
+  jobCityMap = {};
+  pendingCollapsed = false;
+  archivedVisible = false;
+  reviewContextLabelEl.textContent = "";
+  requestListEl.innerHTML = "";
+  archivedRequestListEl.innerHTML = "";
+  locationCardsEl.innerHTML = "";
+  changeFiltersEl.disabled = true;
   authStatusEl.textContent = "Checking reviewer access...";
+
   try {
-    await Promise.all([loadRequests(), loadLocations()]);
-    authStatusEl.textContent = "Reviewer access connected. Locations shown are filtered by workbook eligibility.";
+    await loadFilterOptions();
+    await promptForFilters(true);
+    changeFiltersEl.disabled = false;
+    await loadLocations();
+    authStatusEl.textContent = `Connected — ${locations.length} location${locations.length !== 1 ? "s" : ""} loaded for ${selectedFilters.jobNumber}.`;
   } catch (error) {
     authStatusEl.textContent = error.message;
-    requestListEl.innerHTML = "";
     locationCardsEl.innerHTML = "";
+    changeFiltersEl.disabled = true;
+    reviewContextLabelEl.textContent = "";
   }
 });
 
@@ -349,8 +516,15 @@ toggleArchivedEl.addEventListener("click", () => {
   setQueueToggleLabels(pendingCount, archivedCount);
 });
 
+changeFiltersEl.addEventListener("click", async () => {
+  try {
+    await promptForFilters(false);
+    await loadLocations();
+    authStatusEl.textContent = "Reviewer filters updated.";
+  } catch (error) {
+    authStatusEl.textContent = error.message;
+  }
+});
+
+reviewContextLabelEl.textContent = "";
 locationCardsEl.innerHTML = "<p class=\"empty\">Connect reviewer access to load eligible locations.</p>";
-
-
-
-

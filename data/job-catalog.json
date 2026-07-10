@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "dateDisplayFormat": "MM/DD/YYYY",
+  "jobs": [
+    {
+      "jobNumber": "ALCH-1234",
+      "postDate": "2026-07-01",
+      "removeDate": "2026-08-01",
+      "postDateDisplay": "07/01/2026",
+      "removeDateDisplay": "08/01/2026",
+      "campaign": "Summer retail push",
+      "city": "DC",
+      "sourceFields": {
+        "Post": "07/01/2026",
+        "Remove": "08/01/2026",
+        "job#": "ALCH-1234",
+        "Campaign": "Summer retail push",
+        "Market/Borough": "DC"
+      }
+    }
+  ]
+}
+
