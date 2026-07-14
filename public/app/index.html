@@ -22,7 +22,25 @@
   </header>
 
   <main>
+    <section class="panel">
+      <h2>Public access</h2>
+      <form id="public-access-form" class="form">
+        <label for="public-access-key">Public access key</label>
+        <input id="public-access-key" type="password" required>
+        <button type="submit" class="button button-primary">Connect public access</button>
+      </form>
+      <p id="public-access-status" class="status"></p>
+    </section>
+
     <section class="toolbar">
+      <label for="city-filter">City</label>
+      <select id="city-filter">
+        <option value="">All cities</option>
+      </select>
+      <label for="job-filter">Job</label>
+      <select id="job-filter">
+        <option value="">All jobs</option>
+      </select>
       <label for="search">Search locations</label>
       <input id="search" type="search" placeholder="Start typing a street or location...">
     </section>
@@ -45,6 +63,6 @@
     </article>
   </template>
 
-  <script src="./public.js"></script>
+  <script src="./public.js?v=20260711b"></script>
 </body>
 </html>

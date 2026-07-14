@@ -1,23 +1,91 @@
 {
   "version": 1,
   "dateDisplayFormat": "MM/DD/YYYY",
+  "generatedAt": "2026-07-14T00:50:22Z",
+  "source": {
+    "type": "csv",
+    "path": "C:\\Users\\bippe\\OneDrive\\Documents\\posters\\job-catalog.csv"
+  },
   "jobs": [
     {
       "jobNumber": "ALCH-1234",
-      "postDate": "2026-07-01",
-      "removeDate": "2026-08-01",
-      "postDateDisplay": "07/01/2026",
-      "removeDateDisplay": "08/01/2026",
-      "campaign": "Summer retail push",
+      "postDate": "2026-07-22",
+      "removeDate": null,
+      "postDateDisplay": "07/22/2026",
+      "removeDateDisplay": null,
+      "campaign": "Whacks",
       "city": "DC",
       "sourceFields": {
-        "Post": "07/01/2026",
-        "Remove": "08/01/2026",
+        "Post": "7/22/2026",
+        "Remove": "",
         "job#": "ALCH-1234",
-        "Campaign": "Summer retail push",
+        "Campaign": "Whacks",
         "Market/Borough": "DC"
+      }
+    },
+    {
+      "jobNumber": "ALCH-5678",
+      "postDate": "2026-07-22",
+      "removeDate": null,
+      "postDateDisplay": "07/22/2026",
+      "removeDateDisplay": null,
+      "campaign": "Copa",
+      "city": "Philly",
+      "sourceFields": {
+        "Post": "7/22/2026",
+        "Remove": "",
+        "job#": "ALCH-5678",
+        "Campaign": "Copa",
+        "Market/Borough": "Philly"
+      }
+    },
+    {
+      "jobNumber": "ALCH-9012",
+      "postDate": "2026-07-29",
+      "removeDate": null,
+      "postDateDisplay": "07/29/2026",
+      "removeDateDisplay": null,
+      "campaign": "Egg Life",
+      "city": "Boston",
+      "sourceFields": {
+        "Post": "7/29/2026",
+        "Remove": "",
+        "job#": "ALCH-9012",
+        "Campaign": "Egg Life",
+        "Market/Borough": "Boston"
+      }
+    },
+    {
+      "jobNumber": "ALCH-4321",
+      "postDate": "2026-07-22",
+      "removeDate": null,
+      "postDateDisplay": "07/22/2026",
+      "removeDateDisplay": null,
+      "campaign": "Whacks2",
+      "city": "Philly",
+      "sourceFields": {
+        "Post": "7/22/2026",
+        "Remove": "",
+        "job#": "ALCH-4321",
+        "Campaign": "Whacks2",
+        "Market/Borough": "Philly"
+      }
+    },
+    {
+      "jobNumber": "ALCH-4321",
+      "postDate": "2026-07-22",
+      "removeDate": null,
+      "postDateDisplay": "07/22/2026",
+      "removeDateDisplay": null,
+      "campaign": "Whacks3",
+      "city": "Boston",
+      "sourceFields": {
+        "Post": "7/22/2026",
+        "Remove": "",
+        "job#": "ALCH-4321",
+        "Campaign": "Whacks3",
+        "Market/Borough": "Boston"
       }
     }
   ]
 }
-

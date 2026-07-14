@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Owner Console</title>
-  <link rel="stylesheet" href="./styles.css?v=20260706c">
+  <link rel="stylesheet" href="./styles.css?v=20260710b">
 </head>
 <body>
   <header class="site-header">
     <div>
-      <p class="eyebrow">buildPortfolio</p>
+      <p id="owner-context-label" class="eyebrow"></p>
       <h1>Owner Console</h1>
       <p>Approve reviewer submissions to publish to public, reject, unpublish, or set covers directly.</p>
     </div>
@@ -44,16 +44,11 @@
       <h2>Set cover directly</h2>
       <p>Pick a location, browse photos, and set the cover without waiting for a request. A tracking ticket is still created.</p>
       <div class="toolbar">
+        <button id="change-filters" type="button" class="button" disabled>Change city/job</button>
         <label for="search">Search locations</label>
         <input id="search" type="search" placeholder="Start typing...">
       </div>
       <section id="location-cards" class="cards"></section>
-    </section>
-
-    <section id="detail-panel" class="panel hidden">
-      <h2 id="detail-title">Location images</h2>
-      <p id="detail-meta" class="meta"></p>
-      <div id="owner-grid" class="cards"></div>
     </section>
 
     <section class="panel">
@@ -64,6 +59,24 @@
       <div id="archived-request-list" class="list hidden"></div>
     </section>
   </main>
+
+  <dialog id="filter-dialog">
+    <form method="dialog" class="form">
+      <h2>Select owner view</h2>
+      <label>
+        Job
+        <select id="popup-job-select"></select>
+      </label>
+      <label>
+        City
+        <select id="popup-city-select"></select>
+      </label>
+      <div class="actions">
+        <button value="cancel" class="button" type="submit">Cancel</button>
+        <button id="popup-continue" value="continue" class="button button-primary" type="submit">Continue</button>
+      </div>
+    </form>
+  </dialog>
 
   <template id="request-template">
     <div class="list-row">
@@ -80,12 +93,18 @@
   </template>
 
   <template id="location-card-template">
-    <article class="card" style="cursor:pointer">
+    <article class="card">
       <div class="cover-frame"><img alt=""></div>
       <div class="card-body">
+        <p class="job-number-label"></p>
+        <p class="site-id-label"></p>
         <h2></h2>
         <p class="meta"></p>
+        <div class="actions">
+          <button class="button button-primary" type="button">Open all images</button>
+        </div>
       </div>
+      <div class="accordion-panel hidden"></div>
     </article>
   </template>
 
@@ -99,6 +118,6 @@
     </article>
   </template>
 
-  <script src="./owner.js?v=20260706c"></script>
+  <script src="./owner.js?v=20260710b"></script>
 </body>
 </html>

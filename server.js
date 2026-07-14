@@ -17,13 +17,28 @@ const coverRequestsPath = path.join(dataDir, "cover-requests.json");
 const publishedLocationsPath = path.join(dataDir, "published-locations.json");
 const imageSourcePath = path.join(dataDir, "image-source.json");
 const citiesConfigPath = path.join(dataDir, "cities.json");
+const citySourcesPath = path.join(dataDir, "city-sources.json");
+const galleryCacheDir = path.join(dataDir, "gallery-cache");
+const publicAccessKeysPath = path.join(dataDir, "public-access-keys.json");
 const jobCatalogPath = path.join(dataDir, "job-catalog.json");
+const locationJobMapPath = path.join(dataDir, "location-job-map.json");
+const galleryBuilderPath = path.join(repoRoot, "scripts", "build-gallery-data.py");
 const jobCatalogBuilderPath = path.join(repoRoot, "scripts", "build-job-catalog.py");
 const jobCatalogCsvPath = process.env.JOB_CATALOG_CSV_PATH || path.join(repoRoot, "data", "job-catalog.csv");
+const galleryWorkbookPath = process.env.GALLERY_WORKBOOK_PATH || "";
+const galleryWorksheetName = process.env.GALLERY_WORKSHEET_NAME || "";
+const galleryImagesRootPath = process.env.GALLERY_IMAGES_ROOT_PATH || "";
+const galleryCity = process.env.GALLERY_CITY || "";
+const dataRefreshIntervalMs = Number(process.env.DATA_REFRESH_INTERVAL_MS || 60000);
 let lastJobCatalogCsvMtimeMs = null;
+let lastGalleryBuildFingerprints = {};
+let lastLocationMapSourceMtimeMs = null;
+let refreshLoopInProgress = false;
+let refreshLoopQueued = false;
 
 const reviewerKey = process.env.REVIEWER_KEY || "dev-reviewer-key";
 const ownerKey = process.env.OWNER_KEY || "dev-owner-key";
+const publicKey = process.env.PUBLIC_KEY || "dev-public-key";
 const allowlistEmails = (process.env.REVIEWER_EMAIL_ALLOWLIST || "")
   .split(",")
   .map((value) => value.trim().toLowerCase())
@@ -66,6 +81,21 @@ function ensureDataFiles() {
       { id: "boston", name: "Boston", active: true }
     ]);
   }
+  if (!fs.existsSync(locationJobMapPath)) {
+    saveJson(locationJobMapPath, {
+      version: 1,
+      assignments: []
+    });
+  }
+  if (!fs.existsSync(citySourcesPath)) {
+    saveJson(citySourcesPath, []);
+  }
+  if (!fs.existsSync(publicAccessKeysPath)) {
+    saveJson(publicAccessKeysPath, []);
+  }
+  if (!fs.existsSync(galleryCacheDir)) {
+    fs.mkdirSync(galleryCacheDir, { recursive: true });
+  }
 }
 
 function normalizeText(value) {
@@ -73,6 +103,22 @@ function normalizeText(value) {
     .replace(/\u00a0/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function resolveConfiguredPath(value) {
+  const text = normalizeText(value);
+  if (!text) {
+    return "";
+  }
+  return path.isAbsolute(text) ? text : path.resolve(repoRoot, text);
+}
+
+function tryStat(targetPath) {
+  try {
+    return fs.statSync(targetPath);
+  } catch {
+    return null;
+  }
 }
 
 function normalizeLocationKey(value) {
@@ -188,7 +234,9 @@ function loadPublishedLocations() {
 function loadImageSource() {
   const fallback = {
     imagesRootPath: path.join(repoRoot, "index_files"),
-    city: null
+    city: null,
+    workbookPath: "",
+    worksheetName: ""
   };
   const data = loadJson(imageSourcePath, fallback);
   if (!data || typeof data !== "object") {
@@ -199,7 +247,9 @@ function loadImageSource() {
     : "";
   return {
     imagesRootPath: configuredRoot || fallback.imagesRootPath,
-    city: data.city || null
+    city: data.city || null,
+    workbookPath: typeof data.workbookPath === "string" ? data.workbookPath.trim() : "",
+    worksheetName: typeof data.worksheetName === "string" ? data.worksheetName.trim() : ""
   };
 }
 
@@ -214,21 +264,149 @@ function loadCityRegistry() {
     .filter(Boolean);
   return Array.from(new Set(names));
 }
+function loadJobCatalogJobs() {
+  const data = loadJson(jobCatalogPath, { jobs: [] });
+  if (!data || typeof data !== "object" || !Array.isArray(data.jobs)) {
+    return [];
+  }
+  return data.jobs;
+}
+
+function loadLocationJobAssignments() {
+  const data = loadJson(locationJobMapPath, { assignments: [] });
+  if (!data || typeof data !== "object" || !Array.isArray(data.assignments)) {
+    return [];
+  }
+
+  return data.assignments
+    .filter((entry) => entry && typeof entry === "object" && entry.active !== false)
+    .map((entry) => ({
+      jobNumber: normalizeJobToken(entry.jobNumber),
+      city: normalizeText(entry.city),
+      locationId: normalizeLocationKey(entry.locationId || entry.locationName || entry.siteCode)
+    }))
+    .filter((entry) => entry.jobNumber && entry.locationId);
+}
+
+function buildImageRootFingerprint(imagesRootPath) {
+  const rootStats = tryStat(imagesRootPath);
+  if (!rootStats || !rootStats.isDirectory()) {
+    return "";
+  }
+
+  const folderStamps = fs.readdirSync(imagesRootPath, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => {
+      const folderPath = path.join(imagesRootPath, entry.name);
+      const folderStats = tryStat(folderPath);
+      const stamp = folderStats ? Math.trunc(folderStats.mtimeMs) : 0;
+      return `${entry.name}:${stamp}`;
+    })
+    .sort((a, b) => a.localeCompare(b));
+
+  return `${Math.trunc(rootStats.mtimeMs)}|${folderStamps.join(",")}`;
+}
+
+function normalizeSourceId(value) {
+  const normalized = normalizeText(value).toLowerCase().replace(/[^a-z0-9\-_]/g, "-");
+  return normalized || "city";
+}
+
+function resolveGalleryBuildConfig() {
+  const source = loadImageSource();
+  const city = normalizeText(galleryCity || source.city);
+  return {
+    id: normalizeSourceId(city || "default"),
+    city,
+    workbookPath: resolveConfiguredPath(galleryWorkbookPath || source.workbookPath),
+    worksheetName: normalizeText(galleryWorksheetName || source.worksheetName),
+    imagesRootPath: resolveConfiguredPath(galleryImagesRootPath || source.imagesRootPath)
+  };
+}
+
+function loadCitySources() {
+  const configured = loadJson(citySourcesPath, []);
+  if (Array.isArray(configured)) {
+    const active = configured
+      .filter((entry) => entry && typeof entry === "object" && entry.active !== false)
+      .map((entry) => ({
+        id: normalizeSourceId(entry.id || entry.city),
+        city: normalizeText(entry.city),
+        workbookPath: resolveConfiguredPath(entry.workbookPath),
+        worksheetName: normalizeText(entry.worksheetName),
+        imagesRootPath: resolveConfiguredPath(entry.imagesRootPath)
+      }))
+      .filter((entry) => entry.city && entry.workbookPath && entry.imagesRootPath);
+    if (active.length > 0) {
+      return active;
+    }
+  }
+
+  const legacy = resolveGalleryBuildConfig();
+  return legacy.city && legacy.workbookPath && legacy.imagesRootPath ? [legacy] : [];
+}
+
+function buildCityArtifactPath(sourceId) {
+  return path.join(galleryCacheDir, `gallery-data.${normalizeSourceId(sourceId)}.json`);
+}
+
+function buildMergedGalleryPayload(artifactPaths) {
+  const mergedLocations = [];
+  const seen = new Set();
+  let email = "bipper9879@hotmail.com";
+  let issueUrlBase = "https://github.com/bipper9879/buildPortfolio/issues/new";
+
+  artifactPaths.forEach((artifactPath) => {
+    const cityData = loadJson(artifactPath, { locations: [] });
+    if (cityData && typeof cityData === "object") {
+      if (normalizeText(cityData.email)) {
+        email = normalizeText(cityData.email);
+      }
+      if (normalizeText(cityData.issueUrlBase)) {
+        issueUrlBase = normalizeText(cityData.issueUrlBase);
+      }
+    }
+    const locations = Array.isArray(cityData.locations) ? cityData.locations : [];
+    locations.forEach((entry) => {
+      if (!entry || typeof entry !== "object") {
+        return;
+      }
+      const key = `${normalizeText(entry.city).toLowerCase()}|${normalizeLocationKey(entry.location)}`;
+      if (seen.has(key)) {
+        return;
+      }
+      seen.add(key);
+      mergedLocations.push(entry);
+    });
+  });
+
+  mergedLocations.sort((a, b) =>
+    normalizeText(a.city).localeCompare(normalizeText(b.city))
+    || normalizeText(a.location).localeCompare(normalizeText(b.location))
+  );
+
+  return {
+    email,
+    issueUrlBase,
+    locations: mergedLocations
+  };
+}
+
 function refreshJobCatalogIfNeeded() {
   if (!jobCatalogCsvPath) {
-    return;
+    return false;
   }
   if (!fs.existsSync(jobCatalogBuilderPath)) {
     throw new Error(`Missing builder script: ${jobCatalogBuilderPath}`);
   }
   if (!fs.existsSync(jobCatalogCsvPath)) {
-    throw new Error(`CSV file not found: ${jobCatalogCsvPath}`);
+    return false;
   }
 
   const csvStats = fs.statSync(jobCatalogCsvPath);
   const csvMtimeMs = csvStats.mtimeMs;
   if (lastJobCatalogCsvMtimeMs != null && csvMtimeMs <= lastJobCatalogCsvMtimeMs && fs.existsSync(jobCatalogPath)) {
-    return;
+    return false;
   }
 
   const result = spawnSync("python", [
@@ -250,6 +428,197 @@ function refreshJobCatalogIfNeeded() {
   }
 
   lastJobCatalogCsvMtimeMs = csvMtimeMs;
+  return true;
+}
+
+function refreshGalleryDataIfNeeded() {
+  const sources = loadCitySources();
+  if (sources.length === 0) {
+    return false;
+  }
+  if (!fs.existsSync(galleryBuilderPath)) {
+    throw new Error(`Missing builder script: ${galleryBuilderPath}`);
+  }
+
+  const artifactPaths = [];
+  let anyCityChanged = false;
+
+  sources.forEach((source) => {
+    if (!fs.existsSync(source.workbookPath)) {
+      console.warn(`[data-refresh] skipped city "${source.city}" (missing workbook: ${source.workbookPath})`);
+      return;
+    }
+    if (!fs.existsSync(source.imagesRootPath)) {
+      console.warn(`[data-refresh] skipped city "${source.city}" (missing images root: ${source.imagesRootPath})`);
+      return;
+    }
+
+    const workbookStats = fs.statSync(source.workbookPath);
+    const imageFingerprint = buildImageRootFingerprint(source.imagesRootPath);
+    const nextFingerprint = JSON.stringify({
+      workbookMtimeMs: Math.trunc(workbookStats.mtimeMs),
+      imageFingerprint,
+      worksheetName: source.worksheetName,
+      city: source.city
+    });
+
+    const artifactPath = buildCityArtifactPath(source.id);
+    const previousFingerprint = lastGalleryBuildFingerprints[source.id] || "";
+    const needsBuild = nextFingerprint !== previousFingerprint || !fs.existsSync(artifactPath);
+    if (needsBuild) {
+      const urlPrefix = `images/${source.id}`;
+      const args = [
+        galleryBuilderPath,
+        "--workbook-path", source.workbookPath,
+        "--repo-root", repoRoot,
+        "--images-root", source.imagesRootPath,
+        "--city", source.city,
+        "--url-prefix", urlPrefix,
+        "--output-path", artifactPath,
+        "--skip-image-source-write"
+      ];
+      if (source.worksheetName) {
+        args.push("--worksheet-name", source.worksheetName);
+      }
+
+      const result = spawnSync("python", args, {
+        cwd: repoRoot,
+        encoding: "utf8"
+      });
+      if (result.error) {
+        throw new Error(`Failed to start gallery builder for city "${source.city}": ${result.error.message}`);
+      }
+      if (result.status !== 0) {
+        const details = normalizeText(result.stderr) || normalizeText(result.stdout) || "Unknown gallery build error.";
+        throw new Error(`Gallery build failed for city "${source.city}": ${details}`);
+      }
+
+      anyCityChanged = true;
+      lastGalleryBuildFingerprints[source.id] = nextFingerprint;
+    }
+
+    artifactPaths.push(artifactPath);
+  });
+
+  if (artifactPaths.length === 0) {
+    return false;
+  }
+
+  const mergedPayload = buildMergedGalleryPayload(artifactPaths);
+  const nextContent = `${JSON.stringify(mergedPayload, null, 2)}\n`;
+  const currentContent = fs.existsSync(galleryDataPath) ? fs.readFileSync(galleryDataPath, "utf8").replace(/^\uFEFF/, "") : "";
+  if (nextContent !== currentContent) {
+    fs.writeFileSync(galleryDataPath, nextContent, "utf8");
+    return true;
+  }
+
+  return anyCityChanged;
+}
+
+function refreshLocationJobMapFromGalleryIfNeeded() {
+  const galleryStats = tryStat(galleryDataPath);
+  if (!galleryStats || !galleryStats.isFile()) {
+    return false;
+  }
+
+  const sourceMtimeMs = Math.trunc(galleryStats.mtimeMs);
+  if (lastLocationMapSourceMtimeMs != null && sourceMtimeMs <= lastLocationMapSourceMtimeMs && fs.existsSync(locationJobMapPath)) {
+    return false;
+  }
+
+  const data = loadGalleryData();
+  const assignments = [];
+  const seen = new Set();
+
+  data.locations.forEach((entry) => {
+    const locationName = normalizeText(entry && entry.location);
+    const locationId = normalizeLocationKey(locationName || entry.locationId || entry.siteCode);
+    if (!locationId || !Array.isArray(entry && entry.jobNumbers)) {
+      return;
+    }
+
+    const city = normalizeText(entry && entry.city);
+    entry.jobNumbers.forEach((jobNumber) => {
+      const token = normalizeJobToken(jobNumber);
+      if (!token) {
+        return;
+      }
+      const dedupeKey = `${token}|${city.toLowerCase()}|${locationId}`;
+      if (seen.has(dedupeKey)) {
+        return;
+      }
+      seen.add(dedupeKey);
+      assignments.push({
+        jobNumber: token,
+        city: city || null,
+        locationId,
+        locationName: locationName || null,
+        siteCode: normalizeText(entry.siteCode) || null,
+        active: true
+      });
+    });
+  });
+
+  assignments.sort((a, b) =>
+    a.jobNumber.localeCompare(b.jobNumber, undefined, { numeric: true })
+    || (a.city || "").localeCompare(b.city || "")
+    || a.locationId.localeCompare(b.locationId)
+  );
+
+  saveJson(locationJobMapPath, {
+    version: 1,
+    generatedAt: new Date().toISOString(),
+    source: "gallery-data.json",
+    assignments
+  });
+
+  lastLocationMapSourceMtimeMs = sourceMtimeMs;
+  return true;
+}
+
+function runBackgroundDataRefreshCycle(trigger) {
+  if (refreshLoopInProgress) {
+    refreshLoopQueued = true;
+    return;
+  }
+
+  refreshLoopInProgress = true;
+  try {
+    do {
+      refreshLoopQueued = false;
+      const refreshed = [];
+      if (refreshJobCatalogIfNeeded()) {
+        refreshed.push("job-catalog");
+      }
+      if (refreshGalleryDataIfNeeded()) {
+        refreshed.push("gallery-data");
+      }
+      if (refreshLocationJobMapFromGalleryIfNeeded()) {
+        refreshed.push("location-job-map");
+      }
+      if (refreshed.length > 0) {
+        console.log(`[data-refresh:${trigger}] refreshed ${refreshed.join(", ")}`);
+      }
+    } while (refreshLoopQueued);
+  } catch (error) {
+    console.error(`[data-refresh:${trigger}] ${error.message}`);
+  } finally {
+    refreshLoopInProgress = false;
+  }
+}
+
+function startBackgroundDataRefreshLoop() {
+  runBackgroundDataRefreshCycle("startup");
+
+  if (!Number.isFinite(dataRefreshIntervalMs) || dataRefreshIntervalMs <= 0) {
+    return;
+  }
+
+  const intervalMs = Math.max(10000, Math.trunc(dataRefreshIntervalMs));
+  const timer = setInterval(() => runBackgroundDataRefreshCycle("interval"), intervalMs);
+  if (typeof timer.unref === "function") {
+    timer.unref();
+  }
 }
 
 function isEmailAllowed(email) {
@@ -264,6 +633,79 @@ function isEmailAllowed(email) {
   return allowlistDomains.includes(domain);
 }
 
+function loadPublicAccessKeys() {
+  const data = loadJson(publicAccessKeysPath, []);
+  if (!Array.isArray(data)) {
+    return [];
+  }
+  return data
+    .filter((entry) => entry && typeof entry === "object" && entry.active !== false)
+    .map((entry) => ({
+      id: normalizeText(entry.id || entry.label || "client"),
+      key: normalizeText(entry.key),
+      allowedJobs: new Set(
+        (Array.isArray(entry.allowedJobs) ? entry.allowedJobs : [])
+          .map((job) => normalizeJobToken(job))
+          .filter(Boolean)
+      ),
+      allowedCities: new Set(
+        (Array.isArray(entry.allowedCities) ? entry.allowedCities : [])
+          .map((city) => normalizeText(city).toLowerCase())
+          .filter(Boolean)
+      )
+    }))
+    .filter((entry) => entry.key);
+}
+
+function isLocationAllowedForPublicScope(entry, scope) {
+  if (!scope) {
+    return false;
+  }
+  const city = normalizeText(entry && entry.city).toLowerCase();
+  if (scope.allowedCities.size > 0 && !scope.allowedCities.has(city)) {
+    return false;
+  }
+
+  if (scope.allowedJobs.size > 0) {
+    const jobs = Array.isArray(entry && entry.jobNumbers)
+      ? entry.jobNumbers.map((job) => normalizeJobToken(job)).filter(Boolean)
+      : [];
+    if (!jobs.some((job) => scope.allowedJobs.has(job))) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function assertPublicAccess(req, res) {
+  const providedKey = normalizeText((req.query && req.query.key) || (req.body && req.body.key));
+  if (!providedKey) {
+    res.status(401).json({ error: "Public access key is required." });
+    return null;
+  }
+
+  if (publicKey && providedKey === publicKey) {
+    return {
+      keyId: "global",
+      allowedJobs: new Set(),
+      allowedCities: new Set()
+    };
+  }
+
+  const matchedKey = loadPublicAccessKeys().find((entry) => entry.key === providedKey);
+  if (!matchedKey) {
+    res.status(401).json({ error: "Invalid public access key." });
+    return null;
+  }
+
+  return {
+    keyId: matchedKey.id || "client",
+    allowedJobs: matchedKey.allowedJobs,
+    allowedCities: matchedKey.allowedCities
+  };
+}
+
 function assertReviewerAccess(req, res) {
   const key = req.query.key || req.body.key;
   const email = req.query.email || req.body.email;
@@ -275,13 +717,6 @@ function assertReviewerAccess(req, res) {
 
   if (!isEmailAllowed(email)) {
     res.status(403).json({ error: "Reviewer email is not allowed." });
-    return null;
-  }
-
-  try {
-    refreshJobCatalogIfNeeded();
-  } catch (error) {
-    res.status(500).json({ error: `Job catalog refresh failed: ${error.message}` });
     return null;
   }
 
@@ -376,9 +811,35 @@ function buildLocationSummary(entry, overrides, published) {
   };
 }
 
+function registerImageStaticRoutes() {
+  app.get("/images/:sourceId/*", (req, res, next) => {
+    const sourceId = normalizeSourceId(req.params.sourceId);
+    const relativePath = req.params[0] || "";
+    const source = loadCitySources().find((entry) => entry.id === sourceId);
+    if (!source || !source.imagesRootPath) {
+      return next();
+    }
+
+    const rootPath = path.resolve(source.imagesRootPath);
+    const targetPath = path.resolve(rootPath, relativePath);
+    if (!targetPath.startsWith(`${rootPath}${path.sep}`) && targetPath !== rootPath) {
+      return res.status(400).json({ error: "Invalid image path." });
+    }
+
+    return res.sendFile(targetPath, (error) => {
+      if (error) {
+        next();
+      }
+    });
+  });
+
+  // Legacy fallback for old single-source image URLs (/images/<folder>/<file>).
+  app.use("/images", express.static(loadImageSource().imagesRootPath));
+}
+
 app.use("/app", express.static(path.join(repoRoot, "public", "app")));
 app.use("/index_files", express.static(path.join(repoRoot, "index_files")));
-app.use("/images", express.static(loadImageSource().imagesRootPath));
+registerImageStaticRoutes();
 
 // Legacy pages remain available.
 app.get("/legacy", (_, res) => {
@@ -401,18 +862,95 @@ app.get("/", (_, res) => {
   res.redirect("/app/");
 });
 
-app.get("/api/public/locations", (_, res) => {
+app.get("/api/public/filter-options", (req, res) => {
+  const publicScope = assertPublicAccess(req, res);
+  if (!publicScope) {
+    return;
+  }
+  const data = loadGalleryData();
+  const published = loadPublishedLocations();
+  const cities = new Set();
+  const jobNumbers = new Set();
+  const jobCities = {};
+
+  data.locations
+    .filter((entry) => {
+      const locationId = normalizeLocationKey(entry.location);
+      const publication = published[locationId];
+      return Boolean(publication && publication.published) && isLocationAllowedForPublicScope(entry, publicScope);
+    })
+    .forEach((entry) => {
+      const city = normalizeText(entry.city);
+      if (city) {
+        cities.add(city);
+      }
+      if (Array.isArray(entry.jobNumbers)) {
+        entry.jobNumbers.forEach((jobNumber) => {
+          const token = normalizeJobToken(jobNumber);
+          if (!token) {
+            return;
+          }
+          jobNumbers.add(token);
+          if (!jobCities[token]) {
+            jobCities[token] = new Set();
+          }
+          if (city) {
+            jobCities[token].add(city);
+          }
+        });
+      }
+    });
+
+  const serializedJobCities = Object.fromEntries(
+    Object.entries(jobCities).map(([job, citySet]) => [
+      job,
+      Array.from(citySet).sort((a, b) => a.localeCompare(b))
+    ])
+  );
+
+  res.json({
+    cities: Array.from(cities).sort((a, b) => a.localeCompare(b)),
+    jobNumbers: Array.from(jobNumbers).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
+    jobCities: serializedJobCities
+  });
+});
+
+app.get("/api/public/locations", (req, res) => {
+  const publicScope = assertPublicAccess(req, res);
+  if (!publicScope) {
+    return;
+  }
+  const selectedCity = normalizeText(req.query.city);
+  const selectedJobNumber = normalizeJobToken(req.query.jobNumber);
   const data = loadGalleryData();
   const overrides = loadOverrides();
   const published = loadPublishedLocations();
-  const locations = data.locations
+  let locations = data.locations
     .map((entry) => buildLocationSummary(entry, overrides, published))
-    .filter((entry) => entry.published);
+    .filter((entry) => entry.published)
+    .filter((entry) => isLocationAllowedForPublicScope(entry, publicScope));
+
+  if (selectedJobNumber) {
+    locations = locations.filter((entry) =>
+      Array.isArray(entry.jobNumbers) &&
+      entry.jobNumbers.map((job) => normalizeJobToken(job)).includes(selectedJobNumber)
+    );
+  }
+  if (selectedCity) {
+    const normalizedSelectedCity = selectedCity.toLowerCase();
+    locations = locations.filter((entry) =>
+      normalizeText(entry.city).toLowerCase() === normalizedSelectedCity
+    );
+  }
 
   res.json({ locations });
 });
 
 app.get("/api/public/locations/:locationId", (req, res) => {
+  const publicScope = assertPublicAccess(req, res);
+  if (!publicScope) {
+    return;
+  }
   const data = loadGalleryData();
   const overrides = loadOverrides();
   const published = loadPublishedLocations();
@@ -425,6 +963,10 @@ app.get("/api/public/locations/:locationId", (req, res) => {
   const publication = published[locationId];
   if (!publication || !publication.published) {
     res.status(404).json({ error: "Location is not published for public view." });
+    return;
+  }
+  if (!isLocationAllowedForPublicScope(entry, publicScope)) {
+    res.status(403).json({ error: "Location is not available for this public key." });
     return;
   }
 
@@ -443,6 +985,10 @@ app.get("/api/public/locations/:locationId", (req, res) => {
 });
 
 app.post("/api/public/cover-requests", (req, res) => {
+  const publicScope = assertPublicAccess(req, res);
+  if (!publicScope) {
+    return;
+  }
   const { locationId, requesterName, requesterEmail, note } = req.body || {};
   if (!locationId || !requesterName || !requesterEmail) {
     res.status(400).json({
@@ -455,6 +1001,10 @@ app.post("/api/public/cover-requests", (req, res) => {
   const entry = findLocationEntry(data, locationId);
   if (!entry) {
     res.status(404).json({ error: "Location not found." });
+    return;
+  }
+  if (!isLocationAllowedForPublicScope(entry, publicScope)) {
+    res.status(403).json({ error: "Location is not available for this public key." });
     return;
   }
 
@@ -514,16 +1064,34 @@ app.get("/api/reviewer/locations", (req, res) => {
     .filter((entry) => isReviewerVisibleEntry(entry))
     .map((entry) => buildLocationSummary(entry, overrides, published));
 
-  if (selectedCity) {
+  let usedMapForJob = false;
+  if (selectedJobNumber) {
+    const assignments = loadLocationJobAssignments();
+    const hasMappedJob = assignments.some((entry) => entry.jobNumber === selectedJobNumber);
+
+    if (hasMappedJob) {
+      usedMapForJob = true;
+      const normalizedSelectedCity = selectedCity ? selectedCity.toLowerCase() : "";
+      const allowedLocationIds = new Set(
+        assignments
+          .filter((entry) => entry.jobNumber === selectedJobNumber)
+          .filter((entry) => !normalizedSelectedCity || !entry.city || entry.city.toLowerCase() === normalizedSelectedCity)
+          .map((entry) => entry.locationId)
+      );
+
+      locations = locations.filter((entry) => allowedLocationIds.has(normalizeLocationKey(entry.locationId)));
+    } else {
+      locations = locations.filter((entry) =>
+        Array.isArray(entry.jobNumbers) &&
+        entry.jobNumbers.map((job) => normalizeJobToken(job)).includes(selectedJobNumber)
+      );
+    }
+  }
+
+  if (selectedCity && !usedMapForJob) {
     const normalizedSelectedCity = selectedCity.toLowerCase();
     locations = locations.filter((entry) =>
       normalizeText(entry.city).toLowerCase() === normalizedSelectedCity
-    );
-  }
-  if (selectedJobNumber) {
-    locations = locations.filter((entry) =>
-      Array.isArray(entry.jobNumbers) &&
-      entry.jobNumbers.map((job) => normalizeJobToken(job)).includes(selectedJobNumber)
     );
   }
 
@@ -537,32 +1105,150 @@ app.get("/api/reviewer/filter-options", (req, res) => {
   }
 
   const data = loadGalleryData();
+  const catalogJobs = loadJobCatalogJobs();
+  const cities = new Set(loadCityRegistry());
+  const jobNumbers = new Set();
+  const jobCities = {};
+  const jobPostDates = {};
+
+  if (catalogJobs.length > 0) {
+    catalogJobs.forEach((job) => {
+      const token = normalizeJobToken(job && job.jobNumber);
+      const city = normalizeText(job && job.city);
+      const postDateDisplay = normalizeText(
+        (job && job.postDateDisplay)
+        || (job && job.sourceFields && job.sourceFields.Post)
+      );
+      if (!token) {
+        return;
+      }
+      jobNumbers.add(token);
+      if (!jobCities[token]) {
+        jobCities[token] = new Set();
+      }
+      if (!jobPostDates[token]) {
+        jobPostDates[token] = { all: new Set(), byCity: {} };
+      }
+      if (city) {
+        cities.add(city);
+        jobCities[token].add(city);
+        if (!jobPostDates[token].byCity[city]) {
+          jobPostDates[token].byCity[city] = new Set();
+        }
+      }
+      if (postDateDisplay) {
+        jobPostDates[token].all.add(postDateDisplay);
+        if (city) {
+          jobPostDates[token].byCity[city].add(postDateDisplay);
+        }
+      }
+    });
+  } else {
+    data.locations
+      .filter((entry) => isReviewerVisibleEntry(entry))
+      .forEach((entry) => {
+        const city = normalizeText(entry.city);
+        if (city) {
+          cities.add(city);
+        }
+        if (Array.isArray(entry.jobNumbers)) {
+          entry.jobNumbers.forEach((jobNumber) => {
+            const token = normalizeJobToken(jobNumber);
+            if (token) {
+              jobNumbers.add(token);
+              if (!jobCities[token]) {
+                jobCities[token] = new Set();
+              }
+              if (city) {
+                jobCities[token].add(city);
+              }
+            }
+          });
+        }
+      });
+  }
+
+  const serializedJobCities = Object.fromEntries(
+    Object.entries(jobCities).map(([job, citySet]) => [
+      job,
+      Array.from(citySet).sort((a, b) => a.localeCompare(b))
+    ])
+  );
+  const serializedJobPostDates = Object.fromEntries(
+    Object.entries(jobPostDates).map(([job, data]) => [
+      job,
+      {
+        all: Array.from(data.all).sort((a, b) => a.localeCompare(b)),
+        byCity: Object.fromEntries(
+          Object.entries(data.byCity).map(([city, dates]) => [
+            city,
+            Array.from(dates).sort((a, b) => a.localeCompare(b))
+          ])
+        )
+      }
+    ])
+  );
+
+  res.json({
+    reviewerEmail,
+    cities: Array.from(cities).sort((a, b) => a.localeCompare(b)),
+    jobNumbers: Array.from(jobNumbers).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
+    jobCities: serializedJobCities,
+    jobPostDates: serializedJobPostDates
+  });
+});
+app.get("/api/owner/filter-options", (req, res) => {
+  const ownerEmail = assertOwnerAccess(req, res);
+  if (!ownerEmail) {
+    return;
+  }
+
+  const data = loadGalleryData();
+  const catalogJobs = loadJobCatalogJobs();
   const cities = new Set(loadCityRegistry());
   const jobNumbers = new Set();
   const jobCities = {};
 
-  data.locations
-    .filter((entry) => isReviewerVisibleEntry(entry))
-    .forEach((entry) => {
-      const city = normalizeText(entry.city);
+  if (catalogJobs.length > 0) {
+    catalogJobs.forEach((job) => {
+      const token = normalizeJobToken(job && job.jobNumber);
+      const city = normalizeText(job && job.city);
+      if (!token) {
+        return;
+      }
+      jobNumbers.add(token);
+      if (!jobCities[token]) {
+        jobCities[token] = new Set();
+      }
       if (city) {
         cities.add(city);
-      }
-      if (Array.isArray(entry.jobNumbers)) {
-        entry.jobNumbers.forEach((jobNumber) => {
-          const token = normalizeJobToken(jobNumber);
-          if (token) {
-            jobNumbers.add(token);
-            if (!jobCities[token]) {
-              jobCities[token] = new Set();
-            }
-            if (city) {
-              jobCities[token].add(city);
-            }
-          }
-        });
+        jobCities[token].add(city);
       }
     });
+  } else {
+    data.locations
+      .filter((entry) => isReviewerEligible(entry) && hasCityTag(entry))
+      .forEach((entry) => {
+        const city = normalizeText(entry.city);
+        if (city) {
+          cities.add(city);
+        }
+        if (Array.isArray(entry.jobNumbers)) {
+          entry.jobNumbers.forEach((jobNumber) => {
+            const token = normalizeJobToken(jobNumber);
+            if (token) {
+              jobNumbers.add(token);
+              if (!jobCities[token]) {
+                jobCities[token] = new Set();
+              }
+              if (city) {
+                jobCities[token].add(city);
+              }
+            }
+          });
+        }
+      });
+  }
 
   const serializedJobCities = Object.fromEntries(
     Object.entries(jobCities).map(([job, citySet]) => [
@@ -572,13 +1258,12 @@ app.get("/api/reviewer/filter-options", (req, res) => {
   );
 
   res.json({
-    reviewerEmail,
+    ownerEmail,
     cities: Array.from(cities).sort((a, b) => a.localeCompare(b)),
     jobNumbers: Array.from(jobNumbers).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
     jobCities: serializedJobCities
   });
 });
-
 app.get("/api/reviewer/locations/:locationId/images", (req, res) => {
   const reviewerEmail = assertReviewerAccess(req, res);
   if (!reviewerEmail) {
@@ -683,12 +1368,29 @@ app.get("/api/owner/locations", (req, res) => {
     return;
   }
 
+  const selectedCity = normalizeText(req.query.city);
+  const selectedJobNumber = normalizeJobToken(req.query.jobNumber);
+
   const data = loadGalleryData();
   const overrides = loadOverrides();
   const published = loadPublishedLocations();
-  const locations = data.locations
+  let locations = data.locations
     .filter((entry) => isReviewerEligible(entry))
     .map((entry) => buildLocationSummary(entry, overrides, published));
+
+  if (selectedJobNumber) {
+    locations = locations.filter((entry) =>
+      Array.isArray(entry.jobNumbers) &&
+      entry.jobNumbers.map((job) => normalizeJobToken(job)).includes(selectedJobNumber)
+    );
+  }
+
+  if (selectedCity) {
+    const normalizedSelectedCity = selectedCity.toLowerCase();
+    locations = locations.filter((entry) =>
+      normalizeText(entry.city).toLowerCase() === normalizedSelectedCity
+    );
+  }
 
   res.json({ ownerEmail, locations });
 });
@@ -903,8 +1605,7 @@ app.post("/api/owner/locations/:locationId/unpublish", (req, res) => {
 });
 
 ensureDataFiles();
+startBackgroundDataRefreshLoop();
 app.listen(port, () => {
   console.log(`buildPortfolio server running at http://localhost:${port}`);
 });
-
-

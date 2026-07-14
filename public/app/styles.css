@@ -181,6 +181,46 @@ select {
   color: var(--accent);
 }
 
+.job-number-label {
+  margin: 0 0 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--accent-strong);
+  padding: 4px 8px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.job-group {
+  border: 2px solid var(--accent-strong);
+  border-radius: 16px;
+  padding: 12px;
+  background: rgba(31, 111, 95, 0.08);
+  margin-bottom: 20px;
+}
+
+.job-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.job-group-header h3 {
+  margin: 0;
+  color: var(--accent-strong);
+}
+
+.job-group-header p {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
 .accordion-panel {
   border-top: 1px solid var(--line);
   padding: 16px;

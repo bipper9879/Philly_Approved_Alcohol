@@ -13,6 +13,7 @@ const searchInput = document.getElementById("search");
 const locationCardsEl = document.getElementById("location-cards");
 const locationCardTemplate = document.getElementById("location-card-template");
 const imageTemplate = document.getElementById("image-template");
+const ALL_JOBS_VALUE = "__ALL_JOBS__";
 
 let locations = [];
 let openLocationId = "";
@@ -22,6 +23,7 @@ let selectedFilters = { city: "All cities", jobNumber: "" };
 let availableCities = [];
 let availableJobs = [];
 let jobCityMap = {};
+let jobPostDateMap = {};
 
 function normalizeText(value) {
   return String(value || "")
@@ -48,7 +50,34 @@ function updateReviewContextLabel() {
     return;
   }
   const cityLabel = city && city !== "All cities" ? city : "All Cities";
-  reviewContextLabelEl.textContent = `${cityLabel} Raw Photos — ${jobNumber}`;
+  if (jobNumber === ALL_JOBS_VALUE) {
+    reviewContextLabelEl.textContent = `${cityLabel} Raw Photos — All jobs`;
+    return;
+  }
+  const postDateLabel = getSelectedPostDateLabel(jobNumber, city);
+  reviewContextLabelEl.textContent = postDateLabel
+    ? `${cityLabel} Raw Photos — ${jobNumber} • Post: ${postDateLabel}`
+    : `${cityLabel} Raw Photos — ${jobNumber}`;
+}
+
+function getSelectedPostDateLabel(jobNumber, city) {
+  if (jobNumber === ALL_JOBS_VALUE) {
+    return "";
+  }
+  const metadata = jobPostDateMap[jobNumber];
+  if (!metadata || typeof metadata !== "object") {
+    return "";
+  }
+
+  const byCity = metadata.byCity && typeof metadata.byCity === "object" ? metadata.byCity : {};
+  const allDates = Array.isArray(metadata.all) ? metadata.all.filter(Boolean) : [];
+  const selectedCity = city && city !== "All cities" ? city : "";
+  const cityDates = selectedCity && Array.isArray(byCity[selectedCity]) ? byCity[selectedCity].filter(Boolean) : [];
+  const dates = cityDates.length ? cityDates : allDates;
+  if (!dates.length) {
+    return "";
+  }
+  return dates.length > 1 ? `${dates[0]}+` : dates[0];
 }
 
 function populateSelect(selectEl, options, placeholder) {
@@ -71,7 +100,36 @@ function populateSelect(selectEl, options, placeholder) {
   selectEl.disabled = false;
 }
 
+function populateJobSelect(selectEl) {
+  selectEl.innerHTML = "";
+  if (!availableJobs.length) {
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent = "No job options";
+    selectEl.appendChild(option);
+    selectEl.disabled = true;
+    return;
+  }
+
+  const allOption = document.createElement("option");
+  allOption.value = ALL_JOBS_VALUE;
+  allOption.textContent = "All jobs";
+  selectEl.appendChild(allOption);
+
+  availableJobs.forEach((job) => {
+    const option = document.createElement("option");
+    option.value = String(job);
+    option.textContent = String(job);
+    selectEl.appendChild(option);
+  });
+  selectEl.disabled = false;
+}
+
 function cityOptionsForJob(jobNumber) {
+  if (!jobNumber || jobNumber === ALL_JOBS_VALUE) {
+    const allCities = availableCities.filter((city) => city !== "All cities");
+    return ["All cities", ...allCities];
+  }
   const allCities = availableCities.filter((city) => city !== "All cities");
   const jobCities = (jobCityMap[jobNumber] || []).filter(Boolean);
   const scoped = jobCities.length ? jobCities : allCities;
@@ -104,11 +162,11 @@ function getDialogResult() {
 }
 
 async function promptForFilters(required = false) {
-  populateSelect(popupJobSelectEl, availableJobs, "No job options");
-  if (selectedFilters.jobNumber && availableJobs.includes(selectedFilters.jobNumber)) {
+  populateJobSelect(popupJobSelectEl);
+  if (selectedFilters.jobNumber && (selectedFilters.jobNumber === ALL_JOBS_VALUE || availableJobs.includes(selectedFilters.jobNumber))) {
     popupJobSelectEl.value = selectedFilters.jobNumber;
   } else if (availableJobs.length > 0) {
-    popupJobSelectEl.value = availableJobs[0];
+    popupJobSelectEl.value = ALL_JOBS_VALUE;
   }
 
   syncPopupCitiesForJob(false);
@@ -378,6 +436,7 @@ async function loadFilterOptions() {
   availableCities = (payload.cities || []).map((city) => String(city));
   availableJobs = (payload.jobNumbers || []).map((job) => String(job));
   jobCityMap = payload.jobCities || {};
+  jobPostDateMap = payload.jobPostDates || {};
   if (!availableJobs.length) {
     throw new Error("No city-tagged reviewer jobs are available. Re-sync with a City value first.");
   }
@@ -385,26 +444,42 @@ async function loadFilterOptions() {
 
 function renderLocationCards(items) {
   locationCardsEl.innerHTML = "";
+  locationCardsEl.classList.remove("cards");
 
   if (!items.length) {
     locationCardsEl.innerHTML = "<p class=\"empty\">No locations matched your search.</p>";
     return;
   }
 
+  if (selectedFilters.jobNumber === ALL_JOBS_VALUE) {
+    renderGroupedLocationCards(items);
+    return;
+  }
+
+  locationCardsEl.classList.add("cards");
   items.forEach((location) => {
+    locationCardsEl.appendChild(createLocationCard(location, selectedFilters.jobNumber));
+  });
+}
+
+function createLocationCard(location, focusJobNumber = "") {
     const fragment = locationCardTemplate.content.cloneNode(true);
     const card = fragment.querySelector(".card");
     const img = fragment.querySelector("img");
+    const jobBadge = fragment.querySelector(".job-number-label");
     const siteLabel = fragment.querySelector(".site-id-label");
     const title = fragment.querySelector("h2");
     const meta = fragment.querySelector(".meta");
     const button = fragment.querySelector(".button-primary");
     card.dataset.locationId = location.locationId;
 
+    const allJobs = Array.isArray(location.jobNumbers) ? location.jobNumbers.filter(Boolean) : [];
+    const badgeJob = focusJobNumber || allJobs[0] || "Unassigned";
+    jobBadge.textContent = `Job ${badgeJob}`;
     siteLabel.textContent = location.siteCode || `Site #${location.siteId}`;
     title.textContent = location.locationName;
-    const jobsMeta = Array.isArray(location.jobNumbers) && location.jobNumbers.length
-      ? ` • Jobs: ${location.jobNumbers.join(", ")}`
+    const jobsMeta = allJobs.length
+      ? ` • Jobs: ${allJobs.join(", ")}`
       : "";
     const publishedMeta = location.published ? " • Public: live" : " • Public: hidden";
     meta.textContent = `${location.imageCount} image${location.imageCount !== 1 ? "s" : ""}${jobsMeta}${publishedMeta}`;
@@ -430,7 +505,45 @@ function renderLocationCards(items) {
       toggle();
     });
 
-    locationCardsEl.appendChild(fragment);
+    return fragment;
+}
+
+function renderGroupedLocationCards(items) {
+  const grouped = new Map();
+
+  items.forEach((location) => {
+    const jobs = Array.isArray(location.jobNumbers) && location.jobNumbers.length
+      ? location.jobNumbers
+      : ["Unassigned"];
+    jobs.forEach((jobNumber) => {
+      if (!grouped.has(jobNumber)) {
+        grouped.set(jobNumber, []);
+      }
+      grouped.get(jobNumber).push(location);
+    });
+  });
+
+  const sortedJobs = Array.from(grouped.keys()).sort((a, b) =>
+    a.localeCompare(b, undefined, { numeric: true })
+  );
+
+  sortedJobs.forEach((jobNumber) => {
+    const section = document.createElement("section");
+    section.className = "job-group";
+    section.innerHTML = `
+      <div class="job-group-header">
+        <h3>Job ${jobNumber}</h3>
+        <p>${grouped.get(jobNumber).length} location${grouped.get(jobNumber).length !== 1 ? "s" : ""}</p>
+      </div>
+    `;
+
+    const grid = document.createElement("div");
+    grid.className = "cards";
+    grouped.get(jobNumber).forEach((location) => {
+      grid.appendChild(createLocationCard(location, jobNumber));
+    });
+    section.appendChild(grid);
+    locationCardsEl.appendChild(section);
   });
 }
 
@@ -449,9 +562,11 @@ async function loadLocations() {
   locationCardsEl.innerHTML = "<p class=\"empty\">Loading reviewer-eligible locations...</p>";
   const params = {
     email: auth.email,
-    key: auth.key,
-    jobNumber: filters.jobNumber
+    key: auth.key
   };
+  if (filters.jobNumber && filters.jobNumber !== ALL_JOBS_VALUE) {
+    params.jobNumber = filters.jobNumber;
+  }
   if (filters.city && filters.city !== "All cities") {
     params.city = filters.city;
   }
@@ -473,6 +588,7 @@ authFormEl.addEventListener("submit", async (event) => {
   availableCities = [];
   availableJobs = [];
   jobCityMap = {};
+  jobPostDateMap = {};
   pendingCollapsed = false;
   archivedVisible = false;
   reviewContextLabelEl.textContent = "";
@@ -487,7 +603,8 @@ authFormEl.addEventListener("submit", async (event) => {
     await promptForFilters(true);
     changeFiltersEl.disabled = false;
     await loadLocations();
-    authStatusEl.textContent = `Connected — ${locations.length} location${locations.length !== 1 ? "s" : ""} loaded for ${selectedFilters.jobNumber}.`;
+    const jobLabel = selectedFilters.jobNumber === ALL_JOBS_VALUE ? "All jobs" : selectedFilters.jobNumber;
+    authStatusEl.textContent = `Connected — ${locations.length} location${locations.length !== 1 ? "s" : ""} loaded for ${jobLabel}.`;
   } catch (error) {
     authStatusEl.textContent = error.message;
     locationCardsEl.innerHTML = "";

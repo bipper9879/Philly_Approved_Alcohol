@@ -166,26 +166,78 @@ def read_workbook_metadata(workbook_path: Path, worksheet_name: str):
         wb.close()
 
 
-def build_locations(index_files_root: Path, by_exact, by_normalized):
+def has_images(folder: Path) -> bool:
+    return any(
+        child.is_file() and child.suffix.lower() in IMAGE_EXTENSIONS
+        for child in folder.iterdir()
+    )
+
+
+def discover_location_folders(index_files_root: Path, max_depth: int = 6):
+    discovered = []
+
+    def walk(folder: Path, depth: int):
+        if depth > max_depth:
+            return
+        if has_images(folder):
+            discovered.append(folder)
+            return
+
+        children = sorted([p for p in folder.iterdir() if p.is_dir()], key=lambda p: p.name.lower())
+        for child in children:
+            walk(child, depth + 1)
+
+    for root_child in sorted([p for p in index_files_root.iterdir() if p.is_dir()], key=lambda p: p.name.lower()):
+        walk(root_child, 1)
+
+    return discovered
+
+
+def build_image_url(index_files_root: Path, file_path: Path, url_prefix: str) -> str:
+    parts = [quote(part, safe="") for part in file_path.relative_to(index_files_root).parts]
+    return f"{url_prefix}/{'/'.join(parts)}"
+
+
+def build_locations(index_files_root: Path, by_exact, by_normalized, url_prefix: str):
+    grouped = {}
+
+    for folder in discover_location_folders(index_files_root):
+        key = normalize_location_key(folder.name)
+        if not key:
+            continue
+
+        bucket = grouped.setdefault(key, {"location": folder.name, "folders": []})
+        bucket["folders"].append(folder)
+
     locations = []
-    for folder in sorted([p for p in index_files_root.iterdir() if p.is_dir()], key=lambda p: p.name.lower()):
+    for bucket in sorted(grouped.values(), key=lambda item: item["location"].lower()):
+        location_name = bucket["location"]
         images = []
-        for file_path in sorted([f for f in folder.iterdir() if f.is_file()], key=lambda p: p.name.lower()):
-            if file_path.suffix.lower() not in IMAGE_EXTENSIONS:
-                continue
-            images.append(
-                {
-                    "name": file_path.name,
-                    "url": f"images/{quote(folder.name, safe='')}/{quote(file_path.name, safe='')}",
-                }
-            )
+        seen_urls = set()
+        seen_names = set()
+
+        for folder in bucket["folders"]:
+            for file_path in sorted([f for f in folder.iterdir() if f.is_file()], key=lambda p: p.name.lower()):
+                if file_path.suffix.lower() not in IMAGE_EXTENSIONS:
+                    continue
+                image_url = build_image_url(index_files_root, file_path, url_prefix)
+                image_name_key = file_path.name.lower()
+                if image_name_key in seen_names:
+                    continue
+                if image_url in seen_urls:
+                    continue
+                seen_names.add(image_name_key)
+                seen_urls.add(image_url)
+                images.append({"name": file_path.name, "url": image_url})
 
         cover_image_name = None
         if images:
             explicit_cover = next((img for img in images if img["name"].lower() == "cover.jpg"), None)
             cover_image_name = explicit_cover["name"] if explicit_cover else images[0]["name"]
 
-        metadata = by_exact.get(folder.name) or by_normalized.get(normalize_location_key(folder.name), {})
+        metadata = by_exact.get(location_name) or by_normalized.get(normalize_location_key(location_name), {})
+        primary_folder = bucket["folders"][0]
+        primary_folder_rel = "/".join(quote(part, safe="") for part in primary_folder.relative_to(index_files_root).parts)
         locations.append(
             {
                 "siteCode": metadata.get("siteCode"),
@@ -197,9 +249,9 @@ def build_locations(index_files_root: Path, by_exact, by_normalized):
                 "reviewerEligible": bool(metadata.get("reviewerEligible")),
                 "reviewerFilterLabel": metadata.get("reviewerFilterLabel"),
                 "reviewerFilterValue": metadata.get("reviewerFilterValue"),
-                "location": folder.name,
-                "folderName": folder.name,
-                "folderUrl": f"images/{quote(folder.name, safe='')}/",
+                "location": location_name,
+                "folderName": primary_folder.name,
+                "folderUrl": f"{url_prefix}/{primary_folder_rel}/",
                 "coverImageName": cover_image_name,
                 "images": images,
             }
@@ -216,12 +268,15 @@ def main():
     parser.add_argument("--images-root", default="", help="Image root folder containing location subfolders")
     parser.add_argument("--city", required=True, help="City tag written into each location")
     parser.add_argument("--email", default="bipper9879@hotmail.com", help="Email in gallery-data.json payload")
+    parser.add_argument("--output-path", default="", help="Output gallery-data path (default: <repo-root>/gallery-data.json)")
+    parser.add_argument("--skip-image-source-write", action="store_true", help="Do not update data/image-source.json")
+    parser.add_argument("--url-prefix", default="images", help="URL prefix used for generated image URLs")
     args = parser.parse_args()
 
     repo_root = Path(args.repo_root).resolve()
     workbook_path = Path(args.workbook_path).resolve()
     index_files_root = Path(args.images_root).resolve() if args.images_root else (repo_root / "index_files")
-    output_path = repo_root / "gallery-data.json"
+    output_path = Path(args.output_path).resolve() if args.output_path else (repo_root / "gallery-data.json")
     image_source_config_path = repo_root / "data" / "image-source.json"
 
     if not workbook_path.exists():
@@ -230,7 +285,10 @@ def main():
         raise FileNotFoundError(f"Missing index_files folder: {index_files_root}")
 
     by_exact, by_normalized = read_workbook_metadata(workbook_path, args.worksheet_name)
-    locations = build_locations(index_files_root, by_exact, by_normalized)
+    url_prefix = (args.url_prefix or "images").strip().strip("/")
+    if not url_prefix:
+        url_prefix = "images"
+    locations = build_locations(index_files_root, by_exact, by_normalized, url_prefix)
     city = (args.city or "").strip()
     if not city:
         raise RuntimeError("City is required. Pass --city with a non-empty value.")
@@ -245,18 +303,21 @@ def main():
 
     output_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 
-    image_source_config_path.parent.mkdir(parents=True, exist_ok=True)
-    image_source_config_path.write_text(
-        json.dumps(
-            {
-                "imagesRootPath": str(index_files_root),
-                "city": city,
-            },
-            indent=2,
+    if not args.skip_image_source_write:
+        image_source_config_path.parent.mkdir(parents=True, exist_ok=True)
+        image_source_config_path.write_text(
+            json.dumps(
+                {
+                    "imagesRootPath": str(index_files_root),
+                    "city": city,
+                    "workbookPath": str(workbook_path),
+                    "worksheetName": (args.worksheet_name or "").strip(),
+                },
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
         )
-        + "\n",
-        encoding="utf-8",
-    )
 
     matched = sum(1 for loc in locations if loc.get("siteCode"))
     unmatched = len(locations) - matched
@@ -270,4 +331,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

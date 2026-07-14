@@ -158,7 +158,31 @@ Notes:
 - Keep source dates as MM/DD/YYYY in CSV.
 - Builder stores both display dates (MM/DD/YYYY) and normalized dates (YYYY-MM-DD) in JSON.
 - Any extra CSV columns are preserved under each job's attributes object for troubleshooting and future integrations.
-- Reviewer auto-refresh: reviewer API requests automatically rebuild data/job-catalog.json from JOB_CATALOG_CSV_PATH when the CSV file changes (no PowerShell execution-policy step needed at login).
+- Background auto-refresh: on server startup and every DATA_REFRESH_INTERVAL_MS (default 60000), the app checks inputs and rebuilds data/job-catalog.json, gallery-data.json, and data/location-job-map.json only when sources changed.
+- Multi-city gallery refresh: configure active city inputs in `data/city-sources.json` (workbook + images root per city). Each cycle builds per-city artifacts in `data/gallery-cache/` and merges them into `gallery-data.json`.
+- Gallery scanner is recursive (up to 6 levels), so city roots can contain mixed nested structures like `city/year/date/location` or `city/date/location` as long as the final location folder contains image files.
+- Reviewer location filtering now prefers data/location-job-map.json when a selected job has map assignments; if a job has no map entries yet, it falls back to gallery jobNumbers.
+- Public access keys:
+  - `PUBLIC_KEY` in `.env` is a global full-access public key.
+  - `data/public-access-keys.json` supports client-scoped keys with `allowedJobs` and `allowedCities` (set `active: true` to enable).
+
+## City Sources Build (SharePoint synced root -> city-sources.json)
+
+Use this to auto-build `data/city-sources.json` from a synced SharePoint root folder shaped like:
+
+`root\City\...`
+
+Command:
+
+`powershell -ExecutionPolicy Bypass -File .\scripts\build-city-sources.ps1 -RootPath "C:\full\path\to\synced\root"`
+
+Notes:
+
+- Uses active city names from `data/cities.json` by default.
+- Picks workbook in each city folder using best match (`*city*workbook*.xls*` first, then `*workbook*.xls*`).
+- Writes `workbookPath` + `imagesRootPath` per city so the 60s refresh loop can build merged gallery data.
+- Optional city override:
+  `-Cities "DC,Philly,Boston"`
 ## Manual Cover Change (Step-by-Step)
 
 Use this when you accept a cover request ticket.
@@ -393,9 +417,10 @@ Use this section to resume quickly next month.
 
 ### Architecture direction (to keep future integration easy)
 
-- Keep photo inventory in `gallery-data.json` and job/city planning in `data/job-catalog.json`.
+- Keep photo inventory in `gallery-data.json`, job/city planning in `data/job-catalog.json`, and job-to-location assignments in `data/location-job-map.json`.
 - Keep ingestion pluggable: local CSV now, external client feed later with the same normalized contract.
-- Keep reviewer flow consuming normalized job/city mapping so source-system changes do not require UI rewrites.`r`n
+- Keep reviewer flow consuming normalized job/city mapping so source-system changes do not require UI rewrites.
+
 ### Known remaining polish items
 
 - Ticket ordering should keep pending/reviewed at top and completed below.
@@ -418,11 +443,3 @@ Use this section to resume quickly next month.
   - Update .env with GOOGLE_MAPS_API_KEY and update location.js to use embed URL format:
     https://www.google.com/maps/embed/v1/streetview?key=YOUR_KEY&location=LAT,LON
   - No new key needed when moving to Azure; just add the new domain to allowed referrers.
-
-
-
-
-
-
-
-

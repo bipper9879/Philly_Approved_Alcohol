@@ -45,6 +45,16 @@
 
   <main class="single-layout">
     <section class="panel">
+      <h2>Public access</h2>
+      <form id="public-access-form" class="form">
+        <label for="public-access-key">Public access key</label>
+        <input id="public-access-key" type="password" required>
+        <button type="submit" class="button button-primary">Connect public access</button>
+      </form>
+      <p id="public-access-status" class="status"></p>
+    </section>
+
+    <section class="panel">
       <div id="cover" class="cover-frame large"></div>
       <p id="meta" class="meta"></p>
       <div id="street-view-container" class="street-view-frame hidden">
@@ -74,6 +84,6 @@
     </section>
   </main>
 
-  <script src="./location.js"></script>
+  <script src="./location.js?v=20260711a"></script>
 </body>
 </html>

@@ -3,13 +3,22 @@ const coverEl = document.getElementById("cover");
 const metaEl = document.getElementById("meta");
 const coordsEl = document.getElementById("location-coords");
 const streetViewContainer = document.getElementById("street-view-container");
-const streetViewFrame = document.getElementById("street-view-frame");
 const requestFormEl = document.getElementById("request-form");
 const requestStatusEl = document.getElementById("request-status");
+const accessFormEl = document.getElementById("public-access-form");
+const accessKeyEl = document.getElementById("public-access-key");
+const accessStatusEl = document.getElementById("public-access-status");
+
+let publicAccessKey = "";
 
 function getLocationParam() {
   const params = new URLSearchParams(window.location.search);
   return (params.get("location") || "").trim();
+}
+
+function getKeyParam() {
+  const params = new URLSearchParams(window.location.search);
+  return (params.get("key") || "").trim();
 }
 
 function normalizeText(value) {
@@ -24,6 +33,20 @@ function normalizeLocationKey(value) {
     .toLowerCase()
     .replace(/&/g, " and ")
     .replace(/[^a-z0-9]/g, "");
+}
+
+function getStoredPublicKey() {
+  return sessionStorage.getItem("publicAccessKey") || "";
+}
+
+function setStoredPublicKey(key) {
+  sessionStorage.setItem("publicAccessKey", key);
+}
+
+function withPublicKey(url) {
+  const query = new URLSearchParams();
+  query.set("key", publicAccessKey);
+  return `${url}?${query.toString()}`;
 }
 
 function renderCover(locationName, coverImage) {
@@ -71,15 +94,19 @@ async function loadLocation() {
     coverEl.innerHTML = "<div class=\"empty\">Use the public page to open a location.</div>";
     return null;
   }
+  if (!publicAccessKey) {
+    throw new Error("Public access key is required.");
+  }
 
   titleEl.textContent = locationName;
   const locationId = normalizeLocationKey(locationName);
-  const response = await fetch(`/api/public/locations/${encodeURIComponent(locationId)}`, {
+  const response = await fetch(withPublicKey(`/api/public/locations/${encodeURIComponent(locationId)}`), {
     cache: "no-store"
   });
 
   if (!response.ok) {
-    throw new Error(`Location not found (${response.status}).`);
+    const payload = await response.json().catch(() => ({}));
+    throw new Error(payload.error || `Location not found (${response.status}).`);
   }
 
   const payload = await response.json();
@@ -98,8 +125,13 @@ requestFormEl.addEventListener("submit", async (event) => {
     requestStatusEl.textContent = "Missing location context.";
     return;
   }
+  if (!publicAccessKey) {
+    requestStatusEl.textContent = "Connect public access first.";
+    return;
+  }
 
   const payload = {
+    key: publicAccessKey,
     locationId,
     requesterName: document.getElementById("requester-name").value,
     requesterEmail: document.getElementById("requester-email").value,
@@ -128,7 +160,37 @@ requestFormEl.addEventListener("submit", async (event) => {
   }
 });
 
-loadLocation().catch((error) => {
-  coverEl.innerHTML = `<div class="empty">${error.message}</div>`;
+async function connectPublicAccess(key) {
+  publicAccessKey = key.trim();
+  if (!publicAccessKey) {
+    throw new Error("Public access key is required.");
+  }
+  setStoredPublicKey(publicAccessKey);
+  await loadLocation();
+}
+
+accessFormEl.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  accessStatusEl.textContent = "Connecting...";
+  try {
+    await connectPublicAccess(accessKeyEl.value);
+    accessStatusEl.textContent = "Public access connected.";
+  } catch (error) {
+    accessStatusEl.textContent = error.message;
+    coverEl.innerHTML = `<div class="empty">${error.message}</div>`;
+  }
 });
 
+coverEl.innerHTML = "<div class=\"empty\">Connect with a public access key to load this location.</div>";
+const initialKey = getKeyParam() || getStoredPublicKey();
+if (initialKey) {
+  accessKeyEl.value = initialKey;
+  connectPublicAccess(initialKey)
+    .then(() => {
+      accessStatusEl.textContent = "Public access connected.";
+    })
+    .catch((error) => {
+      accessStatusEl.textContent = error.message;
+      coverEl.innerHTML = `<div class="empty">${error.message}</div>`;
+    });
+}
