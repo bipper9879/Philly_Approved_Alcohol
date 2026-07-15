@@ -1,42 +1,124 @@
 # buildPortfolio
 
-Public site:
-https://bipper9879.github.io/Philly_Approved_Alcohol
+Multi-city field photo review and client portfolio approval platform.
 
-## New Website + API (Local Server MVP)
+**GitHub repo:** `bipper9879/buildPortfolio`  
+**Active branch:** `addingJobNumber` (feature branch — not yet merged to `main`)
 
-This repo now includes a Node.js + Express app that provides:
+---
 
-- A modern public interface at `/app/` that only shows the current cover image per location.
-- A public request form to submit cover-change requests.
-- A reviewer interface at `/app/reviewer.html` that only shows workbook-eligible locations (Column D/E dynamic filter) and submits image selections for owner approval.
-- An owner interface at `/app/owner.html` that approves reviewer submissions and controls what is visible to public.
-- Legacy static pages still available (`/legacy`, `/index.html`, `/gallery.html`).
+## Local machine paths (bipper9879)
 
-### Local setup
+These are machine-specific and must **never** be committed to GitHub.
+Store them in `.env` and `data/city-sources.json` (both gitignored).
+
+| Purpose | Path |
+|---|---|
+| Repo clone (worktree) | `C:\Users\bippe\.copilot\repos\copilot-worktrees\Philly_Approved_Alcohol\bipper9879-studious-engine` |
+| Repo clone (main) | `C:\Users\bippe\OneDrive\Workspace\Projects\Philly_Approved_Alcohol` |
+| Philly images root | `C:\Users\bippe\OneDrive\Documents\posters\Philly` |
+| DC images root | `C:\Users\bippe\OneDrive\Documents\posters\dc` |
+| Boston images root | `C:\Users\bippe\OneDrive\Documents\posters\boston` |
+| City sources config | `data/city-sources.json` (gitignored — local only) |
+| Environment config | `.env` (gitignored — local only) |
+
+---
+
+## What this app does
+
+A Node.js + Express web app that serves a **multi-city location gallery**
+with a full reviewer → owner → public approval workflow.
+
+- **Public** — browse approved locations, view cover photo, submit cover requests (key-gated).
+- **Reviewer** — browse full photo sets by city/job, select cover candidates, submit to owner queue.
+- **Owner** — approve/reject reviewer submissions, publish locations to public, manage queue.
+- **Background refresh** — automatically rebuilds gallery data from city workbooks + image folders every 60 seconds.
+
+Routes:
+- Public: `http://localhost:3000/app/`
+- Reviewer: `http://localhost:3000/app/reviewer.html`
+- Owner: `http://localhost:3000/app/owner.html`
+- Legacy: `http://localhost:3000/legacy`
+
+---
+
+## Local setup
+
+## Local setup
 
 1. Install Node.js 20+.
 2. Install packages:
+   ```powershell
+   npm install
+   ```
+3. Copy env template and fill in your values:
+   ```powershell
+   Copy-Item .env.example .env
+   ```
+   Key `.env` values to set:
+   - `REVIEWER_KEY` — secret key for reviewer login
+   - `OWNER_KEY` — secret key for owner login
+   - `PUBLIC_KEY` — global public access key (full access)
+   - `GALLERY_WORKBOOK_PATH` — path to your workbook (used by single-city legacy mode)
+   - `GALLERY_IMAGES_ROOT_PATH` — path to your images root (legacy mode)
+   - `DATA_REFRESH_INTERVAL_MS` — how often to rebuild gallery data (default 60000ms)
 
-   `npm install`
-
-3. Copy env template:
-
-   `Copy-Item .env.example .env`
-
-4. Edit `.env` for reviewer controls:
-   - `REVIEWER_KEY`
-   - `REVIEWER_EMAIL_ALLOWLIST`
-   - `REVIEWER_EMAIL_DOMAIN_ALLOWLIST`
+4. Configure city sources for multi-city mode.
+   Create `data/city-sources.json` (this file is gitignored — stays local only):
+   ```json
+   [
+     {
+       "id": "philly",
+       "city": "Philly",
+       "workbookPath": "C:\\Users\\bippe\\OneDrive\\Documents\\posters\\Philly\\Philly_Workbook.xlsx",
+       "imagesRootPath": "C:\\Users\\bippe\\OneDrive\\Documents\\posters\\Philly",
+       "active": true
+     },
+     {
+       "id": "dc",
+       "city": "DC",
+       "workbookPath": "C:\\Users\\bippe\\OneDrive\\Documents\\posters\\dc\\DC_Workbook.xlsx",
+       "imagesRootPath": "C:\\Users\\bippe\\OneDrive\\Documents\\posters\\dc",
+       "active": true
+     },
+     {
+       "id": "boston",
+       "city": "Boston",
+       "workbookPath": "C:\\Users\\bippe\\OneDrive\\Documents\\posters\\boston\\Boston_Workbook.xlsx",
+       "imagesRootPath": "C:\\Users\\bippe\\OneDrive\\Documents\\posters\\boston",
+       "active": true
+     }
+   ]
+   ```
 
 5. Start server:
-
-   `npm run dev`
+   ```powershell
+   npm run dev
+   ```
 
 6. Open:
    - Public: `http://localhost:3000/app/`
    - Reviewer: `http://localhost:3000/app/reviewer.html`
-   - Legacy spreadsheet: `http://localhost:3000/legacy`
+   - Owner: `http://localhost:3000/app/owner.html`
+
+### Dev credentials (local only)
+
+These are default fallback keys when `.env` values are not set:
+
+| Role | Login key |
+|---|---|
+| Reviewer | `dev-reviewer-key` |
+| Owner | `dev-owner-key` |
+| Public | `dev-public-key` |
+
+Set real keys in `.env` before sharing or demoing.
+
+### Troubleshooting startup
+
+- **Gallery build failed / Permission denied on workbook** — close the workbook in Excel first, then restart.
+- **Failed to load filter options: 500** — check that `data/city-sources.json` exists and paths are correct.
+- **No locations showing for reviewer/owner** — confirm workbook has numeric values in column D or E for the rows you want visible.
+- **`Active Root Directory` wrong in UID log** — set `WILDPOSTING_POSTERS_ROOT` env var before running UID scripts.
 
 ## What This Site Does
 
