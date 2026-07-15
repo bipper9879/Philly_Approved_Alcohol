@@ -1,0 +1,9 @@
+[
+  {
+    "id": "sample-philly-client",
+    "key": "sample-philly-key",
+    "allowedJobs": ["ALCH-5678"],
+    "allowedCities": ["Philly"],
+    "active": false
+  }
+]

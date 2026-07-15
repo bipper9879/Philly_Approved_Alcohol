@@ -1,59 +1,43 @@
 param(
+    [Parameter(Mandatory = $true)]
+    [string]$WorkbookPath,
+
+    [string]$WorksheetName = "",
     [string]$RepoRoot = (Split-Path -Parent $PSScriptRoot),
+    [string]$ImagesRootPath = "",
+    [Parameter(Mandatory = $true)]
+    [string]$City,
     [string]$Email = "bipper9879@hotmail.com"
 )
 
-$indexFilesRoot = Join-Path $RepoRoot "index_files"
-$outputPath = Join-Path $RepoRoot "gallery-data.json"
-$imageExtensions = @(".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp")
+$ErrorActionPreference = "Stop"
 
-function Get-EncodedSegment {
-    param([string]$Value)
-
-    return [System.Uri]::EscapeDataString($Value)
+$pythonScript = Join-Path $PSScriptRoot "build-gallery-data.py"
+if (-not (Test-Path -Path $pythonScript -PathType Leaf)) {
+    throw "Missing Python build script: $pythonScript"
 }
 
-$locations = Get-ChildItem -Path $indexFilesRoot -Directory |
-    Sort-Object Name |
-    ForEach-Object {
-        $folder = $_
-        $folderUrl = "index_files/$([System.Uri]::EscapeDataString($folder.Name))/"
-
-        $images = Get-ChildItem -Path $folder.FullName -File |
-            Where-Object { $imageExtensions -contains $_.Extension.ToLowerInvariant() } |
-            Sort-Object Name |
-            ForEach-Object {
-                [ordered]@{
-                    name = $_.Name
-                    url = $folderUrl + (Get-EncodedSegment -Value $_.Name)
-                }
-            }
-
-        $coverImageName = $null
-        if ($images.Count -gt 0) {
-            $explicitCover = $images | Where-Object { $_.name -ieq "cover.jpg" } | Select-Object -First 1
-            if ($explicitCover) {
-                $coverImageName = $explicitCover.name
-            } else {
-                $coverImageName = $images[0].name
-            }
-        }
-
-        [ordered]@{
-            location = $folder.Name
-            folderName = $folder.Name
-            folderUrl = $folderUrl
-            coverImageName = $coverImageName
-            images = @($images)
-        }
-    }
-
-$payload = [ordered]@{
-    email = $Email
-    issueUrlBase = "https://github.com/bipper9879/Philly_Approved_Alcohol/issues/new"
-    locations = @($locations)
+$python = Get-Command python -ErrorAction SilentlyContinue
+if (-not $python) {
+    throw "Python is not installed or not in PATH."
 }
 
-$payload |
-    ConvertTo-Json -Depth 6 |
-    Set-Content -Path $outputPath -Encoding UTF8
+$args = @(
+    $pythonScript,
+    "--workbook-path", $WorkbookPath,
+    "--repo-root", $RepoRoot,
+    "--email", $Email
+)
+
+if (-not [string]::IsNullOrWhiteSpace($WorksheetName)) {
+    $args += @("--worksheet-name", $WorksheetName)
+}
+if (-not [string]::IsNullOrWhiteSpace($ImagesRootPath)) {
+    $args += @("--images-root", $ImagesRootPath)
+}
+$args += @("--city", $City)
+
+& python @args
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}

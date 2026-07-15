@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reviewer Console</title>
+  <link rel="stylesheet" href="./styles.css?v=20260710b">
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p id="review-context-label" class="eyebrow"></p>
+      <h1>Reviewer Console</h1>
+      <p>Reviewer access can see eligible full image folders and submit selections for owner approval.</p>
+    </div>
+    <nav class="site-nav">
+      <a href="./">Public</a>
+      <a href="./reviewer.html">Reviewer</a>
+      <a href="./owner.html">Owner</a>
+      <a href="/legacy">Legacy Spreadsheet</a>
+    </nav>
+  </header>
+
+  <main class="single-layout">
+    <section class="panel">
+      <h2>Access</h2>
+      <form id="auth-form" class="form">
+        <label>
+          Reviewer email
+          <input id="email" type="email" required>
+        </label>
+        <label>
+          Reviewer key
+          <input id="key" type="password" required>
+        </label>
+        <button type="submit" class="button button-primary">Connect reviewer access</button>
+      </form>
+      <p id="auth-status" class="status"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Cover requests</h2>
+      <div class="queue-controls">
+        <button id="toggle-pending" type="button" class="button">Collapse pending</button>
+      </div>
+      <div id="request-list" class="list"></div>
+    </section>
+
+    <section class="toolbar">
+      <button id="change-filters" type="button" class="button" disabled>Change city/job</button>
+      <label for="search">Search locations</label>
+      <input id="search" type="search" placeholder="Start typing a street or location...">
+    </section>
+
+    <section id="location-cards" class="cards"></section>
+
+    <section class="panel">
+      <h2>Archived requests</h2>
+      <div class="queue-footer">
+        <button id="toggle-archived" type="button" class="button">View archived requests</button>
+      </div>
+      <div id="archived-request-list" class="list hidden"></div>
+    </section>
+  </main>
+
+  <dialog id="filter-dialog">
+    <form method="dialog" class="form">
+      <h2>Select reviewer view</h2>
+      <label>
+        Job
+        <select id="popup-job-select"></select>
+      </label>
+      <label>
+        City
+        <select id="popup-city-select"></select>
+      </label>
+      <div class="actions">
+        <button value="cancel" class="button" type="submit">Cancel</button>
+        <button id="popup-continue" value="continue" class="button button-primary" type="submit">Continue</button>
+      </div>
+    </form>
+  </dialog>
+
+  <template id="location-card-template">
+    <article class="card">
+      <div class="cover-frame">
+        <img alt="">
+      </div>
+      <div class="card-body">
+        <p class="job-number-label"></p>
+        <p class="site-id-label"></p>
+        <h2></h2>
+        <p class="meta"></p>
+        <div class="actions">
+          <button class="button button-primary" type="button">Open all images</button>
+        </div>
+      </div>
+      <div class="accordion-panel hidden"></div>
+    </article>
+  </template>
+
+  <template id="image-template">
+    <article class="card">
+      <div class="cover-frame">
+        <img alt="">
+      </div>
+      <div class="card-body">
+        <p class="meta"></p>
+        <button class="button button-primary" type="button">Request this as cover</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="./reviewer.js?v=20260710b"></script>
+</body>
+</html>

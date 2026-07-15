@@ -1,0 +1,6 @@
+node_modules/
+.env
+data/*.local.json
+data/city-sources.json
+__pycache__/
+*.pyc

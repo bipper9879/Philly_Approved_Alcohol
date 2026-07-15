@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>buildPortfolio</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">buildPortfolio</p>
+      <h1>Public Cover Gallery</h1>
+      <p>Public viewers can only see each location's selected cover image.</p>
+    </div>
+    <nav class="site-nav">
+      <a href="./">Public</a>
+      <a href="./reviewer.html">Reviewer</a>
+      <a href="./owner.html">Owner</a>
+      <a href="/legacy">Legacy Spreadsheet</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Public access</h2>
+      <form id="public-access-form" class="form">
+        <label for="public-access-key">Public access key</label>
+        <input id="public-access-key" type="password" required>
+        <button type="submit" class="button button-primary">Connect public access</button>
+      </form>
+      <p id="public-access-status" class="status"></p>
+    </section>
+
+    <section class="toolbar">
+      <label for="city-filter">City</label>
+      <select id="city-filter">
+        <option value="">All cities</option>
+      </select>
+      <label for="job-filter">Job</label>
+      <select id="job-filter">
+        <option value="">All jobs</option>
+      </select>
+      <label for="search">Search locations</label>
+      <input id="search" type="search" placeholder="Start typing a street or location...">
+    </section>
+    <section id="cards" class="cards"></section>
+  </main>
+
+  <template id="card-template">
+    <article class="card">
+      <div class="cover-frame">
+        <img alt="">
+      </div>
+      <div class="card-body">
+        <p class="site-id-label"></p>
+        <h2></h2>
+        <p class="meta"></p>
+        <div class="actions">
+          <a class="button button-primary">Open location</a>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="./public.js?v=20260711b"></script>
+</body>
+</html>

@@ -1,0 +1,1467 @@
+{
+  "email": "bipper9879@hotmail.com",
+  "issueUrlBase": "https://github.com/bipper9879/buildPortfolio/issues/new",
+  "locations": [
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "1 680 Boylston St",
+      "folderName": "1 680 Boylston St",
+      "folderUrl": "images/boston/Boston%2012jan2026/1%20680%20Boylston%20St/",
+      "coverImageName": "IMG_20260111_101513_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_101513_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/1%20680%20Boylston%20St/IMG_20260111_101513_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_101518_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/1%20680%20Boylston%20St/IMG_20260111_101518_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "10 Harvard & Cambridge",
+      "folderName": "10 Harvard & Cambridge",
+      "folderUrl": "images/boston/Boston%2012jan2026/10%20Harvard%20%26%20Cambridge/",
+      "coverImageName": "IMG_20260111_071023_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_071023_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/10%20Harvard%20%26%20Cambridge/IMG_20260111_071023_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_071031_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/10%20Harvard%20%26%20Cambridge/IMG_20260111_071031_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "11 Cambridge St & Harvard Ave",
+      "folderName": "11 Cambridge St & Harvard Ave",
+      "folderUrl": "images/boston/Boston%2012jan2026/11%20Cambridge%20St%20%26%20Harvard%20Ave/",
+      "coverImageName": "IMG_20260111_071117_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_071117_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/11%20Cambridge%20St%20%26%20Harvard%20Ave/IMG_20260111_071117_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_071133_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/11%20Cambridge%20St%20%26%20Harvard%20Ave/IMG_20260111_071133_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_071139_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/11%20Cambridge%20St%20%26%20Harvard%20Ave/IMG_20260111_071139_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "12 234 Cambridge St",
+      "folderName": "12 234 Cambridge St",
+      "folderUrl": "images/boston/Boston%2012jan2026/12%20234%20Cambridge%20St/",
+      "coverImageName": "IMG_20260111_071056_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_071056_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/12%20234%20Cambridge%20St/IMG_20260111_071056_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_071103_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/12%20234%20Cambridge%20St/IMG_20260111_071103_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_071124_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/12%20234%20Cambridge%20St/IMG_20260111_071124_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_071127_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/12%20234%20Cambridge%20St/IMG_20260111_071127_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "13 Washington St & Melnea Cass Bvd",
+      "folderName": "13 Washington St & Melnea Cass Bvd",
+      "folderUrl": "images/boston/Boston%2012jan2026/13%20Washington%20St%20%26%20Melnea%20Cass%20Bvd/",
+      "coverImageName": "IMG_20260111_074120_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_074120_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/13%20Washington%20St%20%26%20Melnea%20Cass%20Bvd/IMG_20260111_074120_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_074124_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/13%20Washington%20St%20%26%20Melnea%20Cass%20Bvd/IMG_20260111_074124_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_074132_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/13%20Washington%20St%20%26%20Melnea%20Cass%20Bvd/IMG_20260111_074132_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_074145_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/13%20Washington%20St%20%26%20Melnea%20Cass%20Bvd/IMG_20260111_074145_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "14 Boylston st bet Berkeley st & Arlington st A",
+      "folderName": "14 Boylston st bet Berkeley st & Arlington st A",
+      "folderUrl": "images/boston/Boston%2012jan2026/14%20Boylston%20st%20bet%20Berkeley%20st%20%26%20Arlington%20st%20A/",
+      "coverImageName": "IMG_20260111_093720_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_093720_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/14%20Boylston%20st%20bet%20Berkeley%20st%20%26%20Arlington%20st%20A/IMG_20260111_093720_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_093724_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/14%20Boylston%20st%20bet%20Berkeley%20st%20%26%20Arlington%20st%20A/IMG_20260111_093724_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "15 Church St btw Palmer and MA-2A (A)",
+      "folderName": "15 Church St btw Palmer and MA-2A (A)",
+      "folderUrl": "images/boston/Boston%2012jan2026/15%20Church%20St%20btw%20Palmer%20and%20MA-2A%20%28A%29/",
+      "coverImageName": "IMG_20260111_083037_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_083037_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/15%20Church%20St%20btw%20Palmer%20and%20MA-2A%20%28A%29/IMG_20260111_083037_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_083046_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/15%20Church%20St%20btw%20Palmer%20and%20MA-2A%20%28A%29/IMG_20260111_083046_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "16 Church St btw Palmer and MA-2A (B)",
+      "folderName": "16 Church St btw Palmer and MA-2A (B)",
+      "folderUrl": "images/boston/Boston%2012jan2026/16%20Church%20St%20btw%20Palmer%20and%20MA-2A%20%28B%29/",
+      "coverImageName": "IMG_20260111_083107_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_083107_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/16%20Church%20St%20btw%20Palmer%20and%20MA-2A%20%28B%29/IMG_20260111_083107_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_083113_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/16%20Church%20St%20btw%20Palmer%20and%20MA-2A%20%28B%29/IMG_20260111_083113_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-FD1EA4",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.338276,-71.074807",
+      "lat": 42.338276,
+      "lon": -71.074807,
+      "jobNumbers": [
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "1601 Washington St",
+      "folderName": "1601 Washington St",
+      "folderUrl": "images/boston/06-24-2026_Boston/1601%20Washington%20St/",
+      "coverImageName": "IMG_20260624_075345_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_075345_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/1601%20Washington%20St/IMG_20260624_075345_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_075348_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/1601%20Washington%20St/IMG_20260624_075348_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-7D58DD",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.338266,-71.074743",
+      "lat": 42.338266,
+      "lon": -71.074743,
+      "jobNumbers": [
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "1603 Washington St",
+      "folderName": "1603 Washington St",
+      "folderUrl": "images/boston/06-24-2026_Boston/1603%20Washington%20St/",
+      "coverImageName": "IMG_20260624_075331_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_075331_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/1603%20Washington%20St/IMG_20260624_075331_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_075335_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/1603%20Washington%20St/IMG_20260624_075335_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "2 Cambridge & Emery",
+      "folderName": "2 Cambridge & Emery",
+      "folderUrl": "images/boston/Boston%2012jan2026/2%20Cambridge%20%26%20Emery/",
+      "coverImageName": "IMG_20260111_070315_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_070315_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/2%20Cambridge%20%26%20Emery/IMG_20260111_070315_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_070324_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/2%20Cambridge%20%26%20Emery/IMG_20260111_070324_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_070329_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/2%20Cambridge%20%26%20Emery/IMG_20260111_070329_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_070338_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/2%20Cambridge%20%26%20Emery/IMG_20260111_070338_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-DE2FFF",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.351548,-71.059706",
+      "lat": 42.351548,
+      "lon": -71.059706,
+      "jobNumbers": [
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "21 Edinboro",
+      "folderName": "21 Edinboro",
+      "folderUrl": "images/boston/06-24-2026_Boston/21%20Edinboro/",
+      "coverImageName": "IMG_20260624_071413_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_071413_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/21%20Edinboro/IMG_20260624_071413_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_071416_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/21%20Edinboro/IMG_20260624_071416_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "3 Emery & Cambridge",
+      "folderName": "3 Emery & Cambridge",
+      "folderUrl": "images/boston/Boston%2012jan2026/3%20Emery%20%26%20Cambridge/",
+      "coverImageName": "IMG_20260111_070355_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_070355_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/3%20Emery%20%26%20Cambridge/IMG_20260111_070355_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_070358_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/3%20Emery%20%26%20Cambridge/IMG_20260111_070358_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-7372AB",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.348003,-71.096491",
+      "lat": 42.348003,
+      "lon": -71.096491,
+      "jobNumbers": [
+        "ALCH-4321",
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "352 Newbury St & Massachusettes Ave",
+      "folderName": "352 Newbury St & Massachusettes Ave",
+      "folderUrl": "images/boston/06-24-2026_Boston/352%20Newbury%20St%20%26%20Massachusettes%20Ave/",
+      "coverImageName": "IMG_20260624_053940_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_053940_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/352%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260624_053940_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_053944_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/352%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260624_053944_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_054240_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/352%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260624_054240_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_054301_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/352%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260624_054301_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_054306_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/352%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260624_054306_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_054553_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/352%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260624_054553_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_054556_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/352%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260624_054556_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-5C0A56",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.348006,-71.096448",
+      "lat": 42.348006,
+      "lon": -71.096448,
+      "jobNumbers": [
+        "ALCH-4321",
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "354 Newbury St & Massachusettes Ave",
+      "folderName": "354 Newbury St & Massachusettes Ave",
+      "folderUrl": "images/boston/06-24-2026_Boston/354%20Newbury%20St%20%26%20Massachusettes%20Ave/",
+      "coverImageName": "IMG_20260624_053944_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_053944_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/354%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260624_053944_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_054240_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/354%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260624_054240_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_054301_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/354%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260624_054301_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_054306_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/354%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260624_054306_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_054553_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/354%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260624_054553_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_054556_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/354%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260624_054556_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "4 Newbury St and Broookline Ave",
+      "folderName": "4 Newbury St and Broookline Ave",
+      "folderUrl": "images/boston/Boston%2012jan2026/4%20Newbury%20St%20and%20Broookline%20Ave/",
+      "coverImageName": "IMG_20260111_095727_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_095727_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/4%20Newbury%20St%20and%20Broookline%20Ave/IMG_20260111_095727_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_095741_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/4%20Newbury%20St%20and%20Broookline%20Ave/IMG_20260111_095741_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "4-15-24",
+      "folderName": "4-15-24",
+      "folderUrl": "images/boston/4-15-24/",
+      "coverImageName": "1039 Commonwealth Ave.jpg",
+      "images": [
+        {
+          "name": "1039 Commonwealth Ave.jpg",
+          "url": "images/boston/4-15-24/1039%20Commonwealth%20Ave.jpg"
+        },
+        {
+          "name": "200 Stuart St & Park Pl A (1).jpg",
+          "url": "images/boston/4-15-24/200%20Stuart%20St%20%26%20Park%20Pl%20A%20%281%29.jpg"
+        },
+        {
+          "name": "200 Stuart St & Park Pl A (2).jpg",
+          "url": "images/boston/4-15-24/200%20Stuart%20St%20%26%20Park%20Pl%20A%20%282%29.jpg"
+        },
+        {
+          "name": "200 Stuart St & Park Pl B (1).jpg",
+          "url": "images/boston/4-15-24/200%20Stuart%20St%20%26%20Park%20Pl%20B%20%281%29.jpg"
+        },
+        {
+          "name": "200 Stuart St & Park Pl B (2).jpg",
+          "url": "images/boston/4-15-24/200%20Stuart%20St%20%26%20Park%20Pl%20B%20%282%29.jpg"
+        },
+        {
+          "name": "200 Stuart St & Park Pl C (1).jpg",
+          "url": "images/boston/4-15-24/200%20Stuart%20St%20%26%20Park%20Pl%20C%20%281%29.jpg"
+        },
+        {
+          "name": "200 Stuart St & Park Pl C (2).jpg",
+          "url": "images/boston/4-15-24/200%20Stuart%20St%20%26%20Park%20Pl%20C%20%282%29.jpg"
+        },
+        {
+          "name": "200 Stuart St & Park Pl C (3).jpg",
+          "url": "images/boston/4-15-24/200%20Stuart%20St%20%26%20Park%20Pl%20C%20%283%29.jpg"
+        },
+        {
+          "name": "234 Cabridge St.jpg",
+          "url": "images/boston/4-15-24/234%20Cabridge%20St.jpg"
+        },
+        {
+          "name": "25 Edenboro St & Essex St (1).jpg",
+          "url": "images/boston/4-15-24/25%20Edenboro%20St%20%26%20Essex%20St%20%281%29.jpg"
+        },
+        {
+          "name": "25 Edenboro St & Essex St (2).jpg",
+          "url": "images/boston/4-15-24/25%20Edenboro%20St%20%26%20Essex%20St%20%282%29.jpg"
+        },
+        {
+          "name": "342 Cambridge St.jpg",
+          "url": "images/boston/4-15-24/342%20Cambridge%20St.jpg"
+        },
+        {
+          "name": "380 Boylston St (1).jpg",
+          "url": "images/boston/4-15-24/380%20Boylston%20St%20%281%29.jpg"
+        },
+        {
+          "name": "380 Boylston St (2).jpg",
+          "url": "images/boston/4-15-24/380%20Boylston%20St%20%282%29.jpg"
+        },
+        {
+          "name": "380 Boylston St (3).jpg",
+          "url": "images/boston/4-15-24/380%20Boylston%20St%20%283%29.jpg"
+        },
+        {
+          "name": "603 Newbury St btw Brookline & Kenmore St (1).jpg",
+          "url": "images/boston/4-15-24/603%20Newbury%20St%20btw%20Brookline%20%26%20Kenmore%20St%20%281%29.jpg"
+        },
+        {
+          "name": "603 Newbury St btw Brookline & Kenmore St (2).jpg",
+          "url": "images/boston/4-15-24/603%20Newbury%20St%20btw%20Brookline%20%26%20Kenmore%20St%20%282%29.jpg"
+        },
+        {
+          "name": "603 Newbury St btw Brookline & Kenmore St (3).jpg",
+          "url": "images/boston/4-15-24/603%20Newbury%20St%20btw%20Brookline%20%26%20Kenmore%20St%20%283%29.jpg"
+        },
+        {
+          "name": "99 Hudson St & Tai Tung St (1).jpg",
+          "url": "images/boston/4-15-24/99%20Hudson%20St%20%26%20Tai%20Tung%20St%20%281%29.jpg"
+        },
+        {
+          "name": "99 Hudson St & Tai Tung St (2).jpg",
+          "url": "images/boston/4-15-24/99%20Hudson%20St%20%26%20Tai%20Tung%20St%20%282%29.jpg"
+        },
+        {
+          "name": "Atlantic Ave & Kneeland St (1).jpg",
+          "url": "images/boston/4-15-24/Atlantic%20Ave%20%26%20Kneeland%20St%20%281%29.jpg"
+        },
+        {
+          "name": "Atlantic Ave & Kneeland St (2).jpg",
+          "url": "images/boston/4-15-24/Atlantic%20Ave%20%26%20Kneeland%20St%20%282%29.jpg"
+        },
+        {
+          "name": "Atlantic Ave & Kneeland St (3).jpg",
+          "url": "images/boston/4-15-24/Atlantic%20Ave%20%26%20Kneeland%20St%20%283%29.jpg"
+        },
+        {
+          "name": "Braintree St & Harvard St (1).jpg",
+          "url": "images/boston/4-15-24/Braintree%20St%20%26%20Harvard%20St%20%281%29.jpg"
+        },
+        {
+          "name": "Braintree St & Harvard St (2).jpg",
+          "url": "images/boston/4-15-24/Braintree%20St%20%26%20Harvard%20St%20%282%29.jpg"
+        },
+        {
+          "name": "Brookline Ave & Newbury St (1).jpg",
+          "url": "images/boston/4-15-24/Brookline%20Ave%20%26%20Newbury%20St%20%281%29.jpg"
+        },
+        {
+          "name": "Brookline Ave & Newbury St (2).jpg",
+          "url": "images/boston/4-15-24/Brookline%20Ave%20%26%20Newbury%20St%20%282%29.jpg"
+        },
+        {
+          "name": "Brookline Ave & Newbury St (3).jpg",
+          "url": "images/boston/4-15-24/Brookline%20Ave%20%26%20Newbury%20St%20%283%29.jpg"
+        },
+        {
+          "name": "Cambridge St & Harvard Ave (1).jpg",
+          "url": "images/boston/4-15-24/Cambridge%20St%20%26%20Harvard%20Ave%20%281%29.jpg"
+        },
+        {
+          "name": "Cambridge St & Harvard Ave (2).jpg",
+          "url": "images/boston/4-15-24/Cambridge%20St%20%26%20Harvard%20Ave%20%282%29.jpg"
+        },
+        {
+          "name": "Cambridge St & Harvard Ave (3).jpg",
+          "url": "images/boston/4-15-24/Cambridge%20St%20%26%20Harvard%20Ave%20%283%29.jpg"
+        },
+        {
+          "name": "Cambridge ST & Linden St.jpg",
+          "url": "images/boston/4-15-24/Cambridge%20ST%20%26%20Linden%20St.jpg"
+        },
+        {
+          "name": "Causeway St & Canal St.jpg",
+          "url": "images/boston/4-15-24/Causeway%20St%20%26%20Canal%20St.jpg"
+        },
+        {
+          "name": "Causeway St & Friend St (1).jpg",
+          "url": "images/boston/4-15-24/Causeway%20St%20%26%20Friend%20St%20%281%29.jpg"
+        },
+        {
+          "name": "Causeway St & Friend St (2).jpg",
+          "url": "images/boston/4-15-24/Causeway%20St%20%26%20Friend%20St%20%282%29.jpg"
+        },
+        {
+          "name": "Commonwealth Ave & Babcock St (1).jpg",
+          "url": "images/boston/4-15-24/Commonwealth%20Ave%20%26%20Babcock%20St%20%281%29.jpg"
+        },
+        {
+          "name": "Commonwealth Ave & Babcock St (2).jpg",
+          "url": "images/boston/4-15-24/Commonwealth%20Ave%20%26%20Babcock%20St%20%282%29.jpg"
+        },
+        {
+          "name": "E Beekley St & Fay St (1).jpg",
+          "url": "images/boston/4-15-24/E%20Beekley%20St%20%26%20Fay%20St%20%281%29.jpg"
+        },
+        {
+          "name": "E Beekley St & Fay St (2).jpg",
+          "url": "images/boston/4-15-24/E%20Beekley%20St%20%26%20Fay%20St%20%282%29.jpg"
+        },
+        {
+          "name": "E Berkley ST BTW Fay St & Harrison Ave (1).jpg",
+          "url": "images/boston/4-15-24/E%20Berkley%20ST%20BTW%20Fay%20St%20%26%20Harrison%20Ave%20%281%29.jpg"
+        },
+        {
+          "name": "E Berkley ST BTW Fay St & Harrison Ave (2).jpg",
+          "url": "images/boston/4-15-24/E%20Berkley%20ST%20BTW%20Fay%20St%20%26%20Harrison%20Ave%20%282%29.jpg"
+        },
+        {
+          "name": "Harrison Ave & Knapp St (1).jpg",
+          "url": "images/boston/4-15-24/Harrison%20Ave%20%26%20Knapp%20St%20%281%29.jpg"
+        },
+        {
+          "name": "Harrison Ave & Knapp St (2).jpg",
+          "url": "images/boston/4-15-24/Harrison%20Ave%20%26%20Knapp%20St%20%282%29.jpg"
+        },
+        {
+          "name": "Harrison Ave & Knapp St (3).jpg",
+          "url": "images/boston/4-15-24/Harrison%20Ave%20%26%20Knapp%20St%20%283%29.jpg"
+        },
+        {
+          "name": "Harvard Ave & Braintree St (1).jpg",
+          "url": "images/boston/4-15-24/Harvard%20Ave%20%26%20Braintree%20St%20%281%29.jpg"
+        },
+        {
+          "name": "Harvard Ave & Braintree St (2).jpg",
+          "url": "images/boston/4-15-24/Harvard%20Ave%20%26%20Braintree%20St%20%282%29.jpg"
+        },
+        {
+          "name": "Harvard Ave & Cambridge St (1).jpg",
+          "url": "images/boston/4-15-24/Harvard%20Ave%20%26%20Cambridge%20St%20%281%29.jpg"
+        },
+        {
+          "name": "Harvard Ave & Cambridge St (2).jpg",
+          "url": "images/boston/4-15-24/Harvard%20Ave%20%26%20Cambridge%20St%20%282%29.jpg"
+        },
+        {
+          "name": "Highgate St & Cambridge St (1).jpg",
+          "url": "images/boston/4-15-24/Highgate%20St%20%26%20Cambridge%20St%20%281%29.jpg"
+        },
+        {
+          "name": "Highgate St & Cambridge St (2).jpg",
+          "url": "images/boston/4-15-24/Highgate%20St%20%26%20Cambridge%20St%20%282%29.jpg"
+        },
+        {
+          "name": "Highgate St & Cambridge St (3).jpg",
+          "url": "images/boston/4-15-24/Highgate%20St%20%26%20Cambridge%20St%20%283%29.jpg"
+        },
+        {
+          "name": "Highgate St BTW Cambridge & Farrington Ave (1).jpg",
+          "url": "images/boston/4-15-24/Highgate%20St%20BTW%20Cambridge%20%26%20Farrington%20Ave%20%281%29.jpg"
+        },
+        {
+          "name": "Highgate St BTW Cambridge & Farrington Ave (2).jpg",
+          "url": "images/boston/4-15-24/Highgate%20St%20BTW%20Cambridge%20%26%20Farrington%20Ave%20%282%29.jpg"
+        },
+        {
+          "name": "IMG_20240413_033444.jpg",
+          "url": "images/boston/4-15-24/IMG_20240413_033444.jpg"
+        },
+        {
+          "name": "IMG_20240413_141001.jpg",
+          "url": "images/boston/4-15-24/IMG_20240413_141001.jpg"
+        },
+        {
+          "name": "IMG_20240413_143819.jpg",
+          "url": "images/boston/4-15-24/IMG_20240413_143819.jpg"
+        },
+        {
+          "name": "Linden St & Cambridge St.jpg",
+          "url": "images/boston/4-15-24/Linden%20St%20%26%20Cambridge%20St.jpg"
+        },
+        {
+          "name": "Massachuesettes Ave & Washington St (1).jpg",
+          "url": "images/boston/4-15-24/Massachuesettes%20Ave%20%26%20Washington%20St%20%281%29.jpg"
+        },
+        {
+          "name": "Massachuesettes Ave & Washington St (2).jpg",
+          "url": "images/boston/4-15-24/Massachuesettes%20Ave%20%26%20Washington%20St%20%282%29.jpg"
+        },
+        {
+          "name": "Massachuesettes Ave & Washington St (3).jpg",
+          "url": "images/boston/4-15-24/Massachuesettes%20Ave%20%26%20Washington%20St%20%283%29.jpg"
+        },
+        {
+          "name": "Newbury St and Broookline Ave.jpg",
+          "url": "images/boston/4-15-24/Newbury%20St%20and%20Broookline%20Ave.jpg"
+        },
+        {
+          "name": "Washington St & Melnea Cass Bvd (1).jpg",
+          "url": "images/boston/4-15-24/Washington%20St%20%26%20Melnea%20Cass%20Bvd%20%281%29.jpg"
+        },
+        {
+          "name": "Washington St & Melnea Cass Bvd (2).jpg",
+          "url": "images/boston/4-15-24/Washington%20St%20%26%20Melnea%20Cass%20Bvd%20%282%29.jpg"
+        },
+        {
+          "name": "Washington St & Melnea Cass Bvd (3).jpg",
+          "url": "images/boston/4-15-24/Washington%20St%20%26%20Melnea%20Cass%20Bvd%20%283%29.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-E69E8C",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.349477,-71.089094",
+      "lat": 42.349477,
+      "lon": -71.089094,
+      "jobNumbers": [
+        "ALCH-4321",
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "402 Boylston",
+      "folderName": "402 Boylston",
+      "folderUrl": "images/boston/06-24-2026_Boston/402%20Boylston/",
+      "coverImageName": "IMG_20260624_055205_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_055205_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/402%20Boylston/IMG_20260624_055205_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_055210_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/402%20Boylston/IMG_20260624_055210_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_062905_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/402%20Boylston/IMG_20260624_062905_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-C4E167",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.351675,-71.072274",
+      "lat": 42.351675,
+      "lon": -71.072274,
+      "jobNumbers": [
+        "ALCH-4321",
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "410 Boylston",
+      "folderName": "410 Boylston",
+      "folderUrl": "images/boston/06-24-2026_Boston/410%20Boylston/",
+      "coverImageName": "IMG_20260624_063233_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_063233_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/410%20Boylston/IMG_20260624_063233_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_063235_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/410%20Boylston/IMG_20260624_063235_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-715337",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.354362,-71.13562",
+      "lat": 42.354362,
+      "lon": -71.13562,
+      "jobNumbers": [
+        "ALCH-4321",
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "451 Cambridge",
+      "folderName": "451 Cambridge",
+      "folderUrl": "images/boston/06-24-2026_Boston/451%20Cambridge/",
+      "coverImageName": "IMG_20260624_051827_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_051827_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/451%20Cambridge/IMG_20260624_051827_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_051830_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/451%20Cambridge/IMG_20260624_051830_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "5 Brookline Ave & Newbury St",
+      "folderName": "5 Brookline Ave & Newbury St",
+      "folderUrl": "images/boston/Boston%2012jan2026/5%20Brookline%20Ave%20%26%20Newbury%20St/",
+      "coverImageName": "IMG_20260111_095703_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_095703_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/5%20Brookline%20Ave%20%26%20Newbury%20St/IMG_20260111_095703_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_095709_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/5%20Brookline%20Ave%20%26%20Newbury%20St/IMG_20260111_095709_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "6 603 Newbury St btw Brookline & Kenmore St",
+      "folderName": "6 603 Newbury St btw Brookline & Kenmore St",
+      "folderUrl": "images/boston/Boston%2012jan2026/6%20603%20Newbury%20St%20btw%20Brookline%20%26%20Kenmore%20St/",
+      "coverImageName": "IMG_20260111_095639_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_095639_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/6%20603%20Newbury%20St%20btw%20Brookline%20%26%20Kenmore%20St/IMG_20260111_095639_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_095643_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/6%20603%20Newbury%20St%20btw%20Brookline%20%26%20Kenmore%20St/IMG_20260111_095643_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "8 354 Newbury St & Massachusettes Ave",
+      "folderName": "8 354 Newbury St & Massachusettes Ave",
+      "folderUrl": "images/boston/Boston%2012jan2026/8%20354%20Newbury%20St%20%26%20Massachusettes%20Ave/",
+      "coverImageName": "IMG_20260111_094817_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_094817_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/8%20354%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260111_094817_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_094820_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/8%20354%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260111_094820_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "9 352 Newbury St & Massachusettes Ave",
+      "folderName": "9 352 Newbury St & Massachusettes Ave",
+      "folderUrl": "images/boston/Boston%2012jan2026/9%20352%20Newbury%20St%20%26%20Massachusettes%20Ave/",
+      "coverImageName": "IMG_20260111_094834_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260111_094834_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/9%20352%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260111_094834_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_094844_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/9%20352%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260111_094844_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_094906_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/9%20352%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260111_094906_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260111_094923_DRO.jpg",
+          "url": "images/boston/Boston%2012jan2026/9%20352%20Newbury%20St%20%26%20Massachusettes%20Ave/IMG_20260111_094923_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-5168F8",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.348344,-71.097552",
+      "lat": 42.348344,
+      "lon": -71.097552,
+      "jobNumbers": [
+        "ALCH-4321",
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "Brookline Ave & Newbury St (Left)",
+      "folderName": "Brookline Ave & Newbury St (Left)",
+      "folderUrl": "images/boston/06-24-2026_Boston/Brookline%20Ave%20%26%20Newbury%20St%20%28Left%29/",
+      "coverImageName": "IMG_20260624_055205_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_055205_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Brookline%20Ave%20%26%20Newbury%20St%20%28Left%29/IMG_20260624_055205_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_055210_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Brookline%20Ave%20%26%20Newbury%20St%20%28Left%29/IMG_20260624_055210_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_055220_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Brookline%20Ave%20%26%20Newbury%20St%20%28Left%29/IMG_20260624_055220_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_055224_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Brookline%20Ave%20%26%20Newbury%20St%20%28Left%29/IMG_20260624_055224_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-65881A",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.348353,-71.09672",
+      "lat": 42.348353,
+      "lon": -71.09672,
+      "jobNumbers": [
+        "ALCH-4321",
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "Brookline Ave & Newbury St (Right)",
+      "folderName": "Brookline Ave & Newbury St (Right)",
+      "folderUrl": "images/boston/06-24-2026_Boston/Brookline%20Ave%20%26%20Newbury%20St%20%28Right%29/",
+      "coverImageName": "IMG_20260624_053556_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_053556_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Brookline%20Ave%20%26%20Newbury%20St%20%28Right%29/IMG_20260624_053556_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_053559_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Brookline%20Ave%20%26%20Newbury%20St%20%28Right%29/IMG_20260624_053559_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-FC9E0D",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.354439,-71.13549",
+      "lat": 42.354439,
+      "lon": -71.13549,
+      "jobNumbers": [
+        "ALCH-4321",
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "Cambridge &Rugg St",
+      "folderName": "Cambridge &Rugg St",
+      "folderUrl": "images/boston/06-24-2026_Boston/Cambridge%20%26Rugg%20St/",
+      "coverImageName": "IMG_20260624_051805_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_051805_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Cambridge%20%26Rugg%20St/IMG_20260624_051805_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_051810_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Cambridge%20%26Rugg%20St/IMG_20260624_051810_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-889644",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.355559,-71.132631",
+      "lat": 42.355559,
+      "lon": -71.132631,
+      "jobNumbers": [
+        "ALCH-4321",
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "Cambridge St & Harvard Ave",
+      "folderName": "Cambridge St & Harvard Ave",
+      "folderUrl": "images/boston/06-24-2026_Boston/Cambridge%20St%20%26%20Harvard%20Ave/",
+      "coverImageName": "IMG_20260624_051623_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_051623_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Cambridge%20St%20%26%20Harvard%20Ave/IMG_20260624_051623_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_051625_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Cambridge%20St%20%26%20Harvard%20Ave/IMG_20260624_051625_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_051630_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Cambridge%20St%20%26%20Harvard%20Ave/IMG_20260624_051630_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-589CE4",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.343692,-71.065516",
+      "lat": 42.343692,
+      "lon": -71.065516,
+      "jobNumbers": [
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "E Berkley St & Fay St",
+      "folderName": "E Berkley St & Fay St",
+      "folderUrl": "images/boston/06-24-2026_Boston/E%20Berkley%20St%20%26%20Fay%20St/",
+      "coverImageName": "IMG_20260624_072914_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_072914_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/E%20Berkley%20St%20%26%20Fay%20St/IMG_20260624_072914_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_072918_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/E%20Berkley%20St%20%26%20Fay%20St/IMG_20260624_072918_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-89591C",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.343698,-71.065178",
+      "lat": 42.343698,
+      "lon": -71.065178,
+      "jobNumbers": [
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "E Berkley ST BTW Fay St & Harrison Ave",
+      "folderName": "E Berkley ST BTW Fay St & Harrison Ave",
+      "folderUrl": "images/boston/06-24-2026_Boston/E%20Berkley%20ST%20BTW%20Fay%20St%20%26%20Harrison%20Ave/",
+      "coverImageName": "IMG_20260624_072935_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_072935_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/E%20Berkley%20ST%20BTW%20Fay%20St%20%26%20Harrison%20Ave/IMG_20260624_072935_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_072939_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/E%20Berkley%20ST%20BTW%20Fay%20St%20%26%20Harrison%20Ave/IMG_20260624_072939_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-2367D8",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.355438,-71.132725",
+      "lat": 42.355438,
+      "lon": -71.132725,
+      "jobNumbers": [
+        "ALCH-4321",
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "Harvard Ave & Cambridge",
+      "folderName": "Harvard Ave & Cambridge",
+      "folderUrl": "images/boston/06-24-2026_Boston/Harvard%20Ave%20%26%20Cambridge/",
+      "coverImageName": "IMG_20260624_051604_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_051604_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Harvard%20Ave%20%26%20Cambridge/IMG_20260624_051604_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_051606_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Harvard%20Ave%20%26%20Cambridge/IMG_20260624_051606_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-E65047",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.351578,-71.0598",
+      "lat": 42.351578,
+      "lon": -71.0598,
+      "jobNumbers": [
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "Kingston & Edinboro",
+      "folderName": "Kingston & Edinboro",
+      "folderUrl": "images/boston/06-24-2026_Boston/Kingston%20%26%20Edinboro/",
+      "coverImageName": "IMG_20260624_071022_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_071022_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Kingston%20%26%20Edinboro/IMG_20260624_071022_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_071025_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Kingston%20%26%20Edinboro/IMG_20260624_071025_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-725C53",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.348246,-71.08751",
+      "lat": 42.348246,
+      "lon": -71.08751,
+      "jobNumbers": [
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "Mass & Newbury",
+      "folderName": "Mass & Newbury",
+      "folderUrl": "images/boston/06-24-2026_Boston/Mass%20%26%20Newbury/",
+      "coverImageName": "IMG_20260624_060738_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_060738_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Mass%20%26%20Newbury/IMG_20260624_060738_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_060740_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Mass%20%26%20Newbury/IMG_20260624_060740_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": null,
+      "streetViewUrl": null,
+      "lat": null,
+      "lon": null,
+      "jobNumbers": [],
+      "jobColumnLabels": {
+        "d": "Column D",
+        "e": "Column E"
+      },
+      "reviewerEligible": false,
+      "reviewerFilterLabel": null,
+      "reviewerFilterValue": null,
+      "location": "Needs_Manual_Sorting",
+      "folderName": "Needs_Manual_Sorting",
+      "folderUrl": "images/boston/06-25-2026_Boston/Needs_Manual_Sorting/",
+      "coverImageName": "IMG_20260624_080804_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_080804_DRO.jpg",
+          "url": "images/boston/06-25-2026_Boston/Needs_Manual_Sorting/IMG_20260624_080804_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-A5BDDA",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.348399,-71.087456",
+      "lat": 42.348399,
+      "lon": -71.087456,
+      "jobNumbers": [
+        "ALCH-4321",
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "Newbury st & Massachusetts av",
+      "folderName": "Newbury st & Massachusetts av",
+      "folderUrl": "images/boston/06-24-2026_Boston/Newbury%20st%20%26%20Massachusetts%20av/",
+      "coverImageName": "IMG_20260624_061006_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_061006_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Newbury%20st%20%26%20Massachusetts%20av/IMG_20260624_061006_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_061013_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Newbury%20st%20%26%20Massachusetts%20av/IMG_20260624_061013_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_061016_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Newbury%20st%20%26%20Massachusetts%20av/IMG_20260624_061016_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-9C9226",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.348037,-71.096723",
+      "lat": 42.348037,
+      "lon": -71.096723,
+      "jobNumbers": [
+        "ALCH-4321",
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "Newbury St and Broookline Ave",
+      "folderName": "Newbury St and Broookline Ave",
+      "folderUrl": "images/boston/06-24-2026_Boston/Newbury%20St%20and%20Broookline%20Ave/",
+      "coverImageName": "IMG_20260624_053940_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_053940_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Newbury%20St%20and%20Broookline%20Ave/IMG_20260624_053940_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_053944_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Newbury%20St%20and%20Broookline%20Ave/IMG_20260624_053944_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    },
+    {
+      "siteCode": "BOS-220A5A",
+      "streetViewUrl": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=42.336685,-71.076912",
+      "lat": 42.336685,
+      "lon": -71.076912,
+      "jobNumbers": [
+        "ALCH-9012"
+      ],
+      "jobColumnLabels": {
+        "d": "ALCH-9012",
+        "e": "ALCH-4321"
+      },
+      "reviewerEligible": true,
+      "reviewerFilterLabel": "ALCH-9012",
+      "reviewerFilterValue": 4.0,
+      "location": "Washington St & Mass Ave",
+      "folderName": "Washington St & Mass Ave",
+      "folderUrl": "images/boston/06-24-2026_Boston/Washington%20St%20%26%20Mass%20Ave/",
+      "coverImageName": "IMG_20260624_080804_DRO.jpg",
+      "images": [
+        {
+          "name": "IMG_20260624_080804_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Washington%20St%20%26%20Mass%20Ave/IMG_20260624_080804_DRO.jpg"
+        },
+        {
+          "name": "IMG_20260624_080806_DRO.jpg",
+          "url": "images/boston/06-24-2026_Boston/Washington%20St%20%26%20Mass%20Ave/IMG_20260624_080806_DRO.jpg"
+        }
+      ],
+      "city": "Boston"
+    }
+  ]
+}

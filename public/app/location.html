@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Location Cover</title>
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    .location-coords {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 8px 0 0;
+      letter-spacing: 0.03em;
+    }
+    .street-view-frame {
+      margin-top: 16px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      height: 220px;
+    }
+    .street-view-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">buildPortfolio</p>
+      <h1 id="title">Location</h1>
+      <p id="location-sub">This page intentionally shows only the public cover image.</p>
+      <p id="location-coords" class="location-coords hidden"></p>
+    </div>
+    <nav class="site-nav">
+      <a href="./">Public</a>
+      <a href="./reviewer.html">Reviewer</a>
+      <a href="./owner.html">Owner</a>
+      <a href="/legacy">Legacy Spreadsheet</a>
+    </nav>
+  </header>
+
+  <main class="single-layout">
+    <section class="panel">
+      <h2>Public access</h2>
+      <form id="public-access-form" class="form">
+        <label for="public-access-key">Public access key</label>
+        <input id="public-access-key" type="password" required>
+        <button type="submit" class="button button-primary">Connect public access</button>
+      </form>
+      <p id="public-access-status" class="status"></p>
+    </section>
+
+    <section class="panel">
+      <div id="cover" class="cover-frame large"></div>
+      <p id="meta" class="meta"></p>
+      <div id="street-view-container" class="street-view-frame hidden">
+        <iframe id="street-view-frame" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Request a different cover image</h2>
+      <p>Your request goes to the reviewer queue. Public users cannot see folder images.</p>
+      <form id="request-form" class="form">
+        <label>
+          Your name
+          <input id="requester-name" required>
+        </label>
+        <label>
+          Your email
+          <input id="requester-email" type="email" required>
+        </label>
+        <label>
+          Request notes
+          <textarea id="request-note" rows="4" placeholder="Describe the photo you want as the cover."></textarea>
+        </label>
+        <button type="submit" class="button button-primary">Send request</button>
+      </form>
+      <p id="request-status" class="status"></p>
+    </section>
+  </main>
+
+  <script src="./location.js?v=20260711a"></script>
+</body>
+</html>
